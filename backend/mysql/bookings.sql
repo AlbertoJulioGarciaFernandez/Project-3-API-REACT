@@ -1,0 +1,10 @@
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('1','27/10/2023','08:00','2','1');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('2','27/10/2023','9:00','2','2');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('3','27/10/2023','10:00','3','3');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('4','27/10/2023','11:00','4','4');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('5','27/10/2023','12:00','5','5');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('6','27/10/2023','13:00','6','6');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('7','27/10/2023','16:00','7','7');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('8','27/10/2023', '17:00','8','8');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('9','27/10/2023','18:00','9','9');
+INSERT INTO `project_2_api_rest`.`bookings` (`id`,`bookingDate`,`bookingTime`, `userId`, `classroomId`) VALUES ('10','27/10/2023','19:00','10','10');

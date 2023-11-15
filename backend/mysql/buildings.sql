@@ -1,0 +1,7 @@
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('1','Arquitectura','address 1','928111111','Cafetería, Biblioteca');
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('2','Humanidades','address 2','928222222','Cafetería, Biblioteca');
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('3','Ciencias Económicas/Políticas','address 3','928333333','Cafetería, Biblioteca');
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('4','Informática/Matemáticas','address 4','928444444','Cafetería, Biblioteca');
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('5','Ingenierías','address 5','928555555','Cafetería, Biblioteca');
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('6','Magisterio','address 6','928777777','Cafetería, Biblioteca');
+INSERT INTO `project_2_api_rest`.`buildings` (`id`,`buildingName`,`address`, `phoneNumber`, `providedServices`) VALUES ('7','Ciencias Jurídicas','address 7','928888888','Cafetería, Biblioteca');

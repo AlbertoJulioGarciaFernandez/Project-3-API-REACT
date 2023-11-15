@@ -1,0 +1,61 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table "classrooms" {
+  "id" integer [pk]
+  "classroomName" nvarchar(255)
+  "capacity" integer
+  "idBuilding" integer
+  "aimedAt" enum
+}
+
+Table "bookings" {
+  "id" integer [pk]
+  "bookingDate" date
+  "bookingTime" nvarchar(255)
+  "idUser" integer
+  "idClassroom" integer
+}
+
+Table "users" {
+  "id" integer [pk]
+  "firstName" nvarchar(255)
+  "lastName" nvarchar(255)
+  "address" nvarchar(255)
+  "email" nvarchar(255)
+  "password" nvarchar(255)
+  "role" enum
+}
+
+Table "buildings" {
+  "id" integer [pk]
+  "buildingName" nvarchar(255)
+  "address" nvarchar(255)
+  "phoneNumber" nvarchar(255)
+  "providedServices" nvarchar(255)
+  "buildingManagerId" integer
+}
+
+Table "equipments" {
+  "id" integer [pk]
+  "equipmentName" nvarchar(255)
+  "description" nvarchar(255)
+}
+
+Table "classroomsEquipments" {
+  "idClassroom" integer [pk]
+  "idEquipment" integer [pk]
+  "quantity" integer
+}
+
+Ref:"buildings"."id" < "classrooms"."idBuilding"
+
+Ref:"classrooms"."id" < "classroomsEquipments"."idClassroom"
+
+Ref:"equipments"."id" < "classroomsEquipments"."idEquipment"
+
+Ref:"buildings"."buildingManagerId" - "users"."id"
+
+Ref:"users"."id" < "bookings"."idUser"
+
+Ref:"classrooms"."id" < "bookings"."idClassroom"
