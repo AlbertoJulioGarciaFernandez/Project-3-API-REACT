@@ -1,0 +1,11 @@
+
+element: <PaginaPrincipal />,
+},
+{
+  path: "/signup",
+  element: <Signup/>,
+},
+{
+  path: "/login",
+  element: <Login />,
+},
