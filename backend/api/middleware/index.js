@@ -38,8 +38,7 @@ function getTodaysDate() {
 }
 
 function validatePassword(pass) {
-    // Our API will be only allowing passwords which include upper and lower case letters from the
-    // alphabet, numbers from zero to nine, and whose length equals eigth or more.
+    // Our API will be only allowing passwords whose length equals to eigth or more characters.
     const regex = new RegExp(/[a-zA-Z0-9]{8}/);
     
     if (regex.test(pass)) {
