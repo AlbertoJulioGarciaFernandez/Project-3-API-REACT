@@ -1,19 +1,14 @@
 import { useState } from "react";
 import {
-  Box,
+  Alert,
   Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  FilledInput,
-  FormControl,
-  FormHelperText,
   Icon,
   IconButton,
-  Input,
   InputAdornment,
-  InputLabel,
   TextField,
   Typography,
 } from "@mui/material";
@@ -26,6 +21,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
+  const [error,setError] = useState(false)
 
   async function handleClick() {
     try {
@@ -35,6 +31,7 @@ function LoginForm() {
       navigate("/home");
     } catch (error) {
       //Handle the error
+      setError("true")
       console.log("No registrado");
     }
   }
@@ -109,6 +106,7 @@ function LoginForm() {
           </Typography>
         </Link>
       </CardContent>
+      {error && <Alert severity="error">El usuario indicado no esta registrado</Alert>}
     </Card>
   );
 }
