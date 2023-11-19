@@ -1,0 +1,7 @@
+.passwordsDontMatch {
+    color: red;
+}
+
+.passwordsMatch {
+    color: green;
+}
