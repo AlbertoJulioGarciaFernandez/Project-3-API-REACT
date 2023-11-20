@@ -1,13 +1,9 @@
+import { Box } from "@mui/material";
 import logo from "../../assets/rvr-logo.png";
 
 function Logo() {
   return (
-    <>
-    <img src={logo} alt="logo"/>
-    <a>Reserve Room</a>
-    </>
-   
-
+    <Box component={'img'} src={logo} height={100} width={100} alt='ReserveRoom Logo' sx={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }} />
   )
 }
 

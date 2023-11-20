@@ -23,6 +23,8 @@ import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import './SignUpForm.css';
 import { signup } from "../../services/signup";
 import sideImg from '../../assets/loginSignupImg.jpg';
+// import logo from '../../assets/rvr-logo.png';
+import Logo from "../../components/Logo/Logo";
 
 function SignUpForm() {
   const [firstName, setFirstName] = useState("");
@@ -46,7 +48,10 @@ function SignUpForm() {
     e.preventDefault();
     // Checking if both passwords match:
     if (retypedPassword !== password) {
+
       setRetypedPasswordMsg('Error, ambas contraseñas han de coincidir.');
+    } else {
+      setRetypedPasswordMsg('Ambas contraseñas coinciden.');
     }
 
     try {
@@ -62,12 +67,18 @@ function SignUpForm() {
   }
 
   return (
+
+
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Card
-        sx={{ maxWidth: "700px" }}
         raised={true}
+        sx={{ backgroundColor: '#4E7FFF' }}
       >
-        <CardHeader title="Registro de usuario"></CardHeader>
+        {/* <Box component={'img'} src={logo} height={100} width={100} sx={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }} /> */}
+        <Link to={'/'}>
+          <Logo />
+        </Link>
+        <CardHeader title="Registro de usuario" sx={{ color: 'white', textAlign: 'center' }}></CardHeader>
         <CardContent>
           <TextField
             onChange={(e) => setFirstName(e.target.value)}
@@ -159,7 +170,9 @@ function SignUpForm() {
               ),
             }}
           ></TextField>
-          {retypedPasswordMsg !== '' ? <Alert severity="error">Error. +Info: Ambas contraseñas han de coincidir.</Alert> : <Alert severity="success">Ambas contraseñas coinciden.</Alert>}
+
+          {retypedPasswordMsg !== '' && (retypedPasswordMsg.includes('Error') ? <Alert severity="error">Error. +Info: {retypedPasswordMsg}</Alert> : <Alert severity="success">{retypedPasswordMsg}</Alert>)}
+
         </CardContent>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -206,8 +219,10 @@ function SignUpForm() {
           </DialogActions>
         </Dialog>}
       </Card>
-      <Box component={'img'} src={sideImg} height={500} width={500} sx={{}} />
+      <Box component={'img'} src={sideImg} sx={{ height: '100vh', width: '50vw' }} />
     </Box>
+
+
   );
 }
 
