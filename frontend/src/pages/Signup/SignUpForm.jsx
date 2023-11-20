@@ -23,7 +23,6 @@ import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import './SignUpForm.css';
 import { signup } from "../../services/signup";
 import sideImg from '../../assets/loginSignupImg.jpg';
-// import logo from '../../assets/rvr-logo.png';
 import Logo from "../../components/Logo/Logo";
 
 function SignUpForm() {
@@ -74,10 +73,8 @@ function SignUpForm() {
         raised={true}
         sx={{ backgroundColor: '#4E7FFF' }}
       >
-        {/* <Box component={'img'} src={logo} height={100} width={100} sx={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }} /> */}
-        <Link to={'/'}>
-          <Logo />
-        </Link>
+        
+        <Logo />
         <CardHeader title="Registro de usuario" sx={{ color: 'white', textAlign: 'center' }}></CardHeader>
         <CardContent>
           <TextField
@@ -86,6 +83,7 @@ function SignUpForm() {
             label="Nombre"
             margin="dense"
             fullWidth={true}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
           ></TextField>
 
           <TextField
@@ -94,6 +92,7 @@ function SignUpForm() {
             label="Apellidos"
             margin="dense"
             fullWidth={true}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
           ></TextField>
 
           <TextField
@@ -102,6 +101,7 @@ function SignUpForm() {
             label="Dirección"
             margin="dense"
             fullWidth={true}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
           ></TextField>
 
           <TextField
@@ -111,6 +111,7 @@ function SignUpForm() {
             margin="dense"
             fullWidth={true}
             placeholder="user@email.com"
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -129,6 +130,7 @@ function SignUpForm() {
             margin="dense"
             placeholder="Se requiere que su contraseña tenga como mínimo ocho caracteres."
             fullWidth={true}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -153,6 +155,7 @@ function SignUpForm() {
             label="Repita contraseña"
             margin="dense"
             fullWidth={true}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -186,16 +189,15 @@ function SignUpForm() {
           </Button>
         </CardActions>
         <CardContent>
-          <Link to={`/login`}>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              display="flex"
-              justifyContent="center"
-            >
-              Si ya está registrado, haga click aquí
-            </Typography>
-          </Link>
+
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            display="flex"
+            justifyContent="center"
+          >
+            Si ya está registrado, haga clic&nbsp;<Link to={`/login`}>aquí.</Link>
+          </Typography>
         </CardContent>
 
         {inputError && <Alert severity="error">Error. +Info: {errorMsg.message}</Alert>}
@@ -219,7 +221,7 @@ function SignUpForm() {
           </DialogActions>
         </Dialog>}
       </Card>
-      <Box component={'img'} src={sideImg} sx={{ height: '100vh', width: '50vw' }} />
+      <Box component={'img'} src={sideImg} sx={{ height: '100vh', width: '50vw', objectFit: 'cover'}} />
     </Box>
 
 
