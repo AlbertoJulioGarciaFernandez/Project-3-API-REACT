@@ -12,14 +12,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Icon,
   IconButton,
   InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import './SignUpForm.css';
 import { signup } from "../../services/signup";
 import sideImg from '../../assets/loginSignupImg.jpg';
@@ -49,21 +48,33 @@ function SignUpForm() {
     // Checking if both passwords match:
     if (retypedPassword !== password) {
 
-      setRetypedPasswordMsg('Error, ambas contraseñas han de coincidir.');
+      setRetypedPasswordMsg('Error. +Info: Ambas contraseñas han de coincidir.');
     } else {
-      setRetypedPasswordMsg('Ambas contraseñas coinciden.');
+      if (retypedPassword !== '') {
+        if (retypedPassword.length > 7) {
+          setRetypedPasswordMsg('Ambas contraseñas coinciden y cumplen el requisito de ocho caracteres como mínimo.');
+
+          try {
+            const { data } = await signup({ firstName, lastName, address, email, password });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.user.role);
+            setUserRegistered(true);
+            setInputError(false);
+          } catch (error) {
+            console.log(error)
+            setInputError(true);
+            setErrorMsg(error);
+          }
+
+        } else {
+          setRetypedPasswordMsg('Error. +Info: Las contraseñas coinciden pero no cumplen el requisito de ocho caracteres como mínimo.');
+        }
+      } else {
+        setRetypedPasswordMsg('Error. +Info: Los campos de contraseña han de ser cumplimentados.')
+      }
+
     }
 
-    try {
-      const { data } = await signup({ firstName, lastName, address, email, password });
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('role', data.user.role);
-      setUserRegistered(true);
-    } catch (error) {
-      console.log(error)
-      setInputError(true);
-      setErrorMsg(error);
-    }
   }
 
   return (
@@ -163,7 +174,7 @@ function SignUpForm() {
             }}
           ></TextField>
 
-          {retypedPasswordMsg !== '' && (retypedPasswordMsg.includes('Error') ? <Alert severity="error">Error. +Info: {retypedPasswordMsg}</Alert> : <Alert severity="success">{retypedPasswordMsg}</Alert>)}
+          {retypedPasswordMsg !== '' && (retypedPasswordMsg.includes('Error') ? <Alert severity="error">{retypedPasswordMsg}</Alert> : <Alert severity="success">{retypedPasswordMsg}</Alert>)}
 
         </CardContent>
 
@@ -190,6 +201,7 @@ function SignUpForm() {
         </CardContent>
 
         {inputError && <Alert severity="error">Error. +Info: {errorMsg.message}</Alert>}
+        {userRegistered && <Alert severity="success">TODO OK!</Alert>}
 
         {userRegistered && <Dialog
           open={userRegistered}

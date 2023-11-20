@@ -1,7 +1,6 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import Login from "../pages/Login/Login";
 import Root from "../layouts";
-import LoginForm from "../pages/Login/LoginForm";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/Signup/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
