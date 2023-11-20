@@ -1,9 +1,14 @@
-import React from 'react'
+import Logo from "../../components/Logo/Logo";
+import LoginForm from "./LoginForm";
 
 function Login() {
   return (
-    <div>Login</div>
-  )
+    <div>
+      <Logo/>
+      <LoginForm/>
+      
+    </div>
+  );
 }
 
-export default Login
+export default Login;

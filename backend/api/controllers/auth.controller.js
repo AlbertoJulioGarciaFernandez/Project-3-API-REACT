@@ -32,7 +32,7 @@ async function login(req, res) {
 async function signup(req, res) {
     try {
         if (!validatePassword(req.body.password)) {
-            return res.status(400).send("Password not valid. +Info: It must contain at least one lowercase, one uppercase and one number.");
+            return res.status(400).send("Password not valid. +Info: It must contain, at least, eight characters.");
         } else {
             const saltRounds = bcrypt.genSaltSync(parseInt(process.env.SALTROUNDS))
             const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds)
