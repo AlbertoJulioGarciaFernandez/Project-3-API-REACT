@@ -61,7 +61,7 @@ function CarrouselComponent() {
   function Item(props)
 {
     return (
-        <Paper>
+        <Paper className='container-carousel'>
             <h2>{props.item.name}</h2>
             <p>{props.item.description}</p>
             <div className='image-container'>
