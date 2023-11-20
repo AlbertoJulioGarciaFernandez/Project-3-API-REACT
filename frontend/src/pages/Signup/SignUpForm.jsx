@@ -23,7 +23,6 @@ import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import './SignUpForm.css';
 import { signup } from "../../services/signup";
 import sideImg from '../../assets/loginSignupImg.jpg';
-// import logo from '../../assets/rvr-logo.png';
 import Logo from "../../components/Logo/Logo";
 
 function SignUpForm() {
@@ -38,7 +37,8 @@ function SignUpForm() {
   const [errorMsg, setErrorMsg] = useState({});
   const [userRegistered, setUserRegistered] = useState(false);
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
+  const [passwordIsVisible, setPasswordIsVisible] = useState(false);
+  const [passwordRetypedIsVisible, setPasswordRetypedIsVisible] = useState(false);
 
   const handleNavigate = () => {
     navigate("/dashboard");
@@ -67,80 +67,75 @@ function SignUpForm() {
   }
 
   return (
-
-
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Card
         raised={true}
-        sx={{ backgroundColor: '#4E7FFF' }}
+        sx={{ backgroundColor: '#4E7FFF', height: '100vh', width: '50vw' }}
       >
-        {/* <Box component={'img'} src={logo} height={100} width={100} sx={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 10 }} /> */}
-        <Link to={'/'}>
-          <Logo />
-        </Link>
+
+        <Logo />
         <CardHeader title="Registro de usuario" sx={{ color: 'white', textAlign: 'center' }}></CardHeader>
         <CardContent>
           <TextField
+            className="textfield"
             onChange={(e) => setFirstName(e.target.value)}
             type="text"
             label="Nombre"
             margin="dense"
             fullWidth={true}
+            InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
+            variant="filled"
           ></TextField>
 
           <TextField
+            className="textfield"
             onChange={(e) => setLastName(e.target.value)}
             type="text"
             label="Apellidos"
             margin="dense"
             fullWidth={true}
+            InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
+            variant="filled"
           ></TextField>
 
           <TextField
+            className="textfield"
             onChange={(e) => setAddress(e.target.value)}
             type="text"
             label="Dirección"
             margin="dense"
             fullWidth={true}
+            InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
+            variant="filled"
           ></TextField>
 
           <TextField
+            className="textfield"
             onChange={(e) => setEmail(e.target.value)}
             type="text"
-            label="Email"
+            label="Correo electrónico"
             margin="dense"
             fullWidth={true}
-            placeholder="user@email.com"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Icon>
-                    <Email />
-                  </Icon>
-                </InputAdornment>
-              ),
-            }}
+            InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
+            placeholder="El correo electrónico ha de cumplir el siguiente formato de ejemplo: user@email.com"
+            variant="filled"
           ></TextField>
 
           <TextField
+            className="textfield"
             onChange={(e) => setPassword(e.target.value)}
-            type={isVisible ? "text" : "password"}
-            label="Password"
+            type={passwordIsVisible ? "text" : "password"}
+            label="Contraseña"
             margin="dense"
             placeholder="Se requiere que su contraseña tenga como mínimo ocho caracteres."
             fullWidth={true}
+            InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
+            variant="filled"
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Icon>
-                    <Lock />
-                  </Icon>
-                </InputAdornment>
-              ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setIsVisible(!isVisible)}>
-                    {isVisible ? <Visibility /> : <VisibilityOff />}
+                  <IconButton onClick={() => setPasswordIsVisible(!passwordIsVisible)}>
+                    {passwordIsVisible ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -148,23 +143,20 @@ function SignUpForm() {
           ></TextField>
 
           <TextField
+            className="textfield"
             onChange={(e) => setRetypedPassword(e.target.value)}
-            type={isVisible ? "text" : "password"}
+            type={passwordRetypedIsVisible ? "text" : "password"}
             label="Repita contraseña"
             margin="dense"
+            placeholder="La contraseña ha de coincidir con la establecida en el campo anterior."
             fullWidth={true}
+            InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
+            variant="filled"
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Icon>
-                    <Lock />
-                  </Icon>
-                </InputAdornment>
-              ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setIsVisible(!isVisible)}>
-                    {isVisible ? <Visibility /> : <VisibilityOff />}
+                  <IconButton onClick={() => setPasswordRetypedIsVisible(!passwordRetypedIsVisible)}>
+                    {passwordRetypedIsVisible ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
               ),
@@ -179,23 +171,22 @@ function SignUpForm() {
           <Button
             onClick={handleClick}
             size="medium"
-            // color="primary"
             variant="contained"
           >
             Login
           </Button>
         </CardActions>
         <CardContent>
-          <Link to={`/login`}>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              display="flex"
-              justifyContent="center"
-            >
-              Si ya está registrado, haga click aquí
-            </Typography>
-          </Link>
+
+          <Typography
+            variant="body1"
+            color="white"
+            fontSize={20}
+            display="flex"
+            justifyContent="center"
+          >
+            Si ya está registrado, haga clic&nbsp;<Link className="link" to={`/login`}>aquí.</Link>
+          </Typography>
         </CardContent>
 
         {inputError && <Alert severity="error">Error. +Info: {errorMsg.message}</Alert>}
@@ -219,7 +210,9 @@ function SignUpForm() {
           </DialogActions>
         </Dialog>}
       </Card>
-      <Box component={'img'} src={sideImg} sx={{ height: '100vh', width: '50vw' }} />
+
+      <Box component={'img'} src={sideImg} sx={{ height: '100vh', width: '50vw', objectFit: 'cover' }} />
+
     </Box>
 
 

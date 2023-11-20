@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./LoginForm.css";
 import {
   Alert,
   Box,
@@ -17,99 +16,48 @@ import {
 import { login } from "../../services/login";
 import { Link, useNavigate } from "react-router-dom";
 import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
-import Logo from "../../components/Logo/Logo";
-import sideImg from "../../assets/loginSignupImg.jpg";
+import sideImg from '../../assets/loginSignupImg.jpg';
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorEmail, setErrorEmail] = useState({ error: false, message: "" });
-  const [errorPassword, setErrorPassword] = useState({
-    error: false,
-    message: "",
-  });
+  const [error, setError] = useState(false)
 
   async function handleClick() {
-    if (validateEmail(email)) {
-      setErrorEmail({
-        error: false,
-        message: "",
-      });
-    } else {
-      setErrorEmail({
-        error: true,
-        message: "Formato de correo electronico incorrecto",
-      });
-    }
-    if (validatePassword(password)) {
-      setErrorPassword({
-        error: false,
-        message: "",
-      });
-    } else {
-      setErrorPassword({
-        error: true,
-        message: "Contraseña no valida",
-      });
-    }
     try {
-      if (validateEmail(email) && validatePassword(password)) {
-        const loginResponse = await login({ email, password });
-        localStorage.setItem("token", loginResponse.data.token);
-        localStorage.setItem("role", loginResponse.data.role);
-        navigate("/home");
-      }
+      const loginResponse = await login({ email, password });
+      localStorage.setItem("token", loginResponse.data.token);
+      localStorage.setItem("role", loginResponse.data.role);
+      navigate("/home");
     } catch (error) {
       //Handle the error
-      setError("true");
+      setError("true")
       console.log("No registrado");
     }
   }
 
-  function validateEmail(email) {
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return regex.test(email);
-  }
-
-  function validatePassword(password) {
-    const regex = /[a-zA-Z0-9]{8}/;
-    return regex.test(password);
-  }
-
   return (
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Card
         raised={true}
-        sx={{ backgroundColor: "#4E7FFF", height: "100vh", width: "50vw" }}
+        sx={{ backgroundColor: '#4E7FFF', height: '100vh', width: '50vw' }}
       >
-        <Link to={"/"}>
-          <Logo />
-        </Link>
-        <CardHeader
-          title="Iniciar Sesion"
-          sx={{ color: "white", textAlign: "center" }}
-        ></CardHeader>
+        <CardHeader title="Login" sx={{ color: 'white', textAlign: 'center' }}></CardHeader>
         <CardContent>
           <TextField
-            id="email"
             onChange={(e) => setEmail(e.target.value)}
-            sx={{ background: "white", borderRadius: 1 }}
-            type="email"
-            required
-            label="Correo electronico"
-            variant="filled"
+            type="text"
+            label="Email"
             margin="dense"
             fullWidth={true}
-            helperText={errorEmail.message}
-            error={errorEmail.error}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
             placeholder="user@email.com"
             InputProps={{
               startAdornment: (
-                <InputAdornment>
-                  <Icon sx={{ marginTop: 2 }}>
+                <InputAdornment position="start">
+                  <Icon>
                     <Email />
                   </Icon>
                 </InputAdornment>
@@ -119,24 +67,20 @@ function LoginForm() {
           <TextField
             onChange={(e) => setPassword(e.target.value)}
             type={isVisible ? "text" : "password"}
-            variant="filled"
-            required
-            helperText={errorPassword.message}
-            error={errorPassword.error}
-            sx={{ background: "white", borderRadius: 1 }}
-            label="Contraseña"
+            label="Password"
             margin="dense"
             fullWidth={true}
+            sx={{ backgroundColor: 'white', borderRadius: 1 }}
             InputProps={{
               startAdornment: (
-                <InputAdornment>
-                  <Icon sx={{ marginTop: 2 }}>
+                <InputAdornment position="start">
+                  <Icon>
                     <Lock />
                   </Icon>
                 </InputAdornment>
               ),
               endAdornment: (
-                <InputAdornment>
+                <InputAdornment position="end">
                   <IconButton onClick={() => setIsVisible(!isVisible)}>
                     {isVisible ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
@@ -148,37 +92,31 @@ function LoginForm() {
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button
             onClick={handleClick}
-            size="large"
-            sx={{ background: "black" }}
+            size="medium"
+            // color="primary"
             variant="contained"
           >
-            Iniciar Sesion
+            Login
           </Button>
         </CardActions>
         <CardContent>
-          <Typography
-            variant="body1"
-            display="flex"
-            justifyContent="center"
-            className="link"
-          >
-            Si no esta regitrado haga clic&nbsp;
-            <Link to={`/signup`} className="link">
-              aqui
-            </Link>
-          </Typography>
+          <Link to={`/signup`}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              display="flex"
+              justifyContent="center"
+            >
+              Si no esta regitrado haga click aqui
+            </Typography>
+          </Link>
         </CardContent>
-        {error && (
-          <Alert severity="error">El usuario indicado no esta registrado</Alert>
-        )}
+        {error && <Alert severity="error">El usuario indicado no esta registrado</Alert>}
       </Card>
-      <Box
-        component={"img"}
-        src={sideImg}
-        sx={{ height: "100vh", width: "50vw", objectFit: "cover" }}
-      />
+      <Box component={'img'} src={sideImg} sx={{ height: '100vh', width: '50vw', objectFit: 'cover' }} />
     </Box>
   );
 }
 
 export default LoginForm;
+
