@@ -54,23 +54,25 @@ function SignUpForm() {
         if (retypedPassword.length > 7) {
           setRetypedPasswordMsg('Ambas contraseñas coinciden y cumplen el requisito de ocho caracteres como mínimo.');
 
+          // Data will only be sent after having validated both email address and password: 
           try {
             const { data } = await signup({ firstName, lastName, address, email, password });
             localStorage.setItem('token', data.token);
             localStorage.setItem('role', data.user.role);
             setUserRegistered(true);
+            // Setting inputError variable to false in order to make the Alert message disappear (in case it is being shown
+            // on the screen)
             setInputError(false);
           } catch (error) {
-            console.log(error)
             setInputError(true);
             setErrorMsg(error);
           }
 
         } else {
-          setRetypedPasswordMsg('Error. +Info: Las contraseñas coinciden pero no cumplen el requisito de ocho caracteres como mínimo.');
+          setRetypedPasswordMsg('Error. +Info: Aunque las contraseñas coinciden, estas no cumplen el requisito de ocho caracteres como mínimo.');
         }
       } else {
-        setRetypedPasswordMsg('Error. +Info: Los campos de contraseña han de ser cumplimentados.')
+        setRetypedPasswordMsg('Error. +Info: Los campos de contraseña son de obligada cumplimentación.')
       }
 
     }
@@ -94,6 +96,7 @@ function SignUpForm() {
             label="Nombre"
             margin="dense"
             fullWidth={true}
+            // Using the InputLabelProps property to modify the appearance of the input label:
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
@@ -156,6 +159,10 @@ function SignUpForm() {
           <TextField
             className="textfield"
             onChange={(e) => setRetypedPassword(e.target.value)}
+            // If the state variable «passwordRetypedIsVisible» is set to true, the property
+            // «type» will be set to text, which means that the password will be shown on the 
+            // screen (decodified), whereas when it is set to password, characters will be
+            // codified (black dots):
             type={passwordRetypedIsVisible ? "text" : "password"}
             label="Repita contraseña"
             margin="dense"
@@ -201,7 +208,7 @@ function SignUpForm() {
         </CardContent>
 
         {inputError && <Alert severity="error">Error. +Info: {errorMsg.message}</Alert>}
-        {userRegistered && <Alert severity="success">TODO OK!</Alert>}
+        {userRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {userRegistered && <Dialog
           open={userRegistered}
