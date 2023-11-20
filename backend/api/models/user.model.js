@@ -4,7 +4,7 @@ const { sequelize } = require('../../database')
 const User = sequelize.define(
   'user',
   {
-    firstName: {
+    git : {
       type: DataTypes.STRING,
       allowNull: false,
     },
