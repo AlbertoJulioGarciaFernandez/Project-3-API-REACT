@@ -75,7 +75,7 @@ function LoginForm() {
   }
 
   function validatePassword(password) {
-    const regex = /[a-zA-Z0-9]{8}/;
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]{8,}$/;
     return regex.test(password);
   }
 
