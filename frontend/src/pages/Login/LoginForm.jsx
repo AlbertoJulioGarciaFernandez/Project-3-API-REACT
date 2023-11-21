@@ -160,7 +160,7 @@ function LoginForm() {
             variant="body1"
             display="flex"
             justifyContent="center"
-            className="link"
+            color="white"
           >
             Si no esta regitrado haga clic&nbsp;
             <Link to={`/signup`} className="link">
