@@ -1,31 +1,31 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
-import PaginaPrincipal from "../pages/PaginaPrincipal/PaginaPrincipal";
-import Signup from "../pages/Signup/Signup";
 import Login from "../pages/Login/Login";
 import Root from "../layouts";
-import LoginForm from "../pages/Login/LoginForm";
 import Home from "../pages/Home/Home";
+import SignUp from "../pages/Signup/SignUp";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <PaginaPrincipal />,
+    element: <Home />,
   },
   {
     path: "/signup",
-    element: <Signup/>,
+    element: <SignUp />,
   },
   {
     path: "/login",
-    element: <LoginForm />,
+    element: <Login />,
   },
   {
     path: "/root",
     element: <Root />,
   },
+
   {
-    path: "/home",
-    element: <Home />,
+    path: "/dashboard",
+    element: <Dashboard />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/")  //If the user isn't logged in, we redirect to the login page.
