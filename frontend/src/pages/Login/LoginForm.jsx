@@ -85,9 +85,7 @@ function LoginForm() {
         raised={true}
         sx={{ backgroundColor: "#4E7FFF", height: "100vh", width: "50vw" }}
       >
-        <Link to={"/"}>
           <Logo />
-        </Link>
         <CardHeader
           title="Iniciar Sesion"
           sx={{ color: "white", textAlign: "center" }}
