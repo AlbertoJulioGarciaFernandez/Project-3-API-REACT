@@ -88,7 +88,6 @@ function SignUpForm() {
           if (retypedPassword !== password) {
             setRetypedPasswordMsg('Error. +Info: Ambas contraseñas han de coincidir.');
           } else {
-            console.log(retypedPassword, password)
             // Data will only be sent after having validated all the required fields pointed out above: 
             try {
               const { data } = await signup({ firstName, lastName, address, email, password });
@@ -260,7 +259,7 @@ function SignUpForm() {
           </Typography>
         </CardContent>
 
-        {inputError && <Alert severity="error">Error. +Info: {errorMsg.message}</Alert>}
+        {inputError && <Alert severity="error">Error. +Info: {errorMsg.response.data.msg}</Alert>}
         {userRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {userRegistered && <Dialog
