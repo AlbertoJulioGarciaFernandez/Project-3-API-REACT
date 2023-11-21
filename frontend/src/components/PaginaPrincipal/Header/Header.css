@@ -29,5 +29,11 @@
 }
 
 .tituloEncabezado{
-    color:azure;
+    width: 100%;
+}
+
+.tituloEncabezado h2{
+    color: aliceblue;
+    text-align: center;
+    margin-left: 15rem;
 }

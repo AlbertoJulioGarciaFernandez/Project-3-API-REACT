@@ -24,28 +24,33 @@ function CarrouselComponent() {
       img: "./src/assets/imgCarousel/img2.jpg",
     },
     {
-        name: "Universidad de La Palmas",
-        description: "Una institución centrada en la investigación y la enseñanza de calidad, contribuyendo al desarrollo socioeconómico de la región.",
+      name: "Universidad de La Palmas",
+      description:
+        "Una institución centrada en la investigación y la enseñanza de calidad, contribuyendo al desarrollo socioeconómico de la región.",
       img: "./src/assets/imgCarousel/img3.jpeg",
     },
     {
-        name: "Universidad César Manrique",
-        description: "Una institución comprometida con la sostenibilidad y la preservación del entorno, integrando la cultura y la tecnología.",
+      name: "Universidad César Manrique",
+      description:
+        "Una institución comprometida con la sostenibilidad y la preservación del entorno, integrando la cultura y la tecnología.",
       img: "./src/assets/imgCarousel/img4.jpg",
     },
     {
-        name: "Universidad de Canarias Occidentales",
-        description: "Una universidad que celebra la diversidad cultural y promueve la colaboración internacional en la investigación y la enseñanza.",
+      name: "Universidad de Canarias Occidentales",
+      description:
+        "Una universidad que celebra la diversidad cultural y promueve la colaboración internacional en la investigación y la enseñanza.",
       img: "./src/assets/imgCarousel/img5.jpg",
     },
     {
-        name: "Universidad del Hierro",
-        description: "Una institución enraizada en la comunidad, dedicada a proporcionar oportunidades educativas en la isla de El Hierro.",
+      name: "Universidad del Hierro",
+      description:
+        "Una institución enraizada en la comunidad, dedicada a proporcionar oportunidades educativas en la isla de El Hierro.",
       img: "./src/assets/imgCarousel/img6.jpg",
     },
     {
-        name: "Universidad del Teide",
-        description: "Una universidad que ofrece programas académicos innovadores y oportunidades de investigación en un entorno inspirador.",
+      name: "Universidad del Teide",
+      description:
+        "Una universidad que ofrece programas académicos innovadores y oportunidades de investigación en un entorno inspirador.",
       img: "./src/assets/imgCarousel/img7.jpg",
     },
   ];
@@ -59,13 +64,15 @@ function CarrouselComponent() {
 
   function Item(props) {
     return (
-      <Paper className="container-carousel">
-        <h2>{props.item.name}</h2>
-        <p>{props.item.description}</p>
-        <div className="container-image">
-          <img className="image" src={props.item.img} alt="img" />
-        </div>
-      </Paper>
+      <div className="container-background">
+        <Paper className="container-carousel">
+          <h2>{props.item.name}</h2>
+          <p>{props.item.description}</p>
+          <div className="container-image">
+            <img className="image" src={props.item.img} alt="img" />
+          </div>
+        </Paper>
+      </div>
     );
   }
 }
