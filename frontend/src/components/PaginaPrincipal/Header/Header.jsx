@@ -13,7 +13,7 @@ function Header() {
       </div>
 
       <div className="tituloEncabezado">
-        <h2>Bien Veniedos a Reserv Room</h2>
+        {/* <h2>Bien Veniedos a Reserv Room</h2> */}
       </div>
 
       <ButtonGroup
