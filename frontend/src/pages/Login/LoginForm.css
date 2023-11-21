@@ -1,0 +1,12 @@
+.link{
+    color: white;
+}
+
+.link:link{
+    color: lawngreen;
+    font-weight: bold;
+}
+
+.link:visited{
+    color: white;
+}
