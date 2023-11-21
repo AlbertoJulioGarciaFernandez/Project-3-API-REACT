@@ -1,12 +1,10 @@
-import Logo from "../../components/Logo/Logo";
+import "./LoginForm.css";
 import LoginForm from "./LoginForm";
 
 function Login() {
   return (
     <div>
-      <Logo/>
-      <LoginForm/>
-      
+      <LoginForm />
     </div>
   );
 }
