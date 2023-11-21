@@ -1,15 +1,20 @@
-
-.image-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-}
-.imagen{
-  width: 900px;
-  height: 300px;
-}
-
 .container-carousel{
-  width: 35%;
+  display: inline;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: bisque;
+  width: 100vw; /* Ajusta esto según tus necesidades */
+  overflow: hidden; /* Para asegurarte de que las imágenes no sobresalgan del contenedor */
+}
+
+.container-image {
+
+}
+
+.image{
+  width: 30vw;
+  height: 30vh;
+  display: block;
+  margin: 0 auto;
 }
