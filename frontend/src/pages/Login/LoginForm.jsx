@@ -106,8 +106,8 @@ function LoginForm() {
             placeholder="user@email.com"
             InputProps={{
               startAdornment: (
-                <InputAdornment>
-                  <Icon sx={{ marginTop: 2 }}>
+                <InputAdornment position="start" sx={{ marginTop: 2 }}>
+                  <Icon >
                     <Email />
                   </Icon>
                 </InputAdornment>
@@ -127,14 +127,14 @@ function LoginForm() {
             fullWidth={true}
             InputProps={{
               startAdornment: (
-                <InputAdornment>
-                  <Icon sx={{ marginTop: 2 }}>
+                <InputAdornment position="start" sx={{ marginTop: 2 }}>
+                  <Icon >
                     <Lock />
                   </Icon>
                 </InputAdornment>
               ),
               endAdornment: (
-                <InputAdornment>
+                <InputAdornment position="end">
                   <IconButton onClick={() => setIsVisible(!isVisible)}>
                     {isVisible ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
