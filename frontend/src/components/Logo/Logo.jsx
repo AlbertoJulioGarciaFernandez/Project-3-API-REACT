@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import logo from "../../assets/rvr-logo.png";
 import { Link } from "react-router-dom";
-import './Logo.css';
+import './logo.css';
 
 function Logo() {
   return (
