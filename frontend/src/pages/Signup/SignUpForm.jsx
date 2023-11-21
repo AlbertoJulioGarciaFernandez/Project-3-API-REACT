@@ -188,10 +188,11 @@ function SignUpForm() {
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button
             onClick={handleClick}
-            size="medium"
+            size="large"
             variant="contained"
+            sx={{ backgroundColor: 'black' }}
           >
-            Login
+            Acceder
           </Button>
         </CardActions>
         <CardContent>
