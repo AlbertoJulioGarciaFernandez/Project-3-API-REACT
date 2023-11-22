@@ -8,5 +8,6 @@ export const getListUsers = async () => {
         }
        
     })
+ /*    console.log(data) */
     return data // trae todos los datos de los usuarios
 }

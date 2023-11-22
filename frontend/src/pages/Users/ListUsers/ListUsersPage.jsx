@@ -9,17 +9,19 @@ function ListUsersPage() {
 
   async function getUsers(){
     const data = await getListUsers()
-    setUSer(data)
-    console.log(data)
-  }
+    setUSer(data.users)
+  
+ }
 
   useEffect(() => {
     getUsers();
   }, [])
+/*   console.log(user) */
+
 
   return (
     <>
-      <ListUsersComponent listaUsuarios={user}/>
+      {user.length === 0 ? <h1>Hole</h1> : <ListUsersComponent users={user}/>}
     </>
     
   )
