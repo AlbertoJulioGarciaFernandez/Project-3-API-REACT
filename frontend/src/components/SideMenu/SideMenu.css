@@ -1,0 +1,19 @@
+.menuDashboard{
+    background-color: #DEE7FF;
+    border: 1px solid rgb(212, 212, 212);
+    
+}
+
+.linkMenu{
+    color:black ;
+    text-decoration:none;
+}
+
+.btnMenu{
+ margin: 20px;
+ padding: 20px;
+}
+
+.listItem{
+    height: 35px;
+}

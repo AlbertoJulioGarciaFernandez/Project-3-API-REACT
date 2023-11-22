@@ -1,15 +1,18 @@
-import { Outlet } from 'react-router-dom'
-import Header from '../components/PaginaPrincipal/Header/Header'
-import SideMenu from '../components/SideMenu/SideMenu'
+import { Outlet } from "react-router-dom";
+import SideMenu from "../components/SideMenu/SideMenu";
+import HeaderDashboard from "../components/HeaderDashboard/HeaderDashboard";
+import "./index.css";
 
 function Root() {
   return (
-    <>
-      <Header />
-      <SideMenu />
-      <Outlet />
-    </>
-  )
+    <div className="bodyDashboard">
+      <div className="headerDashboard"><HeaderDashboard /></div>
+      <div className="cuerpo">
+        <div className="menuDashboard"><SideMenu /></div>
+        <div className="contenidoDashboard"><Outlet /></div>
+      </div>
+    </div>
+  );
 }
 
-export default Root
+export default Root;
