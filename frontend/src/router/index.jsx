@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <root/>,
+    element: <Dashboard />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/")  //If the user isn't logged in, we redirect to the login page.

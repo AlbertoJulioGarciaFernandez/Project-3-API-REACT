@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom'
+import Header from '../components/PaginaPrincipal/Header/Header'
+import SideMenu from '../components/SideMenu/SideMenu'
 
 function Root() {
   return (
     <>
-    <div>I am the Header</div>
-    <Outlet/>
-    <div>I am the Footer</div>
+      <Header />
+      <SideMenu />
+      <Outlet />
     </>
   )
 }

@@ -60,7 +60,7 @@ function LoginForm() {
         const loginResponse = await login({ email, password });
         localStorage.setItem("token", loginResponse.data.token);
         localStorage.setItem("role", loginResponse.data.role);
-        navigate("/home");
+        navigate("/dashboard");
       }
     } catch (error) {
       //Handle the error
@@ -167,7 +167,7 @@ function LoginForm() {
           </Typography>
         </CardContent>
         {error && (
-          <Alert severity="error">El usuario indicado no esta registrado</Alert>
+          <Alert severity="error">Error. +Info: El usuario y/o la contraseña introducida no son correctos.</Alert>
         )}
       </Card>
       <Box

@@ -2,5 +2,5 @@ body{
     display: flex;
     margin: 0 auto;
     padding: 0;
-    background-image: url("./assets/portada.jpg");
+    /* background-image: url("./assets/portada.jpg"); */
 }
