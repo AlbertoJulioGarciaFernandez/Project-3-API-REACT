@@ -5,24 +5,38 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import logoHeader from "../../assets/rvr.png";
 import "./HeaderDashboard.css";
+import { useEffect } from "react";
+import { getMyProfile } from '../../services/user';
+import { useState } from "react";
 
-
-const settings = ["Perfil", "Cerrar Sesion"];
 
 function HeaderDashboard() {
 
+  const settings = ["Perfil", "Cerrar Sesion"];
+
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    getMyUserProfile();
+  }, []);
+
+  async function getMyUserProfile() {
+    // API request which will retrieve the user profile:
+
+    const response = await getMyProfile();
+    console.log('entra')
+
+    setUserName(response);
+  }
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
- 
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -38,7 +52,7 @@ function HeaderDashboard() {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"  />
+              <Avatar alt={userName} src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Tooltip>
           <Menu
