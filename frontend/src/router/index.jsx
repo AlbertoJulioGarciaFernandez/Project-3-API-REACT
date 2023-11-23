@@ -4,7 +4,7 @@ import Root from "../layouts";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/Signup/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import ListBookings from "../pages/ListBookings/ListBookings";
+import ListBookings from "../pages/Booking/ListBookings/ListBookings";
 
 export const router = createBrowserRouter([
   {
@@ -37,7 +37,7 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/listbookings',
         element: <ListBookings/>
-      },
+      }
     ],
   },
 ]);

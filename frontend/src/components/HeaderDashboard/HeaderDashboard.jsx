@@ -25,7 +25,7 @@ function HeaderDashboard() {
 const navigate = useNavigate()
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const settings = [{name:"Perfil", onclick:"funcion"},{name:"Cerrar Sesion", onclick:onLogout} ];
+  const settings = [{name:"Perfil", key:"1"},{name:"Cerrar Sesion",key:"2", onclick:onLogout} ];
   
   function onLogout() {
     localStorage.removeItem('token')
@@ -50,7 +50,7 @@ const navigate = useNavigate()
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"  />
+              <Avatar alt="Remy Sharp" src="."  />
             </IconButton>
           </Tooltip>
           <Menu
@@ -70,7 +70,7 @@ const navigate = useNavigate()
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={setting.onclick}>
+              <MenuItem key={setting.key} onClick={setting.onclick}>
                 <Typography textAlign="center">{setting.name}</Typography>
               </MenuItem>
             ))}
