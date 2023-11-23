@@ -10,12 +10,19 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logoHeader from "../../assets/rvr.png";
 import "./HeaderDashboard.css";
+import { useNavigate } from 'react-router-dom'
+
+
 import { useEffect } from "react";
 import { getMyProfile } from '../../services/user';
 import { useState } from "react";
 
 
+const settings = ["Perfil", "Cerrar Sesion"];
+
 function HeaderDashboard() {
+
+const navigate = useNavigate()
 
   const settings = ["Perfil", "Cerrar Sesion"];
 
@@ -34,8 +41,14 @@ function HeaderDashboard() {
   }
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-
+  const settings = [{name:"Perfil", onclick:"funcion"},{name:"Cerrar Sesion", onclick:onLogout} ];
+  
+  function onLogout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    navigate('/')
+  }
+ 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -43,6 +56,8 @@ function HeaderDashboard() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  
 
   return (
     <AppBar position="static" >
@@ -75,8 +90,8 @@ function HeaderDashboard() {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
+              <MenuItem key={setting} onClick={setting.onclick}>
+                <Typography textAlign="center">{setting.name}</Typography>
               </MenuItem>
             ))}
           </Menu>
