@@ -28,10 +28,9 @@ function HeaderDashboard() {
   async function getMyUserProfile() {
     // API request which will retrieve the user profile:
 
-    const response = await getMyProfile();
-    console.log('entra')
+    const data = await getMyProfile();
 
-    setUserName(response);
+    setUserName(data.firstName);
   }
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -52,6 +51,10 @@ function HeaderDashboard() {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              {/* The initial of the given name (stored in userName) will be shown inside 
+              the profile circle located at the top right corner of the screen.
+              To make this possible, we have to provide the user name to the «alt» attribute 
+              of the Avatar component, as it is shown below:   */}
               <Avatar alt={userName} src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Tooltip>
