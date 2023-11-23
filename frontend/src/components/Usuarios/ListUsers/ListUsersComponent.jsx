@@ -29,11 +29,11 @@ function ListUsersComponent(props) {
     paper: {
       width: '100%',
       overflow: 'hidden',
-      backgroundColor: 'yellow',
+      backgroundColor: '#cad5f3',
     },
     tableContainer: {
       maxHeight: 440,
-      backgroundColor: '#5DADE2',
+      backgroundColor: '#DEE7FF',
     },
     tableCell: {
       fontWeight: 'bold',

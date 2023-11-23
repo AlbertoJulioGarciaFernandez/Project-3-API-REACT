@@ -9,6 +9,7 @@ import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
 import AddEquipment from "../pages/Equipment/AddEquipment/AddEquipment";
 import UpdateEquipment from "../pages/Equipment/UpdateEquipment/UpdateEquipment";
 import DeleteEquipment from "../pages/Equipment/DeleteEquipment/DeleteEquipment";
+import CreateUser from "../pages/Users/CreateUser/CreateUser";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/listusers',
         element: <ListUsersPage/>
+      },
+      {
+        path: '/dashboard/createUser',
+        element: <CreateUser/>
       },
     ],
   },
