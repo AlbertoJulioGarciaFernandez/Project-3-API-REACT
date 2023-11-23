@@ -11,22 +11,16 @@ import MenuItem from "@mui/material/MenuItem";
 import logoHeader from "../../assets/rvr.png";
 import "./HeaderDashboard.css";
 import { useNavigate } from 'react-router-dom'
-
-
 import { useEffect } from "react";
 import { getMyProfile } from '../../services/user';
 import { useState } from "react";
 
-
-const settings = ["Perfil", "Cerrar Sesion"];
-
 function HeaderDashboard() {
 
-const navigate = useNavigate()
-
-  const settings = ["Perfil", "Cerrar Sesion"];
-
+  const navigate = useNavigate();
   const [userName, setUserName] = useState();
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const settings = [{ name: "Perfil", onclick: "funcion" }, { name: "Cerrar Sesion", onclick: onLogout }];
 
   useEffect(() => {
     getMyUserProfile();
@@ -34,21 +28,17 @@ const navigate = useNavigate()
 
   async function getMyUserProfile() {
     // API request which will retrieve the user profile:
-
     const data = await getMyProfile();
 
     setUserName(data.firstName);
   }
 
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const settings = [{name:"Perfil", onclick:"funcion"},{name:"Cerrar Sesion", onclick:onLogout} ];
-  
   function onLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     navigate('/')
   }
- 
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -56,8 +46,6 @@ const navigate = useNavigate()
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  
 
   return (
     <AppBar position="static" >
