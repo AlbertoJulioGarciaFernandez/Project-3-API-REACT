@@ -6,6 +6,7 @@ import SignUp from "../pages/Signup/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ListBookings from "../pages/ListBookings/ListBookings";
 import ListUsersPage from "../pages/Users/ListUsers/ListUsersPage";
+import TableComponent from "../pages/TableComponent/TableComponent";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/listusers',
         element: <ListUsersPage/>
+      },
+      {
+        path: '/dashboard/table',
+        element: <TableComponent/>
       },
     ],
   },

@@ -6,22 +6,22 @@ function ListUsersPage() {
 
   const [user, setUSer] = useState([])
   
-
   async function getUsers(){
     const data = await getListUsers()
-    setUSer(data.users)
+    setUSer(data.users)//data.users accede a users que es el array de usuarios y lo almacena en user(singular) variable de estado
+    
   
  }
 
   useEffect(() => {
     getUsers();
   }, [])
-/*   console.log(user) */
 
+/*   console.log(user) */
 
   return (
     <>
-      {user.length === 0 ? <h1>Hole</h1> : <ListUsersComponent users={user}/>}
+<ListUsersComponent users={user}/>
     </>
     
   )

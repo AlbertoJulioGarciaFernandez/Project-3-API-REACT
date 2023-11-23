@@ -1,3 +1,5 @@
+/* componente TableComponent: */
+
 import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,10 +10,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-function ListUsersComponent(props) {
+function TableComponent({ data }) {
     
   //const dataColumns = Object.keys(data[0]); crea los campos que tendrá la cabecera dinamicamente
-  const dataColumns = ["Id","Nombre", "Apellido", "Direccion", "Email", "Rol"] // crea los campos que tendrá la cabecera manualmente
+  const dataColumns = ["Id","Nombre", "Apellido", "Direccion", "Email", "Rol"]
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -24,8 +26,6 @@ function ListUsersComponent(props) {
     setPage(0);
   };
 
-  
-  
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -38,17 +38,17 @@ function ListUsersComponent(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.users
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)//muestra que las paginas se vean de 10 en 10 o de 25 en 25  segun lo queramos en el select, partiendo de que la primera pagina empieza en 1 y termina en 9 y la segunda pagina empieza en 10 y termina en 19
-              .map((user) => {
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
-                    <TableCell >{user.id}</TableCell>
-                    <TableCell >{user.firstName}</TableCell>
-                    <TableCell >{user.lastName}</TableCell>
-                    <TableCell >{user.address}</TableCell>
-                    <TableCell >{user.email}</TableCell>
-                    <TableCell >{user.role}</TableCell>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    <TableCell >{row.id}</TableCell>
+                    <TableCell >{row.name}</TableCell>
+                    <TableCell >{row.surname}</TableCell>
+                    <TableCell >{row.age}</TableCell>
+                    <TableCell >{row.email}</TableCell>
+                    <TableCell >{row.rol}</TableCell>
                   </TableRow>
                 );
               })}
@@ -58,7 +58,7 @@ function ListUsersComponent(props) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={props.users.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -68,4 +68,4 @@ function ListUsersComponent(props) {
   );
 }
 
-export default ListUsersComponent;
+export default TableComponent;
