@@ -24,15 +24,33 @@ function ListUsersComponent(props) {
     setPage(0);
   };
 
+
+  const styles = {
+    paper: {
+      width: '100%',
+      overflow: 'hidden',
+      backgroundColor: 'yellow',
+    },
+    tableContainer: {
+      maxHeight: 440,
+      backgroundColor: '#5DADE2',
+    },
+    tableCell: {
+      fontWeight: 'bold',
+      backgroundColor: '#4E7FFF',
+    },
+  };
   
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+    <Paper sx={styles.paper}>
+      <TableContainer sx={styles.tableContainer}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {dataColumns.map((column) => (
-                <TableCell key={column}>{column}</TableCell>
+                {dataColumns.map((column) => (
+                <TableCell key={column} sx={styles.tableCell}>
+                  {column}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
