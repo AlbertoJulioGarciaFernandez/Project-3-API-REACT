@@ -73,7 +73,7 @@ function ListUsersComponent(props) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[2, 10, 25]}
         component="div"
         count={props.users.length}
         rowsPerPage={rowsPerPage}

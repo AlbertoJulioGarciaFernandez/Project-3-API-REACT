@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import ListUsersComponent from "../../../components/Usuarios/ListUsers/ListUsersComponent"
+import ListUsersComponent from "../../../components/Users/ListUsers/ListUsersComponent"
 import { getListUsers } from "../../../services/Users"
 
 function ListUsersPage() {

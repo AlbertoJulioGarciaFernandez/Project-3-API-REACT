@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import CreateUserComponent from '../../../components/Usuarios/CreateUser/CreateUserComponent'
+/* import React from 'react'
+import PropTypes from 'prop-types' */
+import CreateUserComponent from '../../../components/Users/CreateUser/CreateUserComponent'
 
 function CreateUserPage(props) {
   return (

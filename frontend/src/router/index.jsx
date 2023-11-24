@@ -9,7 +9,7 @@ import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
 import AddEquipment from "../pages/Equipment/AddEquipment/AddEquipment";
 import UpdateEquipment from "../pages/Equipment/UpdateEquipment/UpdateEquipment";
 import DeleteEquipment from "../pages/Equipment/DeleteEquipment/DeleteEquipment";
-import CreateUser from "../pages/Users/CreateUser/CreateUser";
+import CreateUserPage from "../pages/Users/CreateUser/CreateUserPage";
 
 export const router = createBrowserRouter([
   {
@@ -60,12 +60,12 @@ export const router = createBrowserRouter([
         element: <DeleteEquipment />
       },
       {
-        path: '/dashboard/listusers',
+        path: '/dashboard/listUsers',
         element: <ListUsersPage/>
       },
       {
         path: '/dashboard/createUser',
-        element: <CreateUser/>
+        element: <CreateUserPage/>
       },
     ],
   },
