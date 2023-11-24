@@ -1,103 +1,96 @@
-/* import React from 'react' */
-import './CreateUserComponent.css'
+import React from "react";
+import "./CreateUserComponent.css";
 
-/* import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
-
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        Word of the Day
-      </Typography>
-      <Typography variant="h5" component="div">
-        be{bull}nev{bull}o{bull}lent
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        adjective
-      </Typography>
-      <Typography variant="body2">
-        well meaning and kindly.
-        <br />
-        {'"a benevolent smile"'}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Learn More</Button>
-    </CardActions>
-  </React.Fragment>
-); */
+import Box from "@mui/material/Box";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { TextField } from "@mui/material";
 
 
-function CreateUserComponent() {
-  return (
-    <div>Mostrando datos Usuario creado</div>
-    
-  )
+const styles = {
+  texField: {
+    marginBottom: '20px'
+  }
 }
 
-export default CreateUserComponent
+function CreateUserComponent() {
+  const card = (
+    <div className="containerFragment">
+      <React.Fragment>
 
+        <Typography gutterBottom variant="h4" component="form">
+          Alta de Usuario
+        </Typography>
 
-/* import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+        <CardContent className="formContainer">
+          
+          <TextField className="textField"  
+            sx={ styles.texField }
+            component="form"
+            required
+            id="outlined-required"
+            label="Nombre"
+            placeholder="Nombre"
+          />
+          <br />
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+          <TextField className="textField"  
+            sx={ styles.texField }
+            component="form"
+            required
+            id="outlined-required"
+            label="Apellidos"
+            placeholder="Apellidos"
+          />
+          <br />
 
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        Word of the Day
-      </Typography>
-      <Typography variant="h5" component="div">
-        be{bull}nev{bull}o{bull}lent
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        adjective
-      </Typography>
-      <Typography variant="body2">
-        well meaning and kindly.
-        <br />
-        {'"a benevolent smile"'}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Learn More</Button>
-    </CardActions>
-  </React.Fragment>
-);
+          <TextField className="textField"
+           sx={ styles.texField }
+            component="form"
+            required
+            id="outlined-required"
+            label="Direccion"
+            placeholder="Direccion"
+          />
+          <br />
 
-export default function OutlinedCard() {
-  return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">{card}</Card>
-    </Box>
+          <TextField className="textField"
+           sx={ styles.texField }
+            component="form"
+            required
+            id="outlined-required"
+            label="Email"
+            placeholder="Email"
+          />
+          <br />
+
+          <TextField className="textField"
+           sx={ styles.texField }
+            id="outlined-password-input"
+            label="Password"
+            type="Contraseña"
+            placeholder="Contraseña"
+            autoComplete="current-password"
+          />
+        </CardContent>
+        <CardActions>
+          <Button variant="contained" color="success">
+            Enviar
+          </Button>
+        </CardActions>
+      </React.Fragment>
+    </div>
   );
-} */
+
+  return (
+    <>
+      <Box sx={{ minWidth: 275 }}>
+        <div>{card}</div>
+      </Box>
+    </>
+  );
+}
+
+export default CreateUserComponent;
