@@ -14,7 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { addBooking } from "../../../../services/booking";
+import { UpdateMyBooking } from "../../../../services/booking";
 
 
 function UpdateBookingCard(props) {
@@ -34,7 +34,7 @@ function UpdateBookingCard(props) {
 
   async function addMyBooking() {
     try {
-      const addMyBookingResponse = await addBooking({bookingDate:bookingDate, bookingTime:bookingTime, classroomId:classroomId, bookingId:bookingId})
+      const addMyBookingResponse = await UpdateMyBooking({bookingDate:bookingDate, bookingTime:bookingTime, classroomId:classroomId, bookingId:bookingId})
       setMensaje(addMyBookingResponse.data.message)
     
       
@@ -153,7 +153,7 @@ function UpdateBookingCard(props) {
           >
             {props.classroom.filter((booking)=>booking.aimedAt===role).map((classroom) => (
               <MenuItem key={classroom.id} value={classroom.id}>
-                {classroom.classroomName}
+                {classroom.id}
               </MenuItem> 
             ))}
           </Select>
