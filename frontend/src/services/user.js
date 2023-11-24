@@ -8,3 +8,17 @@ export async function getMyProfile() {
   });
   return data;
 }
+export const getListUsers = async () => {
+  const { data } = await api.post("/user", {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+
+  return data; // trae todos los datos de los usuarios
+};
+
+export async function createUser(user) {
+  const response = await api.post("/user", user);
+  return response;
+}

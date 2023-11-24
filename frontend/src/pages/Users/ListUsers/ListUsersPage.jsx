@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import ListUsersComponent from "../../../components/Users/ListUsers/ListUsersComponent"
-import { getListUsers } from "../../../services/Users"
+import { getListUsers } from "../../../services/user"
 
 function ListUsersPage() {
 
@@ -17,7 +17,7 @@ function ListUsersPage() {
     getUsers();
   }, [])
 
-/*   console.log(user) */
+  console.log(user)
 
   return (
     <>

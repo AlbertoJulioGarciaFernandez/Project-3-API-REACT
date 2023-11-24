@@ -21,8 +21,8 @@ import Logo from "../../components/Logo/Logo";
 import sideImg from "../../assets/loginSignupImg.jpg";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("alberto@gmail.com");
+  const [password, setPassword] = useState("1234567a");
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState(false);
