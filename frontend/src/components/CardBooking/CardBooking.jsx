@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import "./CardBooking.css";
-import img from "../../../../assets/portada.jpg";
+import img from "../../assets/portada.jpg";
 
 function CardBooking(props) {
   return (

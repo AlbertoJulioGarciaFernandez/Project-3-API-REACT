@@ -5,6 +5,9 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/Signup/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ListBookings from "../pages/Booking/ListBookings/ListBookings";
+import ListMyBookings from "../pages/Booking/ListMyBookings/ListMyBookings";
+import AddBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
+import UpdateMyBooking from "../pages/Booking/UpdateMyBooking copy/UpdateMyBooking";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +40,19 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/listbookings',
         element: <ListBookings/>
+      },
+      {
+        path: '/dashboard/listmybookings',
+        element: <ListMyBookings/>
+      },
+      {
+        path: '/dashboard/addmybooking',
+        element: <AddBooking/>
+      }
+      ,
+      {
+        path: '/dashboard/updatemybooking',
+        element: <UpdateMyBooking/>
       }
     ],
   },

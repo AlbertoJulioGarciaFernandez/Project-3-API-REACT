@@ -1,23 +1,23 @@
-import './ListBookings.css';
+import './ListMyBookings.css';
 import { useState, useEffect } from 'react'
 import CardBooking from '../../../components/CardBooking/CardBooking';
-import { getAllBookings } from '../../../services/booking';
+import { getMyBookings } from '../../../services/booking';
 
 function ListBookings() {
 
   const [bookings, setBookings] = useState([])
 
   useEffect(() => {
-    getBoookings()
+    getMyBoookings()
   },[])
 
-  async function getBoookings() {
-    const data = await getAllBookings()
-    setBookings(data);
-    console.log(data)
+  async function getMyBoookings() {
+    const data = await getMyBookings()
+    setBookings(data.bookings);
+    
      
   }
-
+  console.log(bookings)
   const bookingsList = bookings.map((booking) => {
     return <CardBooking bookingsArray={booking}/>
   })
