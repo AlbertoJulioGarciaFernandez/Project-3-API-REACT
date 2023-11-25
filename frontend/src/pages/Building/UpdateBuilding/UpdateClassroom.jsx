@@ -12,27 +12,14 @@ function UpdateEquipment() {
 
   async function getEquipmentAvailable() {
     // API request with which we will get the list of pieces of equipment available:
-    const data = await getAllEquipment(),
-      // Storing into «result» all the id codes belonging to the pieces of equipment 
-      // we have already retrieved from the database:
-      result = data.map((item) => item.id);
+    const data = await getAllEquipment();
 
-    // With the spread operator, we will make up an array according to our needs (in
-    // this case, it will contain the string 'Despliegue para seleccionar' as well as
-    // the content of «result», which is another array containing the id codes retrieved
-    // previously).
-    // setSelectArr([...selectArr, result.map(id => console.log(id))]);
-    result.map(id => selectArr.push(id))
-    setEquipmentId(result[0]);
-    setSelectEquipmentId(equipmentId)
     // Storing the different pieces of equipment:
     setEquipment(data);
   }
 
   const [equipment, setEquipment] = useState([]),
-    [equipmentId, setEquipmentId] = useState(),
-    [selectArr, setSelectArr] = useState(['Despliegue para seleccionar']),
-    [selectEquipmentId, setSelectEquipmentId] = useState(),
+    [equipmentId, setEquipmentId] = useState(''),
     [equipmentIdMsg, setEquipmentIdMsg] = useState(''),
     [equipmentName, setEquipmentName] = useState(''),
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
@@ -51,15 +38,14 @@ function UpdateEquipment() {
       setEquipmentDescription(e.target.value);
     },
     handleSelectChange = (e) => {
-      setSelectEquipmentId(e.target.value.toString());
+      setEquipmentId(e.target.value.toString());
     },
     handleClick = async (e) => {
       e.preventDefault();
 
-      if (equipmentId === 'Despliegue para seleccionar') {
+      if (equipmentId === '') {
         setEquipmentIdMsg('Error. +Info: Por favor, despliegue el menú «Código del equipamiento» y seleccione un valor.');
       } else {
-        setSelectEquipmentId(equipmentId);
         setEquipmentIdMsg('');
 
         if (equipmentName === '') {
@@ -80,55 +66,40 @@ function UpdateEquipment() {
     }
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{
+      alignItems: 'center',
+      display: 'flex',
+      height: '80vh',
+      justifyContent: 'center',
+    }}>
       <Card
         raised={true}
-        // component={'form'}
-        sx={{  height: '50vh', width: '50vw' }}
+        component={'form'}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
       >
-        <CardHeader title="Actualización de equipamiento" sx={{ color: 'white', textAlign: 'center' }}></CardHeader>
-        <CardContent>
-          <InputLabel style={{ backgroundColor: 'white', color: 'black', fontWeight: 'bolder', fontSize: 20, width: 250 }} id="simple-select-equipment-id-label">Código del equipamiento</InputLabel>
+        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de equipamiento"></CardHeader>
+        
+        <FormControl size='large' sx={{ marginLeft: 2, marginBottom: -1, width: 300 }}>
+          <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
           <Select
-            title='Por favor, seleccione el código del equipamiento que desea actualizar'
+            title='Por favor, despliegue y seleccione el código del equipamiento que desea actualizar'
             labelId="simple-select-equipment-id-label"
             id="simple-select"
-            value={selectEquipmentId}
+            value={equipmentId}
             label="Código equipamiento"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
-            {/*  {equipment.map(pieceOfEquipment => {
-              selectArr.push(pieceOfEquipment.id.toString());
-            })}
-            {selectArr.unshift('Despliegue para seleccionar')}
-            {console.log(selectArr)} */}
-
-            {selectArr.map((opt, i) => {
-              return <MenuItem key={i} value={opt}>{opt}</MenuItem>
+            {equipment.map(pieceOfEquipment => {
+              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id}</MenuItem>
             })}
           </Select>
-
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+        </FormControl>
 
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={equipment}
-              label="Age"
-              onChange={handleSelectChange}
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-
-
+        <CardContent>
           <TextField
             className="textfield"
             onChange={handleNameChange}
@@ -172,7 +143,7 @@ function UpdateEquipment() {
         {equipmentRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {equipmentRegistered && <Dialog
-          style={{ position: 'absolute', left: 500, top: 200 }}
+          style={{ position: 'absolute', left: 500, top: 100 }}
           open={equipmentRegistered}
           onClose={handleNavigate}
           aria-labelledby="alert-dialog-title"
@@ -191,9 +162,8 @@ function UpdateEquipment() {
           </DialogActions>
         </Dialog>}
       </Card>
-
     </Box>
-  )
+  );
 }
 
 export default UpdateEquipment

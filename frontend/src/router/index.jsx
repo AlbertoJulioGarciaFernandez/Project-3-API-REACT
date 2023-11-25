@@ -8,6 +8,11 @@ import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
 import AddEquipment from "../pages/Equipment/AddEquipment/AddEquipment";
 import UpdateEquipment from "../pages/Equipment/UpdateEquipment/UpdateEquipment";
 import DeleteEquipment from "../pages/Equipment/DeleteEquipment/DeleteEquipment";
+import ListClassrooms from "../pages/Classroom/ListClassrooms/ListClassrooms";
+import AddClassroom from "../pages/Classroom/AddClassroom/AddClassroom";
+import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom";
+import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
+import NotFound from '../pages/NotFound/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -22,13 +27,10 @@ export const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-
-  // ADD ELEMENT NOT FOUND
-
-
   {
     path: "/dashboard",
     element: <Root />,
+    errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/")  //If the user isn't logged in, we redirect to the login page.
@@ -56,6 +58,22 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/deleteEquipment',
         element: <DeleteEquipment />
+      },
+      {
+        path: '/dashboard/listClassrooms',
+        element: <ListClassrooms />
+      },
+      {
+        path: '/dashboard/addClassroom',
+        element: <AddClassroom />
+      },
+      {
+        path: '/dashboard/updateClassroom',
+        element: <UpdateClassroom />
+      },
+      {
+        path: '/dashboard/deleteClassroom',
+        element: <DeleteClassroom />
       },
     ],
   },
