@@ -13,6 +13,7 @@ import AddClassroom from "../pages/Classroom/AddClassroom/AddClassroom";
 import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom";
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from '../pages/NotFound/NotFound';
+import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,22 @@ export const router = createBrowserRouter([
         path: '/dashboard/deleteClassroom',
         element: <DeleteClassroom />
       },
+      {
+        path: '/dashboard/listBuildings',
+        element: <ListBuildings />
+      },
+      // {
+      //   path: '/dashboard/addBuilding',
+      //   element: <AddBuilding />
+      // },
+      // {
+      //   path: '/dashboard/updateBuilding',
+      //   element: <UpdateBuilding />
+      // },
+      // {
+      //   path: '/dashboard/deleteBuilding',
+      //   element: <DeleteBuilding />
+      // },
     ],
   },
 ]);

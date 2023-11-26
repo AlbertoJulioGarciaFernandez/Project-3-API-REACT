@@ -54,10 +54,10 @@ function SideMenu() {
   ];
 
   const menuItemsEdificio = [
-    { icon: <ListIcon />, text: 'Ver Edificios', link: '/dashboard/listbookings', index: 17 },
-    { icon: <AddIcon />, text: 'Crear Edificio', link: '/dashboard/listbookings', index: 18 },
-    { icon: <ChangeCircleIcon />, text: 'Modificar Edificio', link: '/dashboard/listbookings', index: 19 },
-    { icon: <DeleteIcon />, text: 'Eliminar Edificio', link: '/dashboard/listbookings', index: 20 },
+    { icon: <ListIcon />, text: 'Ver Edificios', link: '/dashboard/listBuildings', index: 17 },
+    { icon: <AddIcon />, text: 'Crear Edificio', link: '/dashboard/addBuilding', index: 18 },
+    { icon: <ChangeCircleIcon />, text: 'Modificar Edificio', link: '/dashboard/updateBuilding', index: 19 },
+    { icon: <DeleteIcon />, text: 'Eliminar Edificio', link: '/dashboard/deleteBuilding', index: 20 },
   ];
 
   return (
