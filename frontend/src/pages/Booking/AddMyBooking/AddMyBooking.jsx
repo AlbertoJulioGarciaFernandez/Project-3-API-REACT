@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import AddMyBookingCard from './AddBookingCard/AddMyBookingCard';
-import { getAllClassroom } from '../../../services/classroom';
+import AddMyBookingCard from './AddMyBookingCard/AddMyBookingCard';
+import { getAllClassrooms } from '../../../services/classroom';
 import "./AddMyBooking.css";
 
-function AddBooking() {
+function AddMyBooking() {
     const [classrooms, setClassrooms] = useState([])
 
   useEffect(() => {
@@ -11,7 +11,7 @@ function AddBooking() {
   },[])
 
   async function getClassroom() {
-    const dataClassroom = await getAllClassroom()
+    const dataClassroom = await getAllClassrooms()
     setClassrooms(dataClassroom)
     
      
@@ -25,4 +25,4 @@ function AddBooking() {
   )
 }
 
-export default AddBooking
+export default AddMyBooking

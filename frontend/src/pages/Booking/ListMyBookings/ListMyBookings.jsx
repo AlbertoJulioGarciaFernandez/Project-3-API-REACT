@@ -1,58 +1,45 @@
-import './ListMyBookings.css';
-import { useState, useEffect } from 'react'
-import CardBooking from '../../../components/CardBooking/CardBooking';
-import { getMyBookings } from '../../../services/booking';
-import { getAllClassroom } from '../../../services/classroom';
+import "./ListMyBookings.css";
+import { useState, useEffect } from "react";
+import CardBooking from "../../../components/CardBooking/CardBooking";
+import { getMyBookings } from "../../../services/booking";
+import { getAllClassrooms } from "../../../services/classroom";
 
 function ListBookings() {
-
-  const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    getMyBoookings()
-  },[])
+    getMyBoookings();
+  }, []);
 
   async function getMyBoookings() {
-    const data = await getMyBookings()
-    setBookings(data.bookings);  
+    const data = await getMyBookings();
+    setBookings(data.bookings);
   }
 
-  const [classrooms, setClassrooms] = useState([])
+  const [classrooms, setClassrooms] = useState([]);
 
   useEffect(() => {
-    getClassroom()
-  },[])
+    getClassroom();
+  }, []);
 
   async function getClassroom() {
-    const dataClassroom = await getAllClassroom()
-    setClassrooms(dataClassroom)
+    const dataClassroom = await getAllClassrooms();
+    setClassrooms(dataClassroom);
   }
-  
 
+  const bookingsList = bookings
+    .map((booking) => {
+      return (
+        <CardBooking
+          key={booking.id}
+          bookingsArray={booking}
+          classroom={classrooms}
+        />
+      );
+    })
+    .reverse();
 
-
-
-  console.log(bookings)
-  const bookingsList = bookings.map((booking) => {
-    return <CardBooking key={booking.id} bookingsArray={booking} classroom={classrooms}/>
-  }).reverse()
-
-  
-
-
-
-  return (
-    <div className='cuerpoListBooking'>
-      {bookingsList}
-    </div>
-      
-    
-    
-
-
-    
-    
-  )
+  return <div className="cuerpoListBooking">{bookingsList}</div>;
 }
 
-export default ListBookings
+export default ListBookings;

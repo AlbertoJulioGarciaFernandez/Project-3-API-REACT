@@ -16,11 +16,13 @@ import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom"
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from "../pages/NotFound/NotFound";
 import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
-import ListMyBookings from "../pages/Booking/ListMyBookings/ListMyBookings";
-import AddBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
-import UpdateMyBooking from "../pages/Booking/UpdateMyBooking copy/UpdateMyBooking";
+import ListMyBookings from "../pages/Booking/ListBookings/ListBookings";
+import AddBooking from "../pages/Booking/AddBooking/AddBooking";
+import UpdateMyBooking from "../pages/Booking/UpdateMyBooking/UpdateMyBooking";
 import DeleteMyBooking from "../pages/Booking/DeleteMyBooking/DeleteMyBooking";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import AddMyBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
+import UpdateBooking from "../pages/Booking/UpdateBooking/UpdateBooking";
+
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +40,7 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Root />,
-    errorElement: <NotFound />,
+    //errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/"); //If the user isn't logged in, we redirect to the login page.
@@ -52,9 +54,22 @@ export const router = createBrowserRouter([
         element: <ListBookings />,
       },
       {
-        path: "/dashboard/deleteEquipment",
-        element: <DeleteEquipment />,
+        path: '/dashboard/listEquipment',
+        element: <ListEquipment />
       },
+      {
+        path: '/dashboard/addEquipment',
+        element: <AddEquipment />
+      },
+      {
+        path: '/dashboard/updateEquipment',
+        element: <UpdateEquipment />
+      },
+      {
+        path: '/dashboard/deleteEquipment',
+        element: <DeleteEquipment />
+      },
+    
       {
         path: "/dashboard/listUsers",
         element: <ListUsersPage />,
@@ -93,21 +108,26 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard/addmybooking',
+        element: <AddMyBooking/>
+      },
+      {
+        path: '/dashboard/addbooking',
         element: <AddBooking/>
-      }
-      ,
+      },
       {
         path: '/dashboard/updatemybooking',
         element: <UpdateMyBooking/>
       },
       {
+        path: '/dashboard/updatebooking',
+        element: <UpdateBooking/>
+      }
+      ,
+      {
         path: '/dashboard/deletemybooking',
         element: <DeleteMyBooking/>
       },
-      {
-        path: '/dashboard',
-        element: <Dashboard/>
-      },
+      
       {
         path: '/dashboard/listbookings',
         element: <ListBookings/>

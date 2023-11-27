@@ -11,6 +11,7 @@ export async function getAllBookings() {
 }
 
 export async function getMyBookings() {
+  
   const {data} = await api.get("/booking/getMyBookings", {
     headers:{
       "Authorization" : localStorage.getItem("token")
@@ -20,8 +21,20 @@ export async function getMyBookings() {
   return data;
 }
 
-export async function addBooking({bookingDate, bookingTime, classroomId}) {
+
+export async function addMyBooking({bookingDate, bookingTime, classroomId}) {
     const response = await api.post("/booking", {bookingDate, bookingTime, classroomId}
+    , {
+      headers:{
+        "Authorization" : localStorage.getItem("token")
+      },
+      
+    });
+    return response;
+  }
+
+  export async function addBooking({bookingDate, bookingTime, classroomId, userId}) {
+    const response = await api.post(`/booking/${userId}`, {bookingDate, bookingTime, classroomId}
     , {
       headers:{
         "Authorization" : localStorage.getItem("token")

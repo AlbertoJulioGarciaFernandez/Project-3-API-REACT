@@ -1,41 +1,37 @@
-import { useEffect, useState } from 'react'
-import { getAllClassroom } from '../../../services/classroom';
+import { useEffect, useState } from "react";
+import { getAllClassrooms } from "../../../services/classroom";
 import "./DeleteMyBooking.css";
-import { getMyBookings } from '../../../services/booking';
-import DeleteMyBookingCard from './DeleteMyBooking/DeleteMyBookingCard';
+import { getMyBookings } from "../../../services/booking";
+import DeleteMyBookingCard from "./DeleteMyBooking/DeleteMyBookingCard";
 
 function DeleteMyBooking() {
-    const [classrooms, setClassrooms] = useState([])
+  const [classrooms, setClassrooms] = useState([]);
 
   useEffect(() => {
-    getClassroom()
-  },[])
+    getClassroom();
+  }, []);
 
   async function getClassroom() {
-    const dataClassroom = await getAllClassroom()
-    setClassrooms(dataClassroom)
+    const dataClassroom = await getAllClassrooms();
+    setClassrooms(dataClassroom);
   }
 
-  const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    getMyBoookings()
-  },[])
+    getMyBoookings();
+  }, []);
 
   async function getMyBoookings() {
-    const data = await getMyBookings()
+    const data = await getMyBookings();
     setBookings(data.bookings);
-    
-     
   }
 
   return (
-    <div className='BodyAddMyBooking'>
-      <DeleteMyBookingCard classroom={classrooms} booking={bookings}/>
-      
+    <div className="BodyAddMyBooking">
+      <DeleteMyBookingCard classroom={classrooms} booking={bookings} />
     </div>
-    
-  )
+  );
 }
 
-export default DeleteMyBooking
+export default DeleteMyBooking;

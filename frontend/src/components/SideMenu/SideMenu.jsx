@@ -34,7 +34,7 @@ function SideMenu() {
 
   const menuItemsReserva = [
     { icon: <ListIcon />, text: 'Ver Reservas', link: role==="admin" ?'/dashboard/listbookings':'/dashboard/listmybookings' , index:1},
-    { icon: <AddIcon />, text: 'Crear Reserva', link: role==="admin" ?'/dashboard/addbookingadmin':'/dashboard/addmybooking', index:2 },
+    { icon: <AddIcon />, text: 'Crear Reserva', link: role==="admin" ?'/dashboard/addbooking':'/dashboard/addmybooking', index:2 },
     { icon: <ChangeCircleIcon />, text: 'Modificar Reserva', link:role==="admin" ?'/dashboard/updateBooking':'/dashboard/updatemybooking', index:3 },
     { icon: <DeleteIcon />, text: 'Eliminar Reserva', link:role==="admin" ?'/dashboard/deleteBooking':'/dashboard/deletemybooking', index:4 },
     // Agrega más elementos si es necesario

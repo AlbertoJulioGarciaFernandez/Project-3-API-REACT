@@ -7,7 +7,6 @@ import {
   CardHeader,
   Divider,
   FormControl,
-  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -16,50 +15,45 @@ import {
 import { useState } from "react";
 import { addBooking } from "../../../../services/booking";
 
-
-function AddBookingCard(props) {
+function AddBookingCard({user,classroom}) {
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
   const [classroomId, setClassroomId] = useState("");
+  const [userId, setUserId] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
-  
-  const role = localStorage.getItem("role")
 
-  
+  // const role = localStorage.getItem("role");
 
-
-
-
-  async function addMyBooking() {
+  async function anadirBooking() {
     try {
-      setMensaje("")
-      setError("")
-      const addMyBookingResponse = await addBooking({bookingDate:bookingDate, bookingTime:bookingTime, classroomId:classroomId})
-      setMensaje(addMyBookingResponse.data.message)
-    
-      
-     //Do something with the response
+      setMensaje("");
+      setError("");
+      const addMyBookingResponse = await addBooking({
+        bookingDate: bookingDate,
+        bookingTime: bookingTime,
+        classroomId: classroomId,
+        userId:userId
+      });
+      setMensaje(addMyBookingResponse.data.message);
     } catch (error) {
-      setError(error.response.data)
+      setError(error.response.data);
     }
   }
 
   const convertirFormatoFecha = (fechaDMY) => {
-    const partesFecha = fechaDMY.split('-'); // Divide la fecha en sus partes: día, mes, año
+    const partesFecha = fechaDMY.split("-"); // Divide la fecha en sus partes: día, mes, año
     const dia = partesFecha[0];
     const mes = partesFecha[1];
     const año = partesFecha[2];
-  
+
     // Formatea la fecha en formato año-mes-día (YYYY-MM-DD)
     const fechaYMD = `${año}/${mes}/${dia}`;
     return fechaYMD;
   };
 
- 
-
   const handleChangeAge = (event) => {
-    let fechaFormateada= convertirFormatoFecha(event.target.value)
+    let fechaFormateada = convertirFormatoFecha(event.target.value);
     setBookingDate(fechaFormateada);
   };
 
@@ -71,8 +65,9 @@ function AddBookingCard(props) {
     setClassroomId(event.target.value);
   };
 
-  
-
+  const handleChangeUser = (event) => {
+    setUserId(event.target.value);
+  };
 
   const horarios = [
     "08:00",
@@ -92,21 +87,38 @@ function AddBookingCard(props) {
   ];
 
   return (
-    <Card sx={{ width: "500px", background:"#DEE7FF"}}>
-      <CardHeader title="Crear Reserva"/>
+    <Card sx={{ width: "500px", background: "#DEE7FF" }}>
+      <CardHeader title="Crear Reserva" />
       <CardContent>
-      <TextField
-        type="date"
-        onChange={handleChangeAge}
-        slotProps={{
-          input: {
-            min: '2018-06-07T00:00',
-            max: '2018-06-14T00:00',
-            
-          },
-        }}
-      />
-        <FormControl fullWidth sx={{marginTop:"10px"}}>
+      <FormControl fullWidth sx={{ marginTop: "10px" }}>
+          <InputLabel id="demo-simple-select-label">Usuarios</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={userId}
+            label="Usuarios"
+            onChange={handleChangeUser}
+          >
+            {user
+              .map((oneUser) => (
+                <MenuItem key={oneUser.id} value={oneUser.id}>
+                  {oneUser.email}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+        <TextField
+          type="date"
+          sx={{ marginTop: "10px" }}
+          onChange={handleChangeAge}
+          slotProps={{
+            input: {
+              min: "2018-06-07T00:00",
+              max: "2018-06-14T00:00",
+            },
+          }}
+        />
+        <FormControl fullWidth sx={{ marginTop: "10px" }}>
           <InputLabel id="demo-simple-select-label">Horario</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -122,7 +134,7 @@ function AddBookingCard(props) {
             ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth sx={{marginTop:"10px"}}>
+        <FormControl fullWidth sx={{ marginTop: "10px" }}>
           <InputLabel id="demo-simple-select-label">Clase</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -131,34 +143,27 @@ function AddBookingCard(props) {
             label="Clase"
             onChange={handleChangeRoom}
           >
-            {props.classroom.filter((booking)=>booking.aimedAt===role).map((classroom) => (
-              <MenuItem key={classroom.id} value={classroom.id}>
-                {classroom.classroomName}
-              </MenuItem> 
-            ))}
+            {classroom
+              .map((room) => (
+                <MenuItem key={room.id} value={room.id}>
+                  {room.classroomName}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       </CardContent>
       <Divider />
       <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={() => addMyBooking()}>Crear Reserva</Button>
+        <Button onClick={() => anadirBooking()}>Crear Reserva</Button>
       </CardActions>
 
-      {
-  mensaje ? (
-    <Alert severity="success">{mensaje}</Alert>
-  ) : (
-    error && <Alert severity="error">{error}</Alert>
-  )
-}
-
-      
-
+      {mensaje ? (
+        <Alert severity="success">{mensaje}</Alert>
+      ) : (
+        error && <Alert severity="error">{error}</Alert>
+      )}
     </Card>
-    
   );
-
-  
 }
 
 export default AddBookingCard;

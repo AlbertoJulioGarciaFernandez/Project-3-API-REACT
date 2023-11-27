@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getAllClassroom } from '../../../services/classroom';
+import { getAllClassrooms } from '../../../services/classroom';
 import "./UpdateMyBooking.css";
-import UpdateMyBookingCard from './UpdateMyBooking/UpdateMyBookingCard';
+import UpdateMyBookingCard from './UpdateMyBookingCard/UpdateMyBookingCard';
 import { getMyBookings } from '../../../services/booking';
 
 function UpdateMyBooking() {
@@ -12,7 +12,7 @@ function UpdateMyBooking() {
   },[])
 
   async function getClassroom() {
-    const dataClassroom = await getAllClassroom()
+    const dataClassroom = await getAllClassrooms()
     setClassrooms(dataClassroom)
   }
 
