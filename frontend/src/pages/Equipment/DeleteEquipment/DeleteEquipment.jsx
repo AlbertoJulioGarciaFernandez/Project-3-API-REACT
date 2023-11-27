@@ -1,10 +1,57 @@
 import { Alert, Box, Button, Card, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { Alert, Box, Button, Card, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import './DeleteEquipment.css';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { deletePieceEquipment, getAllEquipment } from '../../../services/equipment';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deletePieceEquipment, getAllEquipment } from '../../../services/equipment';
 
 function DeleteEquipment() {
+  useEffect(() => {
+    getEquipmentAvailable();
+  }, []);
+
+  async function getEquipmentAvailable() {
+    // API request with which we will get the list of pieces of equipment available:
+    const data = await getAllEquipment();
+
+    // Storing the different pieces of equipment:
+    setEquipment(data);
+  }
+
+  const [equipment, setEquipment] = useState([]),
+    [equipmentId, setEquipmentId] = useState(''),
+    [equipmentIdMsg, setEquipmentIdMsg] = useState(''),
+    [isError, setIsError] = useState(false),
+    [equipmentDeleted, setEquipmentDeleted] = useState(false),
+    [errorMsg, setErrorMsg] = useState({}),
+    navigate = useNavigate(),
+    handleNavigate = () => {
+      navigate("/dashboard");
+    },
+    handleSelectChange = (e) => {
+      setEquipmentId(e.target.value.toString());
+    },
+    handleClick = async (e) => {
+      e.preventDefault();
+
+      if (equipmentId === '') {
+        setEquipmentIdMsg('Error. +Info: Por favor, despliegue el menú «Código del equipamiento» y seleccione un valor.');
+      } else {
+        try {
+          setEquipmentIdMsg('');
+          await deletePieceEquipment(equipmentId);
+          setEquipmentDeleted(true);
+          setIsError(false);
+        } catch (error) {
+          setIsError(true);
+          setErrorMsg(error);
+        }
+      }
+    }
+
   useEffect(() => {
     getEquipmentAvailable();
   }, []);

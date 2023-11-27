@@ -1,0 +1,15 @@
+.containerFragment{
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    max-width: 25vw;
+    height: 60vh;
+    align-items: center;
+    justify-content: center;
+    margin-left: 25vw;
+    border-radius: 10px;
+}
+
+.textField{
+    width: 15vw;
+}

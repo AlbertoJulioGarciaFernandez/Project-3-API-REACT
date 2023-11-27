@@ -21,9 +21,9 @@ function AddClassroom() {
   const [buildingsRegistered, setBuildingsRegistered] = useState([]),
     [classroomName, setClassroomName] = useState(''),
     [classroomNameMsg, setClassroomNameMsg] = useState(''),
-    [classroomCapacity, setClassroomCapacity] = useState(null),
-    [classroomAimedAt, setClassroomAimedAt] = useState(null),
-    [classroomBuildingId, setClassroomBuildingId] = useState(null),
+    [classroomCapacity, setClassroomCapacity] = useState(''),
+    [classroomAimedAt, setClassroomAimedAt] = useState(''),
+    [classroomBuildingName, setClassroomBuildingName] = useState(''),
     [isError, setIsError] = useState(false),
     [classroomRegistered, setClassroomRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
@@ -40,8 +40,8 @@ function AddClassroom() {
     handleSelectAimedAtChange = (e) => {
       setClassroomAimedAt(e.target.value);
     },
-    handleSelectBuildingChange = (e) => {
-      setClassroomBuildingId(e.target.value);
+    handleSelectBuildingNameChange = (e) => {
+      setClassroomBuildingName(e.target.value);
     },
     handleClick = async (e) => {
       e.preventDefault();
@@ -51,12 +51,11 @@ function AddClassroom() {
       } else {
         try {
           setClassroomNameMsg('');
-          await createClassroom({ classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
+          await createClassroom({ classroomName: classroomName, capacity: capacity, aimedAt: aimedAt, buildingId: buildingId });
           setClassroomName('');
           setClassroomRegistered(true);
           setIsError(false);
         } catch (error) {
-          console.log(error)
           setIsError(true);
           setErrorMsg(error);
         }
@@ -106,21 +105,23 @@ function AddClassroom() {
             variant="filled"
           ></TextField>
 
+
+
         </CardContent>
 
         <FormControl size='large' sx={{ marginBottom: 1, marginLeft: 2, marginTop: 1, width: 300 }}>
           <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Dirigida a</InputLabel>
           <Select
             title='Por favor, despliegue y seleccione el público al que está dirigido el aula que desea dar de alta'
-            labelId="simple-select-aimedat-label"
+            labelId="simple-select-equipment-id-label"
             id="simple-select"
-            value={classroomAimedAt === null ? '' : classroomAimedAt}
+            value={classroomAimedAt}
             label="Dirigida a"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectAimedAtChange}
           >
-            <MenuItem value={'student'}>Alumnado</MenuItem>
-            <MenuItem value={'professor'}>Profesorado</MenuItem>
+            <MenuItem value={'alumnado'}>Alumnado</MenuItem>
+            <MenuItem value={'profesorado'}>Profesorado</MenuItem>
           </Select>
         </FormControl>
 
@@ -128,16 +129,16 @@ function AddClassroom() {
           <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Edificio de ubicación</InputLabel>
           <Select
             title='Por favor, despliegue y seleccione el edificio donde estará ubicado el aula'
-            labelId="simple-select-building-label"
+            labelId="simple-select-equipment-id-label"
             id="simple-select"
-            value={classroomBuildingId === null ? '' : classroomBuildingId}
+            value={classroomBuildingName}
             label="Edificio ubicacion"
             sx={{ backgroundColor: 'white' }}
-            onChange={handleSelectBuildingChange}
+            onChange={handleSelectBuildingNameChange}
           >
             {/* Dynamic generation of select option depending on the buildings already registered on the database: */}
             {buildingsRegistered.map(building => {
-              return <MenuItem key={building.id} value={building.id}>{building.buildingName} (ID: {building.id})</MenuItem>
+              return <MenuItem key={building.id} value={building.buildingName}>{building.buildingName}</MenuItem>
             })}
           </Select>
         </FormControl>
@@ -153,7 +154,7 @@ function AddClassroom() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el aula {classroomName}. +Info: {errorMsg.data}</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el aula {classroomName}. +Info: {errorMsg.response.data}</Alert>}
         {classroomRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {classroomRegistered && <Dialog
