@@ -16,6 +16,9 @@ import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom"
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from "../pages/NotFound/NotFound";
 import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
+import AddBuilding from "../pages/Building/AddBuilding/AddBuilding";
+import UpdateBuilding from "../pages/Building/UpdateBuilding/UpdateBuilding";
+import DeleteBuilding from "../pages/Building/DeleteBuilding/DeleteBuilding";
 
 export const router = createBrowserRouter([
   {
@@ -48,10 +51,6 @@ export const router = createBrowserRouter([
         element: <ListBookings />,
       },
       {
-        path: "/dashboard/deleteEquipment",
-        element: <DeleteEquipment />,
-      },
-      {
         path: "/dashboard/listUsers",
         element: <ListUsersPage />,
       },
@@ -60,24 +59,20 @@ export const router = createBrowserRouter([
         element: <CreateUserPage />,
       },
       {
-        path: "/dashboard/listClassrooms",
-        element: <ListClassrooms />,
+        path: "/dashboard/listEquipment",
+        element: <ListEquipment />,
       },
       {
-        path: "/dashboard/addClassroom",
-        element: <AddClassroom />,
+        path: "/dashboard/addEquipment",
+        element: <AddEquipment />,
       },
       {
-        path: "/dashboard/updateClassroom",
-        element: <UpdateClassroom />,
+        path: "/dashboard/updateEquipment",
+        element: <UpdateEquipment />,
       },
       {
-        path: '/dashboard/updateEquipment',
-        element: <UpdateEquipment />
-      },
-      {
-        path: '/dashboard/deleteEquipment',
-        element: <DeleteEquipment />
+        path: "/dashboard/deleteEquipment",
+        element: <DeleteEquipment />,
       },
       {
         path: '/dashboard/listClassrooms',
@@ -99,18 +94,18 @@ export const router = createBrowserRouter([
         path: '/dashboard/listBuildings',
         element: <ListBuildings />
       },
-      // {
-      //   path: '/dashboard/addBuilding',
-      //   element: <AddBuilding />
-      // },
-      // {
-      //   path: '/dashboard/updateBuilding',
-      //   element: <UpdateBuilding />
-      // },
-      // {
-      //   path: '/dashboard/deleteBuilding',
-      //   element: <DeleteBuilding />
-      // },
+      {
+        path: '/dashboard/addBuilding',
+        element: <AddBuilding />
+      },
+      {
+        path: '/dashboard/updateBuilding',
+        element: <UpdateBuilding />
+      },
+      {
+        path: '/dashboard/deleteBuilding',
+        element: <DeleteBuilding />
+      },
     ],
   },
 ]);
