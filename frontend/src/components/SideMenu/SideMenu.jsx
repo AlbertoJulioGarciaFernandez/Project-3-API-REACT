@@ -34,8 +34,8 @@ function SideMenu() {
   const menuItemsUsuario = [
     { icon: <ListIcon />, text: 'Ver Usuarios', link: '/dashboard/listUsers', index: 5 },
     { icon: <AddIcon />, text: 'Crear Usuario', link: '/dashboard/createUser', index: 6 },
-    { icon: <ChangeCircleIcon />, text: 'Modificar Usuario', link: '/dashboard/listUsers', index: 7 },
-    { icon: <DeleteIcon />, text: 'Eliminar Usuario', link: '/dashboard/listUsers', index: 8 },
+    { icon: <ChangeCircleIcon />, text: 'Modificar Usuario', link: '/dashboard/updateUser', index: 7 },
+    { icon: <DeleteIcon />, text: 'Eliminar Usuario', link: '/dashboard/deleteUser', index: 8 },
     // Agrega más elementos si es necesario
   ];
 

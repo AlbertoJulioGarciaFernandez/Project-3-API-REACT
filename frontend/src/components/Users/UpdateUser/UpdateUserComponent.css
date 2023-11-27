@@ -1,4 +1,4 @@
-.containerFragmentCreateUser {
+.containerFragment {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,9 +6,9 @@
     text-align: center;
   }
   
-  .formulariocrearteUser {
+  .formulario {
     width: 22vw;
-    height: 53vh;
+    height: 72vh;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -16,19 +16,19 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  .formContainerCreateUser {
+  .formContainer {
     display: flex;
     flex-direction: column;
   }
   
-  .textFieldCreateUser {
+  .textField {
     width: 100%;
     margin-bottom: 20px;
   }
 
   .botonEnviar{
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: -1rem;
   }
   
   

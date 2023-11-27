@@ -16,6 +16,8 @@ import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom"
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from "../pages/NotFound/NotFound";
 import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
+import UpdateUserPage from "../pages/Users/UpdateUser/UpdateUserPage";
+import DeleteUserPage from "../pages/Users/DeleteUser/DeleteUserPage";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +59,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/createUser",
         element: <CreateUserPage />,
+      },
+      {
+        path: "/dashboard/updateUser",
+        element: <UpdateUserPage/>,
+      },
+      {
+        path: "/dashboard/deleteUser",
+        element: <DeleteUserPage/>
       },
       {
         path: "/dashboard/listClassrooms",
