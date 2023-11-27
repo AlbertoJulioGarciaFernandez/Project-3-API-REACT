@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './ListEquipment.css';
 import { getAllEquipment } from '../../../services/equipment';
+import PieceOfEquipment from './PieceOfEquipment';
 
 function ListEquipment() {
 
@@ -22,9 +23,9 @@ function ListEquipment() {
 
   return (
     <div>
-      <h1>ListEquipment</h1>
+      <h1>Listado de equipamiento disponible</h1>
       {equipment.map((pieceOfEquipment, i) => {
-        
+        return <PieceOfEquipment key={i} pieceEquipment={pieceOfEquipment} />
       })}
     </div>
   )
