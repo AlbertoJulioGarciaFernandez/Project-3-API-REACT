@@ -17,8 +17,9 @@ function ListUsersPage() {
     getUsers();
   }, [])
 
+  /* console.log("estoy aqui")
   console.log(user)
-
+ */
   return (
     <>
 <ListUsersComponent users={user}/>

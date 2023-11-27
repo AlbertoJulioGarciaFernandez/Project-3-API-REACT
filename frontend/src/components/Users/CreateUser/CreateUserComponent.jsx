@@ -151,7 +151,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               label="Nombre"
               placeholder="Nombre"
               onChange={(e) => {
-                setUser({ ...user, nombre: e.target.value });
+                setUser({ ...user, firstName: e.target.value });
               }}
             />
             <TextField
@@ -163,7 +163,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               label="Apellidos"
               placeholder="Apellidos"
               onChange={(e) => {
-                setUser({ ...user, apellidos: e.target.value });
+                setUser({ ...user, lastName: e.target.value });
               }}
             />
             <TextField
@@ -175,7 +175,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               label="Direccion"
               placeholder="Direccion"
               onChange={(e) => {
-                setUser({ ...user, direccion: e.target.value });
+                setUser({ ...user, address: e.target.value });
               }}
             />
             <TextField
@@ -200,7 +200,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               label="Password"
               placeholder="Password"
               onChange={(e) => {
-                setUser({ ...user, contraseña: e.target.value });
+                setUser({ ...user, password: e.target.value });
               }}
             />
           </CardContent>
