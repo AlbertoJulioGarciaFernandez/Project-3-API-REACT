@@ -1,10 +1,10 @@
 import { Alert, Box, Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select, TextField, InputLabel, FormControl } from '@mui/material';
-import './UpdateEquipment.css';
+import './UpdateBuilding.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAllEquipment, updatePieceEquipment } from '../../../services/equipment';
 
-function UpdateEquipment() {
+function UpdateBuilding() {
 
   useEffect(() => {
     getEquipmentAvailable();
@@ -166,4 +166,4 @@ function UpdateEquipment() {
   );
 }
 
-export default UpdateEquipment
+export default UpdateBuilding
