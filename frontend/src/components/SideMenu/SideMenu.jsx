@@ -44,23 +44,20 @@ function SideMenu() {
     { icon: <AddIcon />, text: 'Crear Equipamiento', link: '/dashboard/addEquipment', index: 10 },
     { icon: <ChangeCircleIcon />, text: 'Modificar Equipamiento', link: '/dashboard/updateEquipment', index: 11 },
     { icon: <DeleteIcon />, text: 'Eliminar Equipamiento', link: '/dashboard/deleteEquipment', index: 12 },
-    // Agrega más elementos si es necesario
   ];
 
   const menuItemsAula = [
-    { icon: <ListIcon />, text: 'Ver Aulas', link: '/dashboard/listbookings', index: 13 },
-    { icon: <AddIcon />, text: 'Crear Aula', link: '/dashboard/listbookings', index: 14 },
-    { icon: <ChangeCircleIcon />, text: 'Modificar Aula', link: '/dashboard/listbookings', index: 15 },
-    { icon: <DeleteIcon />, text: 'Eliminar Aula', link: '/dashboard/listbookings', index: 16 },
-    // Agrega más elementos si es necesario
+    { icon: <ListIcon />, text: 'Ver Aulas', link: '/dashboard/listClassrooms', index: 13 },
+    { icon: <AddIcon />, text: 'Crear Aula', link: '/dashboard/addClassroom', index: 14 },
+    { icon: <ChangeCircleIcon />, text: 'Modificar Aula', link: '/dashboard/updateClassroom', index: 15 },
+    { icon: <DeleteIcon />, text: 'Eliminar Aula', link: '/dashboard/deleteClassroom', index: 16 },
   ];
 
   const menuItemsEdificio = [
-    { icon: <ListIcon />, text: 'Ver Edificios', link: '/dashboard/listbookings', index: 17 },
-    { icon: <AddIcon />, text: 'Crear Edificio', link: '/dashboard/listbookings', index: 18 },
-    { icon: <ChangeCircleIcon />, text: 'Modificar Edificio', link: '/dashboard/listbookings', index: 19 },
-    { icon: <DeleteIcon />, text: 'Eliminar Edificio', link: '/dashboard/listbookings', index: 20 },
-    // Agrega más elementos si es necesario
+    { icon: <ListIcon />, text: 'Ver Edificios', link: '/dashboard/listBuildings', index: 17 },
+    { icon: <AddIcon />, text: 'Crear Edificio', link: '/dashboard/addBuilding', index: 18 },
+    { icon: <ChangeCircleIcon />, text: 'Modificar Edificio', link: '/dashboard/updateBuilding', index: 19 },
+    { icon: <DeleteIcon />, text: 'Eliminar Edificio', link: '/dashboard/deleteBuilding', index: 20 },
   ];
 
   return (

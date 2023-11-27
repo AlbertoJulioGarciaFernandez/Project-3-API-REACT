@@ -1,10 +1,10 @@
 import { Alert, Box, Button, Card, CardActions, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import './DeleteEquipment.css';
+import './DeleteClassroom.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deletePieceEquipment, getAllEquipment } from '../../../services/equipment';
 
-function DeleteEquipment() {
+function DeleteClassroom() {
   useEffect(() => {
     getEquipmentAvailable();
   }, []);
@@ -122,4 +122,4 @@ function DeleteEquipment() {
   )
 }
 
-export default DeleteEquipment
+export default DeleteClassroom
