@@ -5,34 +5,42 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import logoHeader from "../../assets/rvr.png";
 import "./HeaderDashboard.css";
 import { useNavigate } from 'react-router-dom'
-
-
-
-
+import { useEffect } from "react";
+import { getMyProfile } from '../../services/user';
+import { useState } from "react";
 
 function HeaderDashboard() {
 
-const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const settings = [{name:"Perfil", key:"1"},{name:"Cerrar Sesion",key:"2", onclick:onLogout} ];
+  const settings = [{name:"Perfil", onclick: "funcion" , key: "1"},{name:"Cerrar Sesion",key:"2", onclick:onLogout} ];
+
+  useEffect(() => {
+    getMyUserProfile();
+  }, []);
+
+  async function getMyUserProfile() {
+    // API request which will retrieve the user profile:
+    const data = await getMyProfile();
+
+    setUserName(data.firstName);
+  }
+
+  
   
   function onLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     navigate('/')
   }
- 
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -41,8 +49,6 @@ const navigate = useNavigate()
     setAnchorElUser(null);
   };
 
-  
-
   return (
     <AppBar position="static" >
       <Toolbar className="header">
@@ -50,7 +56,11 @@ const navigate = useNavigate()
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="."  />
+              {/* The initial of the given name (stored in userName) will be shown inside 
+              the profile circle located at the top right corner of the screen.
+              To make this possible, we have to provide the user name to the «alt» attribute 
+              of the Avatar component, as it is shown below:   */}
+              <Avatar alt={userName} src="/static/images/avatar/2.jpg" />
             </IconButton>
           </Tooltip>
           <Menu

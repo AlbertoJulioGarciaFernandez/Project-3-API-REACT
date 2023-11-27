@@ -1,7 +1,7 @@
 import api from ".";
 
-export async function getAllClassrooms() {
-  const { data } = await api.get("/classroom", {
+export async function getAllBuildings() {
+  const { data } = await api.get("/building", {
     headers: {
       authorization: localStorage.token,
     },
