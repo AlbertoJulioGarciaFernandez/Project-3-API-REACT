@@ -12,7 +12,7 @@ import ListClassrooms from "../pages/Classroom/ListClassrooms/ListClassrooms";
 import AddClassroom from "../pages/Classroom/AddClassroom/AddClassroom";
 import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom";
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
-import NotFound from '../pages/NotFound/NotFound';
+// import NotFound from '../pages/NotFound/NotFound';
 import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
 
 export const router = createBrowserRouter([
@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Root />,
-    errorElement: <NotFound />,
+    // errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/")  //If the user isn't logged in, we redirect to the login page.

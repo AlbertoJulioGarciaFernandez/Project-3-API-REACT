@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function AddEquipment() {
   const [equipmentName, setEquipmentName] = useState(''),
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
-    [equipmentDescription, setEquipmentDescription] = useState(''),
+    [equipmentDescription, setEquipmentDescription] = useState(null),
     [isError, setIsError] = useState(false),
     [equipmentRegistered, setEquipmentRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),

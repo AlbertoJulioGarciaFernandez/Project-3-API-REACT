@@ -64,9 +64,9 @@ function DeleteEquipment() {
 
         {/* Important: To center the FormCOntrol, we will have to use the property «alignSelf». */}
         <FormControl size='large' sx={{ marginLeft: 2, width: 300, alignSelf: 'center' }}>
-          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20, }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
+          <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20, }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
           <Select
-            title='Por favor, seleccione el código del equipamiento que desea eliminar'
+            title='Por favor, despliegue y seleccione el código del equipamiento que desea eliminar'
             labelId="simple-select-equipment-id-label"
             id="simple-select"
             value={equipmentId}
@@ -77,7 +77,7 @@ function DeleteEquipment() {
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id}</MenuItem>
+              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id} (Denominación: {pieceOfEquipment.equipmentName})</MenuItem>
             })}
           </Select>
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
@@ -98,7 +98,7 @@ function DeleteEquipment() {
         {equipmentDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
 
         {equipmentDeleted && <Dialog
-          style={{ position: 'absolute', left: 500, top: 200 }}
+          style={{ position: 'absolute', left: 600, top: 100 }}
           open={equipmentDeleted}
           onClose={handleNavigate}
           aria-labelledby="alert-dialog-title"

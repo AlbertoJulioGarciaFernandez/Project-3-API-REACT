@@ -2,60 +2,82 @@ import { Alert, Box, Button, Card, CardActions, CardContent, CardHeader, Dialog,
 import './UpdateClassroom.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllEquipment, updatePieceEquipment } from '../../../services/equipment';
+import { getAllClassrooms, updateClassroom } from '../../../services/classroom';
+import { getAllBuildings } from '../../../services/building';
 
 function UpdateClassroom() {
 
   useEffect(() => {
-    getEquipmentAvailable();
+    getBuildingsAvailable();
   }, []);
 
-  async function getEquipmentAvailable() {
-    // API request with which we will get the list of pieces of equipment available:
-    const data = await getAllEquipment();
-
+  async function getBuildingsAvailable() {
+    // API request with which we will get the list of buildings
+    // available:
+    const { buildings } = await getAllBuildings();
     // Storing the different pieces of equipment:
-    setEquipment(data);
+    setBuildingsRegistered(buildings);
   }
 
-  const [equipment, setEquipment] = useState([]),
-    [equipmentId, setEquipmentId] = useState(''),
-    [equipmentIdMsg, setEquipmentIdMsg] = useState(''),
-    [equipmentName, setEquipmentName] = useState(''),
-    [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
-    [equipmentDescription, setEquipmentDescription] = useState(''),
+  useEffect(() => {
+    getClassroomsAvailable();
+  }, []);
+
+  async function getClassroomsAvailable() {
+    // API request:
+    const data = await getAllClassrooms();
+
+    // Storing the different classrooms:
+    setClassrooms(data);
+  }
+
+  const [classrooms, setClassrooms] = useState([]),
+    [buildingsRegistered, setBuildingsRegistered] = useState([]),
+    [classroomName, setClassroomName] = useState(''),
+    [classroomId, setClassroomId] = useState(''),
+    [classroomIdMsg, setClassroomIdMsg] = useState(''),
+    [classroomNameMsg, setClassroomNameMsg] = useState(''),
+    [classroomCapacity, setClassroomCapacity] = useState(null),
+    [classroomAimedAt, setClassroomAimedAt] = useState(null),
+    [classroomBuildingId, setClassroomBuildingId] = useState(null),
     [isError, setIsError] = useState(false),
-    [equipmentRegistered, setEquipmentRegistered] = useState(false),
+    [classroomRegistered, setClassroomRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
       navigate("/dashboard");
     },
     handleNameChange = (e) => {
-      setEquipmentName(e.target.value);
+      setClassroomName(e.target.value);
     },
-    handleDescriptionChange = (e) => {
-      setEquipmentDescription(e.target.value);
+    handleCapacityChange = (e) => {
+      setClassroomCapacity(e.target.value);
     },
-    handleSelectChange = (e) => {
-      setEquipmentId(e.target.value.toString());
+    handleSelectAimedAtChange = (e) => {
+      setClassroomAimedAt(e.target.value);
+    },
+    handleSelectBuildingChange = (e) => {
+      setClassroomBuildingId(e.target.value);
+    },
+    handleSelectIdChange = (e) => {
+      setClassroomId(e.target.value.toString());
     },
     handleClick = async (e) => {
       e.preventDefault();
 
-      if (equipmentId === '') {
-        setEquipmentIdMsg('Error. +Info: Por favor, despliegue el menú «Código del equipamiento» y seleccione un valor.');
+      if (classroomId === '') {
+        setClassroomIdMsg('Error. +Info: Por favor, despliegue el menú «Código del aula y seleccione un valor.');
       } else {
-        setEquipmentIdMsg('');
+        setClassroomIdMsg('');
 
-        if (equipmentName === '') {
-          setEquipmentNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
+        if (classroomName === '') {
+          setClassroomNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
           try {
-            setEquipmentNameMsg('');
-            await updatePieceEquipment({ equipmentId: equipmentId, equipmentName: equipmentName, description: equipmentDescription });
-            setEquipmentName('');
-            setEquipmentRegistered(true);
+            setClassroomNameMsg('');
+            await updateClassroom(classroomId, { classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
+            setClassroomName('');
+            setClassroomRegistered(true);
             setIsError(false);
           } catch (error) {
             setIsError(true);
@@ -75,28 +97,28 @@ function UpdateClassroom() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '50vw' }}
       >
-        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de equipamiento"></CardHeader>
-        
+        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de aula"></CardHeader>
+
         <FormControl size='large' sx={{ marginLeft: 2, marginBottom: -1, width: 300 }}>
-          <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
+          <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Código del aula</InputLabel>
           <Select
-            title='Por favor, despliegue y seleccione el código del equipamiento que desea actualizar'
-            labelId="simple-select-equipment-id-label"
+            title='Por favor, despliegue y seleccione el código del aula que desea actualizar'
+            labelId="simple-select-classroom-id-label"
             id="simple-select"
-            value={equipmentId}
-            label="Código equipamiento"
+            value={classroomId}
+            label="Código aula"
             sx={{ backgroundColor: 'white' }}
-            onChange={handleSelectChange}
+            onChange={handleSelectIdChange}
           >
-            {/* Dynamic generation of select option depending on the equipment already registered on 
+            {/* Dynamic generation of select option depending on the classrooms already registered on 
             the database: */}
-            {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id}</MenuItem>
+            {classrooms.map(classroom => {
+              return <MenuItem key={classroom.id} value={classroom.id}>{classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
             })}
           </Select>
-          {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
         </FormControl>
 
         <CardContent>
@@ -104,7 +126,7 @@ function UpdateClassroom() {
             className="textfield"
             onChange={handleNameChange}
             type="text"
-            title='Por favor, introduzca el nuevo nombre de equipamiento'
+            title='Por favor, introduzca el nuevo nombre de aula'
             label="Denominación"
             margin="dense"
             required
@@ -113,20 +135,57 @@ function UpdateClassroom() {
             variant="filled"
           ></TextField>
 
-          {equipmentNameMsg.includes('Error') && <Alert severity="error">{equipmentNameMsg}</Alert>}
+          {classroomNameMsg.includes('Error') && <Alert severity="error">{classroomNameMsg}</Alert>}
 
           <TextField
             className="textfield"
-            onChange={handleDescriptionChange}
-            type="text"
-            title='Por favor, introduzca la nueva descripción del equipamiento'
-            label="Descripción"
+            onChange={handleCapacityChange}
+            type="number"
+            label="Aforo"
             margin="dense"
+            title='Por favor, seleccione el aforo del aula que desea modificar (valor mínimo: 10 — valor máximo: 50)'
             fullWidth={true}
+            InputProps={{ inputProps: { min: 10, max: 50 } }}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
+
+
         </CardContent>
+
+        <FormControl size='large' sx={{ marginBottom: 1, marginLeft: 2, marginTop: 1, width: 300 }}>
+          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Dirigida a</InputLabel>
+          <Select
+            title='Por favor, despliegue y seleccione el público al que está dirigido el aula que desea actualizar'
+            labelId="simple-select-classroom-id-label"
+            id="simple-select"
+            value={classroomAimedAt === null ? '' : classroomAimedAt}
+            label="Dirigida a"
+            sx={{ backgroundColor: 'white' }}
+            onChange={handleSelectAimedAtChange}
+          >
+            <MenuItem value={'student'}>Alumnado</MenuItem>
+            <MenuItem value={'professor'}>Profesorado</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl size='large' sx={{ marginBottom: 1, marginLeft: 2, marginTop: 1, width: 300 }}>
+          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Edificio de ubicación</InputLabel>
+          <Select
+            title='Por favor, despliegue y seleccione el edificio donde estará ubicado el aula que desea actualizar'
+            labelId="simple-select-classroom-id-label"
+            id="simple-select"
+            value={classroomBuildingId === null ? '' : classroomBuildingId}
+            label="Edificio ubicacion"
+            sx={{ backgroundColor: 'white' }}
+            onChange={handleSelectBuildingChange}
+          >
+            {/* Dynamic generation of select option depending on the buildings already registered on the database: */}
+            {buildingsRegistered.map(building => {
+              return <MenuItem key={building.id} value={building.id}>{building.buildingName} (ID: {building.id})</MenuItem>
+            })}
+          </Select>
+        </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button
@@ -139,22 +198,22 @@ function UpdateClassroom() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el equipamiento {equipmentName}. +Info: {errorMsg.response.data.message}</Alert>}
-        {equipmentRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el aula con código {classroomId}. +Info: {errorMsg.response.data}</Alert>}
+        {classroomRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
-        {equipmentRegistered && <Dialog
+        {classroomRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}
-          open={equipmentRegistered}
+          open={classroomRegistered}
           onClose={handleNavigate}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Actualización de equipamiento"}
+            {"Actualización de aula"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              El equipamiento con código {equipmentId} se ha actualizado correctamente en la base de datos.
+              El aula con código {classroomId} se ha actualizado correctamente en la base de datos.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
