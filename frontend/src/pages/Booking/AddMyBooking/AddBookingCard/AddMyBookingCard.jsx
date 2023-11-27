@@ -33,6 +33,8 @@ function AddBookingCard(props) {
 
   async function addMyBooking() {
     try {
+      setMensaje("")
+      setError("")
       const addMyBookingResponse = await addBooking({bookingDate:bookingDate, bookingTime:bookingTime, classroomId:classroomId})
       setMensaje(addMyBookingResponse.data.message)
     

@@ -27,6 +27,8 @@ function UpdateBookingCard(props) {
   
   const role = localStorage.getItem("role")
 
+  console.log(bookingId)
+
   
 
 
@@ -34,13 +36,17 @@ function UpdateBookingCard(props) {
 
   async function addMyBooking() {
     try {
+      setError("")
+      setMensaje("")
       const addMyBookingResponse = await UpdateMyBooking({bookingDate:bookingDate, bookingTime:bookingTime, classroomId:classroomId, bookingId:bookingId})
-      setMensaje(addMyBookingResponse.data.message)
+      setMensaje(addMyBookingResponse.data)
+      console.log(addMyBookingResponse.data)
     
       
      //Do something with the response
     } catch (error) {
       setError(error.response.data)
+      console.log(error)
     }
   }
 
@@ -76,6 +82,17 @@ function UpdateBookingCard(props) {
 
   
 
+  const clasrooms = {}
+  props.classroom.filter((booking)=>booking.aimedAt===role).map((classroom) => clasrooms[classroom.id]=classroom.classroomName)
+
+  
+const myBokkings= props.booking.map((booking) => (
+    <MenuItem key={booking.id} value={booking.id}>
+      Referencia:{booking.id} | Fecha:{booking.bookingDate } | Hora:{booking.bookingTime} | {clasrooms[booking.classroomId]}
+    </MenuItem> 
+  )).reverse()
+  
+
 
   const horarios = [
     "08:00",
@@ -107,11 +124,7 @@ function UpdateBookingCard(props) {
             label="Referencia Reserva"
             onChange={handleChangeId}
           >
-            {props.booking.map((booking) => (
-              <MenuItem key={booking.id} value={booking.id}>
-                Referencia:{booking.id} | Fecha:{booking.bookingDate } | Hora:{booking.bookingTime} | Clase:{booking.classroomId}
-              </MenuItem> 
-            ))}
+            {myBokkings}
           </Select>
         </FormControl>
       <TextField
@@ -153,7 +166,7 @@ function UpdateBookingCard(props) {
           >
             {props.classroom.filter((booking)=>booking.aimedAt===role).map((classroom) => (
               <MenuItem key={classroom.id} value={classroom.id}>
-                {classroom.id}
+                {classroom.classroomName}
               </MenuItem> 
             ))}
           </Select>
@@ -161,7 +174,7 @@ function UpdateBookingCard(props) {
       </CardContent>
       <Divider />
       <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={() => addMyBooking()}>Crear Reserva</Button>
+        <Button onClick={() => addMyBooking()}>Modificar Reserva</Button>
       </CardActions>
 
       {

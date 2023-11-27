@@ -32,10 +32,22 @@ export async function addBooking({bookingDate, bookingTime, classroomId}) {
   }
 
 
-  export async function UpdateMyBooking({bookingDate, bookingTime, classroomId, id}) {
-    console.log({bookingDate, bookingTime, classroomId, id})
-    const response = await api.put(`/updateMyBooking/:${id}`, {bookingDate, bookingTime, classroomId}
+  export async function UpdateMyBooking({bookingDate, bookingTime, classroomId, bookingId}) {
+    console.log({bookingDate, bookingTime, classroomId, bookingId})
+    const response = await api.put(`/booking/updateMyBooking/${bookingId}`, {bookingDate, bookingTime, classroomId}
     , {
+      headers:{
+        "Authorization" : localStorage.getItem("token")
+      },
+      
+    });
+    return response;
+  }
+
+  export async function DeleteMyBooking({bookingId}) {
+    console.log({ bookingId})
+    const response = await api.delete(`/booking/deleteMyBooking/${bookingId}`, 
+     {
       headers:{
         "Authorization" : localStorage.getItem("token")
       },

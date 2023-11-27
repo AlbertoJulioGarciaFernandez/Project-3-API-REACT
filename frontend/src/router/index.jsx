@@ -8,6 +8,7 @@ import ListBookings from "../pages/Booking/ListBookings/ListBookings";
 import ListMyBookings from "../pages/Booking/ListMyBookings/ListMyBookings";
 import AddBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
 import UpdateMyBooking from "../pages/Booking/UpdateMyBooking copy/UpdateMyBooking";
+import DeleteMyBooking from "../pages/Booking/DeleteMyBooking/DeleteMyBooking";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/updatemybooking',
         element: <UpdateMyBooking/>
+      },
+      {
+        path: '/dashboard/deletemybooking',
+        element: <DeleteMyBooking/>
       }
     ],
   },

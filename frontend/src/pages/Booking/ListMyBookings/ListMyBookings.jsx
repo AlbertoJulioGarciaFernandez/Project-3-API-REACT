@@ -2,6 +2,7 @@ import './ListMyBookings.css';
 import { useState, useEffect } from 'react'
 import CardBooking from '../../../components/CardBooking/CardBooking';
 import { getMyBookings } from '../../../services/booking';
+import { getAllClassroom } from '../../../services/classroom';
 
 function ListBookings() {
 
@@ -13,14 +14,28 @@ function ListBookings() {
 
   async function getMyBoookings() {
     const data = await getMyBookings()
-    setBookings(data.bookings);
-    
-     
+    setBookings(data.bookings);  
   }
+
+  const [classrooms, setClassrooms] = useState([])
+
+  useEffect(() => {
+    getClassroom()
+  },[])
+
+  async function getClassroom() {
+    const dataClassroom = await getAllClassroom()
+    setClassrooms(dataClassroom)
+  }
+  
+
+
+
+
   console.log(bookings)
   const bookingsList = bookings.map((booking) => {
-    return <CardBooking bookingsArray={booking}/>
-  })
+    return <CardBooking key={booking.id} bookingsArray={booking} classroom={classrooms}/>
+  }).reverse()
 
   
 
