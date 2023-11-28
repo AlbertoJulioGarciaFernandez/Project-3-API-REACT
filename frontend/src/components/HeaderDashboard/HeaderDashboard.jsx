@@ -20,7 +20,7 @@ function HeaderDashboard() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const settings = [{name:"Perfil", onclick: "funcion" , key: "1"},{name:"Cerrar Sesion",key:"2", onclick:onLogout} ];
+  const settings = [{name:"Perfil", onclick: profiel , key: "1"},{name:"Cerrar Sesion",key:"2", onclick:onLogout} ];
 
   useEffect(() => {
     getMyUserProfile();
@@ -39,6 +39,10 @@ function HeaderDashboard() {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     navigate('/')
+  }
+
+  function profiel() {
+    navigate('/dashboard/profiel')
   }
 
   const handleOpenUserMenu = (event) => {
@@ -60,7 +64,7 @@ function HeaderDashboard() {
               the profile circle located at the top right corner of the screen.
               To make this possible, we have to provide the user name to the «alt» attribute 
               of the Avatar component, as it is shown below:   */}
-              <Avatar alt={userName} src="/static/images/avatar/2.jpg" />
+              <Avatar alt={userName} src="." />
             </IconButton>
           </Tooltip>
           <Menu

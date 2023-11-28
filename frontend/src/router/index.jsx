@@ -16,12 +16,14 @@ import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom"
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from "../pages/NotFound/NotFound";
 import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
-import ListMyBookings from "../pages/Booking/ListBookings/ListBookings";
+import ListMyBookings from "../pages/Booking/ListMyBookings/ListMyBookings";
 import AddBooking from "../pages/Booking/AddBooking/AddBooking";
 import UpdateMyBooking from "../pages/Booking/UpdateMyBooking/UpdateMyBooking";
 import DeleteMyBooking from "../pages/Booking/DeleteMyBooking/DeleteMyBooking";
 import AddMyBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
 import UpdateBooking from "../pages/Booking/UpdateBooking/UpdateBooking";
+import DeleteBooking from "../pages/Booking/DeleteBooking/DeleteBooking";
+import Profile from "../pages/Users/Profile/Profiel";
 
 
 export const router = createBrowserRouter([
@@ -121,16 +123,22 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/updatebooking',
         element: <UpdateBooking/>
-      }
-      ,
+      },
       {
         path: '/dashboard/deletemybooking',
         element: <DeleteMyBooking/>
       },
-      
+      {
+        path: '/dashboard/deletebooking',
+        element: <DeleteBooking/>
+      },
       {
         path: '/dashboard/listbookings',
         element: <ListBookings/>
+      },
+      {
+        path: '/dashboard/profiel',
+        element: <Profile/>
       }
     ],
   },

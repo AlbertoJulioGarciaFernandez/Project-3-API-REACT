@@ -11,7 +11,6 @@ export async function getAllBookings() {
 }
 
 export async function getMyBookings() {
-  
   const {data} = await api.get("/booking/getMyBookings", {
     headers:{
       "Authorization" : localStorage.getItem("token")
@@ -57,8 +56,31 @@ export async function addMyBooking({bookingDate, bookingTime, classroomId}) {
     return response;
   }
 
+  export async function UpdateBooking({bookingDate, bookingTime, classroomId, bookingId,  userId}) {
+    console.log({bookingDate, bookingTime, classroomId, bookingId, userId})
+    const response = await api.put(`/booking/${bookingId}`, {bookingDate, bookingTime, classroomId, userId}
+    , {
+      headers:{
+        "Authorization" : localStorage.getItem("token")
+      },
+      
+    });
+    return response;
+  }
+
   export async function DeleteMyBooking({bookingId}) {
-    console.log({ bookingId})
+    const response = await api.delete(`/booking/deleteMyBooking/${bookingId}`, 
+     {
+      headers:{
+        "Authorization" : localStorage.getItem("token")
+      },
+      
+    });
+    return response;
+  }
+
+
+  export async function DeleteBooking({bookingId}) {
     const response = await api.delete(`/booking/deleteMyBooking/${bookingId}`, 
      {
       headers:{

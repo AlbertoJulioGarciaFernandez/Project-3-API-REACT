@@ -5,16 +5,18 @@ import { getMyBookings } from "../../../services/booking";
 import { getAllClassrooms } from "../../../services/classroom";
 
 function ListBookings() {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState([])
 
   useEffect(() => {
-    getMyBoookings();
-  }, []);
+    getBookings()
+  },[])
 
-  async function getMyBoookings() {
-    const data = await getMyBookings();
+  async function getBookings() {
+    const data = await getMyBookings()
     setBookings(data.bookings);
+     
   }
+
 
   const [classrooms, setClassrooms] = useState([]);
 
@@ -26,6 +28,8 @@ function ListBookings() {
     const dataClassroom = await getAllClassrooms();
     setClassrooms(dataClassroom);
   }
+
+
 
   const bookingsList = bookings
     .map((booking) => {

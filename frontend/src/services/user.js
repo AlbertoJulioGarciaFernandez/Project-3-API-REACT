@@ -28,3 +28,13 @@ export async function createUser(user) {
   });
   return response;
 }
+
+
+export async function updatePassword(password) {
+  const response = await api.put("/user/updatePassword", password, {
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+    },
+  });
+  return response;
+}

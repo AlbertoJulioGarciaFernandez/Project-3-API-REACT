@@ -13,13 +13,14 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { UpdateMyBooking } from "../../../../services/booking";
+import { UpdateBooking } from "../../../../services/booking";
 
 function UpdateBookingCard(props) {
   const [bookingId, setbookingId] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
   const [classroomId, setClassroomId] = useState("");
+  const [userId, setUserId] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
@@ -29,13 +30,15 @@ function UpdateBookingCard(props) {
     try {
       setError("");
       setMensaje("");
-      const addMyBookingResponse = await UpdateMyBooking({
+      const addBookingResponse = await UpdateBooking({
         bookingDate: bookingDate,
         bookingTime: bookingTime,
         classroomId: classroomId,
         bookingId: bookingId,
+        userId:userId
+
       });
-      setMensaje(addMyBookingResponse.data);
+      setMensaje(addBookingResponse.data);
 
       //Do something with the response
     } catch (error) {
@@ -69,17 +72,23 @@ function UpdateBookingCard(props) {
 
   const handleChangeId = (event) => {
     setbookingId(event.target.value);
+    setUserId(user[event.target.value])
+    
   };
 
   const clasrooms = {};
   props.classroom
     .map((classroom) => (clasrooms[classroom.id] = classroom.classroomName));
 
-    console.log(clasrooms)
+    const user = {};
+    props.booking
+      .map((booking) => (user[booking.id] = booking.userId));
+
+  
 
   const myBokkings = props.booking
     .map((booking) => (
-      <MenuItem key={booking.id} value={booking.id}>
+      <MenuItem key={booking} value={booking.id}>
         Referencia:{booking.id} | Fecha:{booking.bookingDate} | Hora:
         {booking.bookingTime} | {clasrooms[booking.classroomId]}
       </MenuItem>
