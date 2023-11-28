@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -17,29 +18,70 @@ import { updatePassword } from "../../../../services/user";
 
 function ProfielCard({ myProfile }) {
   const [isVisible, setIsVisible] = useState(false);
-  const [password, setPassword] = useState("1234567a");
-  const [passwordRep, setPasswordRep] = useState("1234567a");
+  const [password, setPassword] = useState("");
+  const [passwordRep, setPasswordRep] = useState("");
+  const [error, setError] = useState(false);
+  const [errorPassword, setErrorPassword] = useState({
+    error: false,
+    message: "",
+  });
 
-  
 
 
-  
-    async function changerPassword() {
+  function validatePassword(password) {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]{8,}$/;
+    return regex.test(password);
+  }
 
-      // API request which will retrieve the user profile:
-      const changeData = await updatePassword(password);
-      localStorage.setItem("token", changeData.data.token);
-      
+  function validatePasswordEqual(password,passwordRep) {
+    if(password===passwordRep){
+      return true
+    } else{
+      return false
     }
+  }
+
+
+
+
+
+
+  
+
+  async function changerPassword() {
+
+    if (validatePassword(password) && validatePasswordEqual(password,passwordRep)) {
+      setErrorPassword({
+        error: false,
+        message: "",
+      });
+    } else {
+      setErrorPassword({
+        error: true,
+        message: "Contraseña no valida",
+      });
+    }
+
+
+    try {
+      if(validatePassword(password)){
+        const changeData = await updatePassword({password});
+         localStorage.setItem("token", changeData.data.token);
+      }
+      
+    } catch (error) {
+      setError("true");
+      console.log("No registrado");
+    }
+  
+    
+  }
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(!open);
   };
-  const [errorPassword, setErrorPassword] = useState({
-    error: false,
-    message: "",
-  });
+  
 
   return (
     <div className="profielBody">
@@ -57,7 +99,7 @@ function ProfielCard({ myProfile }) {
           Cambiar contraseña
         </Button>
         {open && (
-          <Box sx={{display:"flex", flexDirection: "column", width:"100%"}}>
+          <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
             <TextField
               onChange={(e) => setPassword(e.target.value)}
               type={isVisible ? "text" : "password"}
@@ -65,7 +107,7 @@ function ProfielCard({ myProfile }) {
               required
               helperText={errorPassword.message}
               error={errorPassword.error}
-              sx={{ background: "white", borderRadius: 1, width:"100%" }}
+              sx={{ background: "white", borderRadius: 1, width: "100%" }}
               label="Contraseña"
               margin="dense"
               fullWidth={true}
@@ -93,7 +135,7 @@ function ProfielCard({ myProfile }) {
               required
               helperText={errorPassword.message}
               error={errorPassword.error}
-              sx={{ background: "white", borderRadius: 1, width:"100%" }}
+              sx={{ background: "white", borderRadius: 1, width: "100%" }}
               label="Contraseña"
               margin="dense"
               fullWidth={true}
@@ -114,9 +156,16 @@ function ProfielCard({ myProfile }) {
                 ),
               }}
             ></TextField>
-            <Button className="btn-cambiarContraseña" onClick={changerPassword} sx={{background:lightBlue}}>
-          Confirmar cambio de contraseña
-        </Button>
+            <Button
+              className="btn-cambiarContraseña"
+              onClick={changerPassword}
+              sx={{ background: lightBlue }}
+            >
+              Confirmar cambio de contraseña
+            </Button>
+            {error && (
+          <Alert severity="error">Error. +Info: La contraseña no es correcta</Alert>
+        )}
           </Box>
         )}
       </Card>

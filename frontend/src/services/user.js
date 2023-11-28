@@ -31,7 +31,8 @@ export async function createUser(user) {
 
 
 export async function updatePassword(password) {
-  const response = await api.put("/user/updatePassword", password, {
+  console.log(password)
+  const response = await api.put("/user/updatePassword",password , {
     headers: {
       "Authorization": localStorage.getItem("token"),
     },
