@@ -51,7 +51,7 @@ export default function DeleteUserComponent() {
     
   return (
     <>
-      <form className="formulario" action="#">
+      <form className="formularioDeleteUser" action="#">
         <label className="titulo">
           Eliminar usuario
         </label>

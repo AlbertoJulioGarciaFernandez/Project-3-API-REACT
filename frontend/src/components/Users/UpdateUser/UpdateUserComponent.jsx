@@ -6,15 +6,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import React  from "react";
-import { Height } from "@mui/icons-material";
 
 export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
 
   return (
     <div className="containerFragment">
-      <form className="formulario">
+      <form className="formularioUpdateUser">
         <React.Fragment>
-          <Typography gutterBottom variant="h4" component="form">
+          <Typography gutterBottom variant="h4" component="form" className="titulo">
             Actualización de Usuario
           </Typography>
 
