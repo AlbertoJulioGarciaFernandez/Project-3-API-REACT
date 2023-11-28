@@ -5,9 +5,6 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/Signup/SignUp";
 import ListBookings from "../pages/ListBookings/ListBookings";
 import ListUsersPage from "../pages/Users/ListUsers/ListUsersPage";
-import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
-import AddEquipment from "../pages/Equipment/AddEquipment/AddEquipment";
-import UpdateEquipment from "../pages/Equipment/UpdateEquipment/UpdateEquipment";
 import DeleteEquipment from "../pages/Equipment/DeleteEquipment/DeleteEquipment";
 import CreateUserPage from "../pages/Users/CreateUser/CreateUserPage";
 import ListClassrooms from "../pages/Classroom/ListClassrooms/ListClassrooms";
@@ -15,9 +12,8 @@ import AddClassroom from "../pages/Classroom/AddClassroom/AddClassroom";
 import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom";
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from "../pages/NotFound/NotFound";
-import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
 import UpdateUserPage from "../pages/Users/UpdateUser/UpdateUserPage";
-import DeleteUserPage from "../pages/Users/DeleteUser/DeleteUserPage";
+import DeleteUserComponent from "../components/Users/DeleteUser/DeleteUserComponent";
 
 export const router = createBrowserRouter([
   {
@@ -66,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/deleteUser",
-        element: <DeleteUserPage/>
+        element: <DeleteUserComponent/>
       },
       {
         path: "/dashboard/listClassrooms",

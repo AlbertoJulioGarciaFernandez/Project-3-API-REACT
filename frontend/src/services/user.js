@@ -48,19 +48,11 @@ export async function updateUser(user) {
   return response
 }
 
-export async function deleteUser(user) {
-  const response = await api.delete(`/user/${user.id}`, 
-/*   {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    address: user.address,
-    email: user.email,
-    password: user.password,
-    role: user.role,
-  }, */
+export async function deleteUser(id) {
+  const response = await api.delete(`/user/${id}`, 
   {
     headers: {
-      "Authorization": localStorage.getItem("token"),
+      "Authorization": localStorage.token,//tambien se puede llamar asi
     },
   });
   return response;

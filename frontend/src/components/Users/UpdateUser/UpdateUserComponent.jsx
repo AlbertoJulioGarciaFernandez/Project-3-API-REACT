@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import React  from "react";
+import { Height } from "@mui/icons-material";
 
 export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
 
