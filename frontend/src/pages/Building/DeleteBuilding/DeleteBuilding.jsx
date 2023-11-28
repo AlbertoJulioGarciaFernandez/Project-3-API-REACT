@@ -2,44 +2,44 @@ import { Alert, Box, Button, Card, CardActions, CardHeader, Dialog, DialogAction
 import './DeleteBuilding.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deletePieceEquipment, getAllEquipment } from '../../../services/equipment';
+import { deleteBuilding, getAllBuildings } from '../../../services/building';
 
 function DeleteBuilding() {
   useEffect(() => {
-    getEquipmentAvailable();
+    getExistingBuildings();
   }, []);
 
-  async function getEquipmentAvailable() {
-    // API request with which we will get the list of pieces of equipment available:
-    const data = await getAllEquipment();
+  async function getExistingBuildings() {
+    // API request:
+    const { buildings } = await getAllBuildings();
 
-    // Storing the different pieces of equipment:
-    setEquipment(data);
+    // Storing all the buildings:
+    setBuildings(buildings);
   }
 
-  const [equipment, setEquipment] = useState([]),
-    [equipmentId, setEquipmentId] = useState(''),
-    [equipmentIdMsg, setEquipmentIdMsg] = useState(''),
+  const [buildings, setBuildings] = useState([]),
+    [buildingId, setBuildingId] = useState(''),
+    [buildingIdMsg, setBuildingIdMsg] = useState(''),
     [isError, setIsError] = useState(false),
-    [equipmentDeleted, setEquipmentDeleted] = useState(false),
+    [buildingDeleted, setBuildingDeleted] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
       navigate("/dashboard");
     },
     handleSelectChange = (e) => {
-      setEquipmentId(e.target.value.toString());
+      setBuildingId(e.target.value.toString());
     },
     handleClick = async (e) => {
       e.preventDefault();
 
-      if (equipmentId === '') {
-        setEquipmentIdMsg('Error. +Info: Por favor, despliegue el menú «Código del equipamiento» y seleccione un valor.');
+      if (buildingId === '') {
+        setBuildingIdMsg('Error. +Info: Por favor, despliegue el menú «Código del edificio» y seleccione un valor.');
       } else {
         try {
-          setEquipmentIdMsg('');
-          await deletePieceEquipment(equipmentId);
-          setEquipmentDeleted(true);
+          setBuildingIdMsg('');
+          await deleteBuilding(buildingId);
+          setBuildingDeleted(true);
           setIsError(false);
         } catch (error) {
           setIsError(true);
@@ -60,27 +60,27 @@ function DeleteBuilding() {
         component={'form'}
         sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
       >
-        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Eliminación de equipamiento"></CardHeader>
+        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Eliminación de edificio"></CardHeader>
 
-        {/* Important: To center the FormCOntrol, we will have to use the property «alignSelf». */}
+        {/* Important: To center the FormControl, we will have to use the property «alignSelf». */}
         <FormControl size='large' sx={{ marginLeft: 2, width: 300, alignSelf: 'center' }}>
-          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20, }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
+          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20, }} id="demo-simple-select-label">Código del edificio</InputLabel>
           <Select
-            title='Por favor, seleccione el código del equipamiento que desea eliminar'
-            labelId="simple-select-equipment-id-label"
+            title='Por favor, despliegue y seleccione el código del edificio que desea eliminar'
+            labelId="simple-select-building-id-label"
             id="simple-select"
-            value={equipmentId}
-            label="Código equipamiento"
+            value={buildingId}
+            label="Código edificio"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
-            {/* Dynamic generation of select option depending on the equipment already registered on 
+            {/* Dynamic generation of select option depending on the building already registered on 
             the database: */}
-            {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id}</MenuItem>
+            {buildings.map(building => {
+              return <MenuItem key={building.id} value={building.id}>Código: {building.id} (Denominación: {building.buildingName})</MenuItem>
             })}
           </Select>
-          {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {buildingIdMsg.includes('Error') && <Alert severity="error">{buildingIdMsg}</Alert>}
         </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -94,22 +94,22 @@ function DeleteBuilding() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el equipamiento con código {equipmentId}. +Info: {errorMsg}</Alert>}
-        {equipmentDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el edificio con código {buildingId}. +Info: {errorMsg}</Alert>}
+        {buildingDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
 
-        {equipmentDeleted && <Dialog
-          style={{ position: 'absolute', left: 500, top: 200 }}
-          open={equipmentDeleted}
+        {buildingDeleted && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={buildingDeleted}
           onClose={handleNavigate}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Eliminación de equipamiento"}
+            {"Eliminación de edificio"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              El equipamiento con código {equipmentId} se ha eliminado correctamente de la base de datos.
+              El edificio con código {buildingId} se ha eliminado correctamente de la base de datos.
             </DialogContentText>
           </DialogContent>
           <DialogActions>

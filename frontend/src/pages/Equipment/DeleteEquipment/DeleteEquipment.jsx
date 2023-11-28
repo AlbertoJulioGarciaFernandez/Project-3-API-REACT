@@ -78,7 +78,7 @@ function DeleteEquipment() {
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id} (Denominación: {pieceOfEquipment.equipmentName})</MenuItem>
+              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>Código: {pieceOfEquipment.id} (Denominación: {pieceOfEquipment.equipmentName})</MenuItem>
             })}
           </Select>
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}

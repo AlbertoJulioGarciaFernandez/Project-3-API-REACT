@@ -115,7 +115,7 @@ function UpdateClassroom() {
             {/* Dynamic generation of select option depending on the classrooms already registered on 
             the database: */}
             {classrooms.map(classroom => {
-              return <MenuItem key={classroom.id} value={classroom.id}>{classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
+              return <MenuItem key={classroom.id} value={classroom.id}>Código: {classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
             })}
           </Select>
           {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
@@ -145,6 +145,7 @@ function UpdateClassroom() {
             margin="dense"
             title='Por favor, seleccione el aforo del aula que desea modificar (valor mínimo: 10 — valor máximo: 50)'
             fullWidth={true}
+            value={(classroomCapacity === null) ? '' : classroomCapacity}
             InputProps={{ inputProps: { min: 10, max: 50 } }}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"

@@ -77,7 +77,7 @@ function DeleteClassroom() {
             {/* Dynamic generation of select option depending on the classrooms already registered on 
             the database: */}
             {classrooms.map(classroom => {
-              return <MenuItem key={classroom.id} value={classroom.id}>{classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
+              return <MenuItem key={classroom.id} value={classroom.id}>Código {classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
             })}
           </Select>
           {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}

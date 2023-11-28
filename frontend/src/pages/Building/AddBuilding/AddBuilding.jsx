@@ -1,33 +1,34 @@
-import { Alert, Box, Button, Card, CardActions, CardContent, CardHeader, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { Alert, Box, Button, Card, CardActions, CardContent, CardHeader, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import './AddBuilding.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createBuilding } from '../../../services/building';
+import { getListUsers } from '../../../services/user';
 
 function AddBuilding() {
 
-  const [users, setUsers] = useState([]);
-
   useEffect(() => {
-    getEquipmentAvailable();
+    getExistingUsers();
   }, []);
 
-  async function getEquipmentAvailable() {
-    // API request with which we will get the list of pieces of equipment available:
-    const data = await getAllEquipment();
+  async function getExistingUsers() {
+    // API request:
+    const { users } = await getListUsers(),
+      // Now, it is time to filter the users who are building administrators filtering
+      // by role:
+      buildingAdmins = users.filter(user => user.role === 'buildingAdmin');
 
-    // Storing the different pieces of equipment:
-    setUsers(data);
+    // Storing all the users who are building administrators:
+    setBuildingAdmins(buildingAdmins);
   }
-
-
 
   const [buildingName, setBuildingName] = useState(''),
     [buildingNameMsg, setBuildingNameMsg] = useState(''),
     [buildingAddress, setBuildingAddress] = useState(''),
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
-    [buildingProvidedServices, setBuildingProvidedServices] = useState(''),
-    [buildingAdmin, setBuildingAdmin] = useState(''),
+    [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
+    [buildingAdmins, setBuildingAdmins] = useState([]),
+    [buildingAdminId, setBuildingAdminId] = useState(null),
     [isError, setIsError] = useState(false),
     [buildingRegistered, setBuildingRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
@@ -45,14 +46,26 @@ function AddBuilding() {
       setBuildingPhoneNumb(e.target.value);
     },
     handleProvidedServicesChange = (e) => {
+
       // If the checkbox is checked:
       if (e.target.checked) {
-        // We concatenate as many services as checkboxes are checked:
-        setBuildingProvidedServices(buildingProvidedServices + e.target.labels[0].innerText + ', ');
+        // We include in the array as many services as checkboxes are checked as long
+        // as these services are NOT already stored in the array:
+        if (!buildingProvidedServices.includes(e.target.labels[0].innerText)) {
+          setBuildingProvidedServices((cv) => [...cv, e.target.labels[0].innerText]);
+        }
+      }
+
+      if (!e.target.checked) {
+        // We delete from the array as many services as checkboxes are unchecked:
+        if (buildingProvidedServices.includes(e.target.labels[0].innerText)) {
+          const result = buildingProvidedServices.filter(providedService => providedService !== e.target.labels[0].innerText);
+          setBuildingProvidedServices(result)
+        }
       }
     },
-    handleBuildingAdminChange = (e) => {
-      setBuildingAdmin(e.target.value);
+    handleSelectBuildingAdminChange = (e) => {
+      setBuildingAdminId(e.target.value);
     },
     handleClick = async (e) => {
       e.preventDefault();
@@ -62,7 +75,8 @@ function AddBuilding() {
       } else {
         try {
           setBuildingNameMsg('');
-          await createBuilding({ buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingProvidedServices, userId: });
+          let buildingServices = buildingProvidedServices.join(', ');
+          await createBuilding({ buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
           setBuildingName('');
           setBuildingRegistered(true);
           setIsError(false);
@@ -83,7 +97,7 @@ function AddBuilding() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '50vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Alta de edificio"></CardHeader>
         <CardContent>
@@ -133,6 +147,25 @@ function AddBuilding() {
           <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
           <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
         </FormGroup>
+
+
+        <FormControl size='large' sx={{ marginBottom: 1, marginLeft: 2, marginTop: 1, width: 400 }}>
+          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Persona que administrará el edificio</InputLabel>
+          <Select
+            title='Por favor, despliegue y seleccione el código de la persona que administrará el edificio que desea dar de alta'
+            labelId="simple-select-buildingadminid-label"
+            id="simple-select"
+            value={(buildingAdminId === null) ? '' : buildingAdminId}
+            label="Codigo administrador"
+            sx={{ backgroundColor: 'white' }}
+            onChange={handleSelectBuildingAdminChange}
+          >
+            {/* Dynamic generation of select option depending on the building administrators already registered on the database: */}
+            {buildingAdmins.map(buildingAdmin => {
+              return <MenuItem key={buildingAdmin.id} value={buildingAdmin.id}>Código: {buildingAdmin.id} (Nombre: {buildingAdmin.firstName} {buildingAdmin.lastName})</MenuItem>
+            })}
+          </Select>
+        </FormControl>
 
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>

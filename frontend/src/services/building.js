@@ -10,34 +10,31 @@ export async function getAllBuildings() {
 }
 
 export async function createBuilding(buildingData) {
-  const { data } = await api.post(
-    "/building",
-    buildingData,
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
+  const { data } = await api.post("/building", buildingData, {
+    headers: {
+      authorization: localStorage.token,
+    },
+  });
+  console.log(data)
   return data;
 }
 
-export async function updateBuilding({
-  buildingId, buildingData
-}) {
-  const { data } = await api.put(
-    `/building/${buildingId}`,
-    {
-      buildingData
-    },
-    {
+export async function updateBuilding(buildingId, buildingData) {
+  console.log(buildingData)
+  try {
+    const { data } = await api.put(`/building/${buildingId}`, buildingData, {
       headers: {
         authorization: localStorage.token,
       },
-    }
-  );
-  return data;
+    });
+    return data;   
+  } catch (error) {
+    console.log(error)
+  }
+ 
 }
+
+// await updateBuilding(buildingId, { buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
 
 export async function deleteBuilding(buildingId) {
   const { data } = await api.delete(`/building/${buildingId}`, {

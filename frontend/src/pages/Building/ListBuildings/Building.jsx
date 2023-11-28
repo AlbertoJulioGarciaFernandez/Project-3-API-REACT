@@ -9,7 +9,7 @@ function Building(props) {
       <p><b>Dirección:</b> {props.existingBuilding.address}</p>
       <p><b>Número de teléfono:</b> {props.existingBuilding.phoneNumber}</p>
       <p><b>Servicios disponibles:</b> {props.existingBuilding.providedServices}</p>
-      <p><b>Administrador/a:</b> {props.existingBuilding.buildingManagerId}</p>
+      <p><b>Administrador/a:</b> {props.existingBuilding.userId}</p>
       <Divider />
     </div>
   )
