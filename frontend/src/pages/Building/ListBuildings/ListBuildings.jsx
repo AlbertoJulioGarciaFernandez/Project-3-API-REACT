@@ -22,12 +22,9 @@ function ListBuildings() {
   }
 
   return (
-    <div>
-      <h1>Listado de edificios existentes</h1>
-      {buildingsRetrieved.map(building => {
-        return <Building key={building.id} existingBuilding={building} />
-      })}
-    </div>
+    <>
+      <Building existingBuildings={buildingsRetrieved} />
+    </>
   )
 }
 

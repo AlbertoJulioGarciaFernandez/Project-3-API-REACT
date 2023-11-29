@@ -28,13 +28,21 @@ function AddBuilding() {
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
     [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
     [buildingAdmins, setBuildingAdmins] = useState([]),
-    [buildingAdminId, setBuildingAdminId] = useState(null),
+    [isChecked, setIsCheked] =useState(false),
+    // Important: In order not to get a 404 error from the API building controller
+    // (createBuilding function), the useState belonging to «buildingAdminId» has to be
+    // EMPTY, not simple quotation. The reason is that the controller will check whether
+    // the userId (building administrator id) is or not UNDEFINED and, somehow, if we
+    // write a value other than leaving useState empty, an error will occur if we do
+    // not select a building administrator in the form:
+    [buildingAdminId, setBuildingAdminId] = useState(),
     [isError, setIsError] = useState(false),
+    [confirmBuildingRegistration, setConfirmBuildingRegistration] = useState(false),
     [buildingRegistered, setBuildingRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listBuildings");
     },
     handleNameChange = (e) => {
       setBuildingName(e.target.value);
@@ -46,7 +54,7 @@ function AddBuilding() {
       setBuildingPhoneNumb(e.target.value);
     },
     handleProvidedServicesChange = (e) => {
-
+      
       // If the checkbox is checked:
       if (e.target.checked) {
         // We include in the array as many services as checkboxes are checked as long
@@ -73,18 +81,29 @@ function AddBuilding() {
       if (buildingName === '') {
         setBuildingNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
       } else {
-        try {
-          setBuildingNameMsg('');
-          let buildingServices = buildingProvidedServices.join(', ');
-          await createBuilding({ buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
-          setBuildingName('');
-          setBuildingRegistered(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setBuildingNameMsg('');
+        // Confirm building registration dialog window will pop up:
+        setConfirmBuildingRegistration(true);
       }
+    },
+    handleProceedRegistration = async () => {
+      setConfirmBuildingRegistration(false);
+      try {
+        let buildingServices = buildingProvidedServices.join(', ');
+        await createBuilding({ buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
+        setBuildingName('');
+        setBuildingRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelRegistration = () => {
+      setConfirmBuildingRegistration(false);
+    },
+    handleCleanCheckBox = () => {
+      setIsCheked(false)
     }
 
   return (
@@ -143,9 +162,9 @@ function AddBuilding() {
         </CardContent>
 
         <FormGroup title='Servicios disponibles' sx={{ marginLeft: 2, marginTop: 1 }}>
-          <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
-          <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
-          <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
+          <FormControlLabel checked={isChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
+          <FormControlLabel checked={isChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
+          <FormControlLabel checked={isChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
         </FormGroup>
 
 
@@ -155,7 +174,7 @@ function AddBuilding() {
             title='Por favor, despliegue y seleccione el código de la persona que administrará el edificio que desea dar de alta'
             labelId="simple-select-buildingadminid-label"
             id="simple-select"
-            value={(buildingAdminId === null) ? '' : buildingAdminId}
+            value={(buildingAdminId === undefined) ? '' : buildingAdminId}
             label="Codigo administrador"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectBuildingAdminChange}
@@ -179,8 +198,41 @@ function AddBuilding() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanCheckBox}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el edificio {buildingName}. +Info: {errorMsg.response.data.error} ({errorMsg.response.data.text})</Alert>}
         {buildingRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmBuildingRegistration && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmBuildingRegistration}
+          onClose={handleProceedRegistration}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar eliminacion edificio"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a dar de alta un nuevo edificio con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedRegistration}>Aceptar</Button>
+            <Button onClick={handleCancelRegistration}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {buildingRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}

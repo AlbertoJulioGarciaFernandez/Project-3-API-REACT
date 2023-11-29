@@ -21,11 +21,12 @@ function DeleteBuilding() {
     [buildingId, setBuildingId] = useState(''),
     [buildingIdMsg, setBuildingIdMsg] = useState(''),
     [isError, setIsError] = useState(false),
+    [confirmBuildingDeletion, setConfirmBuildingDeletion] = useState(false),
     [buildingDeleted, setBuildingDeleted] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listBuildings");
     },
     handleSelectChange = (e) => {
       setBuildingId(e.target.value.toString());
@@ -36,16 +37,24 @@ function DeleteBuilding() {
       if (buildingId === '') {
         setBuildingIdMsg('Error. +Info: Por favor, despliegue el menú «Código del edificio» y seleccione un valor.');
       } else {
-        try {
-          setBuildingIdMsg('');
-          await deleteBuilding(buildingId);
-          setBuildingDeleted(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setBuildingIdMsg('');
+        // Confirm building deletion dialog window will pop up:
+        setConfirmBuildingDeletion(true);
       }
+    },
+    handleProceedDeletion = async () => {
+      setConfirmBuildingDeletion(false);
+      try {
+        await deleteBuilding(buildingId);
+        setBuildingDeleted(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelDeletion = () => {
+      setConfirmBuildingDeletion(false);
     }
 
   return (
@@ -96,6 +105,27 @@ function DeleteBuilding() {
 
         {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el edificio con código {buildingId}. +Info: {errorMsg}</Alert>}
         {buildingDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
+
+        {confirmBuildingDeletion && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmBuildingDeletion}
+          onClose={handleProceedDeletion}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar eliminacion edificio"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a eliminar de la base de datos el edificio con código «{buildingId}». Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedDeletion}>Aceptar</Button>
+            <Button onClick={handleCancelDeletion}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {buildingDeleted && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}

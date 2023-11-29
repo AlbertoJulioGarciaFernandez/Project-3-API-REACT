@@ -10,6 +10,7 @@ export async function getAllBuildings() {
 }
 
 export async function createBuilding(buildingData) {
+  console.log(buildingData)
   const { data } = await api.post("/building", buildingData, {
     headers: {
       authorization: localStorage.token,

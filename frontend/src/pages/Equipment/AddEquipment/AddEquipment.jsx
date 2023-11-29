@@ -9,11 +9,12 @@ function AddEquipment() {
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
     [equipmentDescription, setEquipmentDescription] = useState(null),
     [isError, setIsError] = useState(false),
+    [confirmPieceOfEquipmentRegistration, setConfirmPieceOfEquipmentRegistration] = useState(false),
     [equipmentRegistered, setEquipmentRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listEquipment");
     },
     handleNameChange = (e) => {
       setEquipmentName(e.target.value);
@@ -27,18 +28,25 @@ function AddEquipment() {
       if (equipmentName === '') {
         setEquipmentNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
       } else {
-        try {
-          setEquipmentNameMsg('');
-          await createPieceEquipment({ equipmentName: equipmentName, description: equipmentDescription });
-          setEquipmentName('');
-          setEquipmentRegistered(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setEquipmentNameMsg('');
+        // Confirm piece of equipment registration dialog window will pop up:
+        setConfirmPieceOfEquipmentRegistration(true);
       }
-    }
+    },
+    handleProceedRegistration = async () => {
+      try {
+        await createPieceEquipment({ equipmentName: equipmentName, description: equipmentDescription });
+        setEquipmentName('');
+        setEquipmentRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelRegistration = () => {
+      setConfirmPieceOfEquipmentRegistration(false);
+    };
 
   return (
     <Box sx={{
