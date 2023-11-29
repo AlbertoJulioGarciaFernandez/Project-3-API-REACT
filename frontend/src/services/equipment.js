@@ -9,39 +9,21 @@ export async function getAllEquipment() {
   return data;
 }
 
-export async function createPieceEquipment({ equipmentName, description }) {
-  const { data } = await api.post(
-    "/equipment",
-    {
-      equipmentName: equipmentName,
-      description: description,
+export async function createPieceEquipment(equipmentData) {
+  const { data } = await api.post("/equipment", equipmentData, {
+    headers: {
+      authorization: localStorage.token,
     },
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
+  });
   return data;
 }
 
-export async function updatePieceEquipment({
-  equipmentId,
-  equipmentName,
-  description,
-}) {
-  const { data } = await api.put(
-    `/equipment/${equipmentId}`,
-    {
-      equipmentName: equipmentName,
-      description: description,
+export async function updatePieceEquipment(equipmentId, equipmentData) {
+  const { data } = await api.put(`/equipment/${equipmentId}`, equipmentData, {
+    headers: {
+      authorization: localStorage.token,
     },
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
+  });
   return data;
 }
 

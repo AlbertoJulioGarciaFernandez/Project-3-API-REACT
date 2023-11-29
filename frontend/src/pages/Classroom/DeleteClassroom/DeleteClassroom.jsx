@@ -2,44 +2,44 @@ import { Alert, Box, Button, Card, CardActions, CardHeader, Dialog, DialogAction
 import './DeleteClassroom.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deletePieceEquipment, getAllEquipment } from '../../../services/equipment';
+import { deleteClassroom, getAllClassrooms } from '../../../services/classroom';
 
 function DeleteClassroom() {
   useEffect(() => {
-    getEquipmentAvailable();
+    getClassroomsAvailable();
   }, []);
 
-  async function getEquipmentAvailable() {
-    // API request with which we will get the list of pieces of equipment available:
-    const data = await getAllEquipment();
+  async function getClassroomsAvailable() {
+    // API request with which we will get the list of classrooms available:
+    const data = await getAllClassrooms();
 
-    // Storing the different pieces of equipment:
-    setEquipment(data);
+    // Storing the different classrooms:
+    setClassroom(data);
   }
 
-  const [equipment, setEquipment] = useState([]),
-    [equipmentId, setEquipmentId] = useState(''),
-    [equipmentIdMsg, setEquipmentIdMsg] = useState(''),
+  const [classrooms, setClassroom] = useState([]),
+    [classroomId, setClassroomId] = useState(''),
+    [classroomIdMsg, setClassroomIdMsg] = useState(''),
     [isError, setIsError] = useState(false),
-    [equipmentDeleted, setEquipmentDeleted] = useState(false),
+    [classroomDeleted, setClassroomDeleted] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
       navigate("/dashboard");
     },
     handleSelectChange = (e) => {
-      setEquipmentId(e.target.value.toString());
+      setClassroomId(e.target.value.toString());
     },
     handleClick = async (e) => {
       e.preventDefault();
 
-      if (equipmentId === '') {
-        setEquipmentIdMsg('Error. +Info: Por favor, despliegue el menú «Código del equipamiento» y seleccione un valor.');
+      if (classroomId === '') {
+        setClassroomIdMsg('Error. +Info: Por favor, despliegue el menú «Código del aula» y seleccione un valor.');
       } else {
         try {
-          setEquipmentIdMsg('');
-          await deletePieceEquipment(equipmentId);
-          setEquipmentDeleted(true);
+          setClassroomIdMsg('');
+          await deleteClassroom(classroomId);
+          setClassroomDeleted(true);
           setIsError(false);
         } catch (error) {
           setIsError(true);
@@ -60,27 +60,27 @@ function DeleteClassroom() {
         component={'form'}
         sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
       >
-        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Eliminación de equipamiento"></CardHeader>
+        <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Eliminación de aula"></CardHeader>
 
         {/* Important: To center the FormCOntrol, we will have to use the property «alignSelf». */}
         <FormControl size='large' sx={{ marginLeft: 2, width: 300, alignSelf: 'center' }}>
-          <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20, }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
+          <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20, }} id="demo-simple-select-label">Código del aula</InputLabel>
           <Select
-            title='Por favor, seleccione el código del equipamiento que desea eliminar'
-            labelId="simple-select-equipment-id-label"
+            title='Por favor, despliegue y seleccione el código del aula que desea eliminar'
+            labelId="simple-select-classroom-id-label"
             id="simple-select"
-            value={equipmentId}
-            label="Código equipamiento"
+            value={classroomId}
+            label="Código aula"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
-            {/* Dynamic generation of select option depending on the equipment already registered on 
+            {/* Dynamic generation of select option depending on the classrooms already registered on 
             the database: */}
-            {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id}</MenuItem>
+            {classrooms.map(classroom => {
+              return <MenuItem key={classroom.id} value={classroom.id}>{classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
             })}
           </Select>
-          {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
         </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -94,12 +94,12 @@ function DeleteClassroom() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el equipamiento con código {equipmentId}. +Info: {errorMsg}</Alert>}
-        {equipmentDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el aula con código {classroomId}. +Info: {errorMsg}</Alert>}
+        {classroomDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
 
-        {equipmentDeleted && <Dialog
-          style={{ position: 'absolute', left: 500, top: 200 }}
-          open={equipmentDeleted}
+        {classroomDeleted && <Dialog
+          style={{ position: 'absolute', left: 600, top: 100 }}
+          open={classroomDeleted}
           onClose={handleNavigate}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
@@ -109,7 +109,7 @@ function DeleteClassroom() {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              El equipamiento con código {equipmentId} se ha eliminado correctamente de la base de datos.
+              El aula con código {classroomId} se ha eliminado correctamente de la base de datos.
             </DialogContentText>
           </DialogContent>
           <DialogActions>

@@ -9,6 +9,16 @@ export async function getAllClassrooms() {
   return data;
 }
 
+export async function createClassroom(classroomData) {
+  const { data } = await api.post("/classroom", classroomData, {
+    headers: {
+      authorization: localStorage.token,
+    },
+  });
+  return data;
+}
+
+// Another way of doing it:
 // export async function createClassroom({ classroomName, capacity, aimedAt, buildingId }) {
 //   const { data } = await api.post(
 //     "/classroom",
@@ -27,33 +37,12 @@ export async function getAllClassrooms() {
 //   return data;
 // }
 
-export async function createClassroom(classroomData) {
-  const { data } = await api.post(
-    "/classroom",
-    classroomData,
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
-  return data;
-}
-
-export async function updateClassroom({
-  classroomId, classroomData
-}) {
-  const { data } = await api.put(
-    `/classroom/${classroomId}`,
-    {
-      classroomData
+export async function updateClassroom(classroomId, classroomData) {
+  const { data } = await api.put(`/classroom/${classroomId}`, classroomData, {
+    headers: {
+      authorization: localStorage.token,
     },
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
+  });
   return data;
 }
 

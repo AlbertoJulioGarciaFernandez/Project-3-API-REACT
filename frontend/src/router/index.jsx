@@ -14,6 +14,10 @@ import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom"
 import NotFound from "../pages/NotFound/NotFound";
 import UpdateUserPage from "../pages/Users/UpdateUser/UpdateUserPage";
 import DeleteUserComponent from "../components/Users/DeleteUser/DeleteUserComponent";
+import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
+import AddBuilding from "../pages/Building/AddBuilding/AddBuilding";
+import UpdateBuilding from "../pages/Building/UpdateBuilding/UpdateBuilding";
+import DeleteBuilding from "../pages/Building/DeleteBuilding/DeleteBuilding";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +36,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <Root />,
     errorElement: <NotFound />,
+    // errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/"); //If the user isn't logged in, we redirect to the login page.
@@ -41,12 +46,8 @@ export const router = createBrowserRouter([
     },
     children: [
       {
-        path: "/dashboard/listBookings",
+        path: '/dashboard/listBookings',
         element: <ListBookings />,
-      },
-      {
-        path: "/dashboard/deleteEquipment",
-        element: <DeleteEquipment />,
       },
       {
         path: "/dashboard/listUsers",
@@ -65,29 +66,61 @@ export const router = createBrowserRouter([
         element: <DeleteUserComponent/>
       },
       {
-        path: "/dashboard/listClassrooms",
-        element: <ListClassrooms />,
+        path: "/dashboard/updateUser",
+        element: <UpdateUserPage/>,
       },
       {
-        path: "/dashboard/addClassroom",
-        element: <AddClassroom />,
+        path: "/dashboard/deleteUser",
+        element: <DeleteUserComponent/>
       },
       {
-        path: "/dashboard/updateClassroom",
-        element: <UpdateClassroom />,
+        path: "/dashboard/listEquipment",
+        element: <ListEquipment />,
       },
       {
-        path: "/dashboard/deleteClassroom",
-        element: <DeleteClassroom />,
+        path: "/dashboard/addEquipment",
+        element: <AddEquipment />,
       },
-      // {
-      //   path: '/dashboard/updateBuilding',
-      //   element: <UpdateBuilding />
-      // },
-      // {
-      //   path: '/dashboard/deleteBuilding',
-      //   element: <DeleteBuilding />
-      // },
+      {
+        path: "/dashboard/updateEquipment",
+        element: <UpdateEquipment />,
+      },
+      {
+        path: "/dashboard/deleteEquipment",
+        element: <DeleteEquipment />,
+      },
+      {
+        path: '/dashboard/listClassrooms',
+        element: <ListClassrooms />
+      },
+      {
+        path: '/dashboard/addClassroom',
+        element: <AddClassroom />
+      },
+      {
+        path: '/dashboard/updateClassroom',
+        element: <UpdateClassroom />
+      },
+      {
+        path: '/dashboard/deleteClassroom',
+        element: <DeleteClassroom />
+      },
+      {
+        path: '/dashboard/listBuildings',
+        element: <ListBuildings />
+      },
+      {
+        path: '/dashboard/addBuilding',
+        element: <AddBuilding />
+      },
+      {
+        path: '/dashboard/updateBuilding',
+        element: <UpdateBuilding />
+      },
+      {
+        path: '/dashboard/deleteBuilding',
+        element: <DeleteBuilding />
+      },
     ],
   },
 ]);

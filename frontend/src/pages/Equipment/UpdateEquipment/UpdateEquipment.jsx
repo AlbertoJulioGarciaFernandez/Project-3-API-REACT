@@ -53,7 +53,8 @@ function UpdateEquipment() {
         } else {
           try {
             setEquipmentNameMsg('');
-            await updatePieceEquipment({ equipmentId: equipmentId, equipmentName: equipmentName, description: equipmentDescription });
+            // await updatePieceEquipment({ equipmentId: equipmentId, equipmentName: equipmentName, description: equipmentDescription });
+            await updatePieceEquipment(equipmentId, { equipmentName: equipmentName, description: equipmentDescription });
             setEquipmentName('');
             setEquipmentRegistered(true);
             setIsError(false);
@@ -139,7 +140,7 @@ function UpdateEquipment() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el equipamiento {equipmentName}. +Info: {errorMsg.response.data.message}</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el equipamiento con código {equipmentId}. +Info: {errorMsg.response.data.message}</Alert>}
         {equipmentRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {equipmentRegistered && <Dialog
