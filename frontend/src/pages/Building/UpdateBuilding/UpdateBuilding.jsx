@@ -112,11 +112,11 @@ function UpdateBuilding() {
             setBuildingNameMsg('');
             let buildingServices = buildingProvidedServices.join(', ');
             await updateBuilding(buildingId, { buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
-    //         "buildingName": "nuevo",
-    // "address": "C/ Lope de Vega, 19",
-    // "phoneNumber": "785623659",
-    // "providedServices": "Biblioteca, Salón de actos",
-    // "userId": 8
+            //         "buildingName": "nuevo",
+            // "address": "C/ Lope de Vega, 19",
+            // "phoneNumber": "785623659",
+            // "providedServices": "Biblioteca, Salón de actos",
+            // "userId": 8
             setBuildingName('');
             setBuildingRegistered(true);
             setIsError(false);
@@ -239,7 +239,7 @@ function UpdateBuilding() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el edificio con código {buildingId}. +Info: {errorMsg.response.data}</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el edificio con código {buildingId}. +Info: {errorMsg.response.data.error} ({errorMsg.response.data.text})</Alert>}
         {buildingRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {buildingRegistered && <Dialog

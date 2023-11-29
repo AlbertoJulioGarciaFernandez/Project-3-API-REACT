@@ -15,26 +15,17 @@ export async function createBuilding(buildingData) {
       authorization: localStorage.token,
     },
   });
-  console.log(data)
   return data;
 }
 
 export async function updateBuilding(buildingId, buildingData) {
-  console.log(buildingData)
-  try {
-    const { data } = await api.put(`/building/${buildingId}`, buildingData, {
-      headers: {
-        authorization: localStorage.token,
-      },
-    });
-    return data;   
-  } catch (error) {
-    console.log(error)
-  }
- 
+  const { data } = await api.put(`/building/${buildingId}`, buildingData, {
+    headers: {
+      authorization: localStorage.token,
+    },
+  });
+  return data;
 }
-
-// await updateBuilding(buildingId, { buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
 
 export async function deleteBuilding(buildingId) {
   const { data } = await api.delete(`/building/${buildingId}`, {

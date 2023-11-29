@@ -179,7 +179,7 @@ function AddBuilding() {
           </Button>
         </CardActions>
 
-        {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el edificio {buildingName}. +Info: {errorMsg.response.data}</Alert>}
+        {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el edificio {buildingName}. +Info: {errorMsg.response.data.error} ({errorMsg.response.data.text})</Alert>}
         {buildingRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {buildingRegistered && <Dialog
