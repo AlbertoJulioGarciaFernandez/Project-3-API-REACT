@@ -28,7 +28,9 @@ function AddBuilding() {
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
     [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
     [buildingAdmins, setBuildingAdmins] = useState([]),
-    [isChecked, setIsCheked] =useState(false),
+    [cafeteriaIsChecked, setCafeteriaIsChecked] = useState(false),
+    [libraryIsChecked, setLibraryIsChecked] = useState(false),
+    [assemblyHallIsChecked, setAssemblyHallIsChecked] = useState(false),
     // Important: In order not to get a 404 error from the API building controller
     // (createBuilding function), the useState belonging to «buildingAdminId» has to be
     // EMPTY, not simple quotation. The reason is that the controller will check whether
@@ -54,13 +56,25 @@ function AddBuilding() {
       setBuildingPhoneNumb(e.target.value);
     },
     handleProvidedServicesChange = (e) => {
-      
+
+      if (e.target.labels[0].innerText === 'Cafetería') {
+        setCafeteriaIsChecked(!cafeteriaIsChecked);
+      }
+
+      if (e.target.labels[0].innerText === 'Biblioteca') {
+        setLibraryIsChecked(!libraryIsChecked);
+      }
+
+      if (e.target.labels[0].innerText === 'Salón de actos') {
+        setAssemblyHallIsChecked(!assemblyHallIsChecked);
+      }
+
       // If the checkbox is checked:
       if (e.target.checked) {
         // We include in the array as many services as checkboxes are checked as long
         // as these services are NOT already stored in the array:
         if (!buildingProvidedServices.includes(e.target.labels[0].innerText)) {
-          setBuildingProvidedServices((cv) => [...cv, e.target.labels[0].innerText]);
+          setBuildingProvidedServices((currentValue) => [...currentValue, e.target.labels[0].innerText]);
         }
       }
 
@@ -102,8 +116,23 @@ function AddBuilding() {
     handleCancelRegistration = () => {
       setConfirmBuildingRegistration(false);
     },
-    handleCleanCheckBox = () => {
-      setIsCheked(false)
+    handleCleanCheckBox = async () => {
+      // Not only we have to set these state variables to false in order
+      // to reset their values but also the array in which we store all 
+      // the services!
+      setCafeteriaIsChecked(false);
+      setLibraryIsChecked(false);
+      setAssemblyHallIsChecked(false);
+      // Resetting the array:
+      setBuildingProvidedServices([]);
+      // If we did not reset the array, services which were checked before
+      // we press the clean form button would still be stored in it despite
+      // the fact that they are now unchecked!
+      
+      
+      // Check out why does not work (notice the async above in arrow function declaration)
+      setBuildingAdmins([]);
+      await getExistingUsers();
     }
 
   return (
@@ -162,9 +191,9 @@ function AddBuilding() {
         </CardContent>
 
         <FormGroup title='Servicios disponibles' sx={{ marginLeft: 2, marginTop: 1 }}>
-          <FormControlLabel checked={isChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
-          <FormControlLabel checked={isChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
-          <FormControlLabel checked={isChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
+          <FormControlLabel checked={cafeteriaIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
+          <FormControlLabel checked={libraryIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
+          <FormControlLabel checked={assemblyHallIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
         </FormGroup>
 
 
@@ -221,7 +250,7 @@ function AddBuilding() {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Confirmar eliminacion edificio"}
+            {"Confirmar alta de edificio"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">

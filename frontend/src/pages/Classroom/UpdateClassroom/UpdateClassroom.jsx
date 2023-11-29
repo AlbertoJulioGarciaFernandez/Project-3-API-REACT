@@ -41,11 +41,12 @@ function UpdateClassroom() {
     [classroomAimedAt, setClassroomAimedAt] = useState(null),
     [classroomBuildingId, setClassroomBuildingId] = useState(null),
     [isError, setIsError] = useState(false),
+    [confirmClassroomUpdate, setConfirmClassroomUpdate] = useState(false),
     [classroomRegistered, setClassroomRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listClassrooms");
     },
     handleNameChange = (e) => {
       setClassroomName(e.target.value);
@@ -73,19 +74,29 @@ function UpdateClassroom() {
         if (classroomName === '') {
           setClassroomNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
-          try {
-            setClassroomNameMsg('');
-            await updateClassroom(classroomId, { classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
-            setClassroomName('');
-            setClassroomRegistered(true);
-            setIsError(false);
-          } catch (error) {
-            setIsError(true);
-            setErrorMsg(error);
-          }
+          setClassroomNameMsg('');
+          // Confirm classroom update dialog window will pop up:
+          setConfirmClassroomUpdate(true);
+
         }
       }
-    }
+    },
+    handleProceedUpdate = async () => {
+      setConfirmClassroomUpdate(false);
+      try {
+        setClassroomNameMsg('');
+        await updateClassroom(classroomId, { classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
+        setClassroomName('');
+        setClassroomRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelUpdate = () => {
+      setConfirmClassroomUpdate(false);
+    };
 
   return (
     <Box sx={{
@@ -201,6 +212,27 @@ function UpdateClassroom() {
 
         {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el aula con código {classroomId}. +Info: {errorMsg.response.data}</Alert>}
         {classroomRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmClassroomUpdate && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmClassroomUpdate}
+          onClose={handleProceedUpdate}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar actualización de aula"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a actualizar el aula código {classroomId} con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedUpdate}>Aceptar</Button>
+            <Button onClick={handleCancelUpdate}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {classroomRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}

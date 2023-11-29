@@ -25,11 +25,12 @@ function AddClassroom() {
     [classroomAimedAt, setClassroomAimedAt] = useState(null),
     [classroomBuildingId, setClassroomBuildingId] = useState(null),
     [isError, setIsError] = useState(false),
+    [confirmClassroomRegistration, setConfirmClassroomRegistration] = useState(false),
     [classroomRegistered, setClassroomRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listClassrooms");
     },
     handleNameChange = (e) => {
       setClassroomName(e.target.value);
@@ -49,17 +50,28 @@ function AddClassroom() {
       if (classroomName === '') {
         setClassroomNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
       } else {
-        try {
-          setClassroomNameMsg('');
-          await createClassroom({ classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
-          setClassroomName('');
-          setClassroomRegistered(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setClassroomNameMsg('');
+        // Confirm classroom registration dialog window will pop up:
+        setConfirmClassroomRegistration(true);
       }
+    },
+    handleProceedRegistration = async () => {
+      setConfirmClassroomRegistration(false);
+      try {
+        await createClassroom({ classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
+        setClassroomName('');
+        setClassroomRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelRegistration = () => {
+      setConfirmClassroomRegistration(false);
+    },
+    handleCleanInput = () => {
+      setClassroomCapacity(null);
     }
 
   return (
@@ -155,8 +167,41 @@ function AddClassroom() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el aula {classroomName}. +Info: {errorMsg.response.data}</Alert>}
         {classroomRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmClassroomRegistration && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmClassroomRegistration}
+          onClose={handleProceedRegistration}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar alta de aula"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a dar de alta un nuevo aula con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedRegistration}>Aceptar</Button>
+            <Button onClick={handleCancelRegistration}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {classroomRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}

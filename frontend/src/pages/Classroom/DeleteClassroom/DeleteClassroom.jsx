@@ -135,7 +135,7 @@ function DeleteClassroom() {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Eliminación de equipamiento"}
+            {"Eliminación de aula"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">

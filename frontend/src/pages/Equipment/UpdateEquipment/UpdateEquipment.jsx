@@ -25,11 +25,12 @@ function UpdateEquipment() {
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
     [equipmentDescription, setEquipmentDescription] = useState(''),
     [isError, setIsError] = useState(false),
+    [confirmPieceOfEquipmentUpdate, setConfirmPieceOfEquipmentUpdate] = useState(false),
     [equipmentRegistered, setEquipmentRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listEquipment");
     },
     handleNameChange = (e) => {
       setEquipmentName(e.target.value);
@@ -51,20 +52,29 @@ function UpdateEquipment() {
         if (equipmentName === '') {
           setEquipmentNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
-          try {
-            setEquipmentNameMsg('');
-            // await updatePieceEquipment({ equipmentId: equipmentId, equipmentName: equipmentName, description: equipmentDescription });
-            await updatePieceEquipment(equipmentId, { equipmentName: equipmentName, description: equipmentDescription });
-            setEquipmentName('');
-            setEquipmentRegistered(true);
-            setIsError(false);
-          } catch (error) {
-            setIsError(true);
-            setErrorMsg(error);
-          }
+          setEquipmentNameMsg('');
+          // Confirm piece of equipment update dialog window will pop up:
+          setConfirmPieceOfEquipmentUpdate(true);
         }
       }
-    }
+    },
+    handleProceedUpdate = async () => {
+      setConfirmPieceOfEquipmentUpdate(false);
+      try {
+        setEquipmentNameMsg('');
+        await updatePieceEquipment(equipmentId, { equipmentName: equipmentName, description: equipmentDescription });
+        setEquipmentName('');
+        setEquipmentRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelUpdate = () => {
+      setConfirmPieceOfEquipmentUpdate(false);
+    };
+    
 
   return (
     <Box sx={{
@@ -142,6 +152,27 @@ function UpdateEquipment() {
 
         {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el equipamiento con código {equipmentId}. +Info: {errorMsg.response.data.message}</Alert>}
         {equipmentRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmPieceOfEquipmentUpdate && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmPieceOfEquipmentUpdate}
+          onClose={handleProceedUpdate}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar actualización de equipamiento"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a actualizar el equipamiento código {equipmentId} con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedUpdate}>Aceptar</Button>
+            <Button onClick={handleCancelUpdate}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {equipmentRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}
