@@ -5,6 +5,19 @@ import { getAllBookings } from "../../../services/booking";
 import DeleteBookingCard from "./DeleteBooking/DeleteBookingCard";
 
 function DeleteBooking() {
+
+
+  const [refres, setRefres] = useState(false)
+
+  function handleRefres() {
+    setRefres(!refres)
+  }
+
+
+
+
+
+
   const [classrooms, setClassrooms] = useState([]);
 
   useEffect(() => {
@@ -20,7 +33,7 @@ function DeleteBooking() {
 
   useEffect(() => {
     getAllBoookings();
-  }, []);
+  }, [refres]);
 
   async function getAllBoookings() {
     const data = await getAllBookings();
@@ -29,7 +42,7 @@ function DeleteBooking() {
 
   return (
     <div className="BodyAddMyBooking">
-      <DeleteBookingCard classroom={classrooms} booking={bookings} />
+      <DeleteBookingCard classroom={classrooms} booking={bookings} functRefres={handleRefres} />
     </div>
   );
 }

@@ -45,7 +45,6 @@ export async function addMyBooking({bookingDate, bookingTime, classroomId}) {
 
 
   export async function UpdateMyBooking({bookingDate, bookingTime, classroomId, bookingId}) {
-    console.log({bookingDate, bookingTime, classroomId, bookingId})
     const response = await api.put(`/booking/updateMyBooking/${bookingId}`, {bookingDate, bookingTime, classroomId}
     , {
       headers:{

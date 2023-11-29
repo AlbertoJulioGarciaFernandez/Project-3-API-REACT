@@ -43,7 +43,13 @@ function ListBookings() {
     })
     .reverse();
 
-  return <div className="cuerpoListBooking">{bookingsList}</div>;
+  return (<>
+    {bookingsList.length > 0 ? (
+      <div className="cuerpoListBooking">{bookingsList}</div>
+    ) : (
+      <h1 className="cuerpoListBookingNot">No Hay Reservas Disponibles</h1>
+    )}
+  </>)
 }
 
 export default ListBookings;

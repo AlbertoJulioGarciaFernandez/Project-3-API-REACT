@@ -9,18 +9,11 @@
 }
 
 .profielCard{
-    padding: 20px
+    width: 500px;
+    padding: 20px;
+    text-align: center;
+    
 }
 
 
-.modal{
-    position:absolute;
-    top: '50%';
-    left: '50%';
-    transform: 'translate(-50%, -50%)';
-    width: 400px;
-    height: 300px;
-    background-color: #97B4FF;
-    border: '2px solid #000';
-    border-radius: 20px
-} 
+

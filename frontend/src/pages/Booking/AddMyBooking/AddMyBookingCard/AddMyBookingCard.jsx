@@ -121,9 +121,9 @@ function AddBookingCard(props) {
           >
             {props.classroom
               .filter((booking) => booking.aimedAt === role)
-              .map((classroom) => (
-                <MenuItem key={classroom.id} value={classroom.id}>
-                  {classroom.classroomName}
+              .map((myClassroom) => (
+                <MenuItem key={myClassroom.id} value={myClassroom.id}>
+                  {myClassroom.classroomName}
                 </MenuItem>
               ))}
           </Select>

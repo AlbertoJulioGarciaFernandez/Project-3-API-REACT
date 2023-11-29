@@ -30,6 +30,7 @@ function DeleteBookingCard(props) {
       });
       setMensaje(addMyBookingResponse.data);
       console.log(addMyBookingResponse.data);
+      props.functRefres()
 
       //Do something with the response
     } catch (error) {

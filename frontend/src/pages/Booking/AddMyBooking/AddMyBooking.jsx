@@ -13,13 +13,12 @@ function AddMyBooking() {
   async function getClassroom() {
     const dataClassroom = await getAllClassrooms()
     setClassrooms(dataClassroom)
-    
-     
   }
+
 
   return (
     <div className='BodyAddMyBooking'>
-      <AddMyBookingCard classroom={classrooms}/>
+      {classrooms && <AddMyBookingCard classroom={classrooms}/>}
     </div>
     
   )

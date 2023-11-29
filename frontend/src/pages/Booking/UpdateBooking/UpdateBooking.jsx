@@ -5,6 +5,17 @@ import { getAllBookings } from '../../../services/booking';
 import UpdateBookingCard from './UpdateBookingCard/UpdateBookingCard';
 
 function UpdateBooking() {
+
+
+
+  const [refres, setRefres] = useState(false)
+
+  function handleRefres() {
+    setRefres(!refres)
+  }
+
+
+
     const [classrooms, setClassrooms] = useState([])
 
   useEffect(() => {
@@ -20,7 +31,7 @@ function UpdateBooking() {
 
   useEffect(() => {
     getTodasBoookings()
-  },[])
+  },[refres])
 
   async function getTodasBoookings() {
     const data = await getAllBookings()
@@ -31,7 +42,7 @@ function UpdateBooking() {
 
   return (
     <div className='BodyAddMyBooking'>
-      <UpdateBookingCard classroom={classrooms} booking={bookings}/>
+      {(bookings && classrooms) &&<UpdateBookingCard classroom={classrooms} booking={bookings} functRefres={handleRefres}/>}
       
     </div>
     

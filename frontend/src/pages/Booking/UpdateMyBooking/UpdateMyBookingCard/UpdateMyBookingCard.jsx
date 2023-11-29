@@ -16,12 +16,16 @@ import { useState } from "react";
 import { UpdateMyBooking } from "../../../../services/booking";
 
 function UpdateMyBookingCard(props) {
-  const [bookingId, setbookingId] = useState("");
+  const [bookingSelect, setBookingSelect] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
   const [classroomId, setClassroomId] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
+
+  console.log(bookingSelect)
+
+  
 
   const role = localStorage.getItem("role");
 
@@ -29,13 +33,21 @@ function UpdateMyBookingCard(props) {
     try {
       setError("");
       setMensaje("");
-      const addMyBookingResponse = await UpdateMyBooking({
+      const addMyBookingResponse = await UpdateMyBooking(
+        {
         bookingDate: bookingDate,
         bookingTime: bookingTime,
         classroomId: classroomId,
-        bookingId: bookingId,
-      });
-      setMensaje(addMyBookingResponse.data);
+        bookingId: bookingSelect.id,
+        }
+      );
+      setMensaje(addMyBookingResponse.data)
+       props.functRefres()
+       setBookingDate("")
+       setBookingSelect("")
+       setBookingTime("")
+       setClassroomId("")
+
 
       //Do something with the response
     } catch (error) {
@@ -43,19 +55,10 @@ function UpdateMyBookingCard(props) {
     }
   }
 
-  const convertirFormatoFecha = (fechaDMY) => {
-    const partesFecha = fechaDMY.split("-"); // Divide la fecha en sus partes: día, mes, año
-    const dia = partesFecha[0];
-    const mes = partesFecha[1];
-    const año = partesFecha[2];
 
-    // Formatea la fecha en formato año-mes-día (YYYY-MM-DD)
-    const fechaYMD = `${año}/${mes}/${dia}`;
-    return fechaYMD;
-  };
 
   const handleChangeAge = (event) => {
-    let fechaFormateada = convertirFormatoFecha(event.target.value);
+    let fechaFormateada = event.target.value;
     setBookingDate(fechaFormateada);
   };
 
@@ -67,8 +70,13 @@ function UpdateMyBookingCard(props) {
     setClassroomId(event.target.value);
   };
 
-  const handleChangeId = (event) => {
-    setbookingId(event.target.value);
+  const handleChangeSelect = (event) => {
+    setBookingSelect(event.target.value);
+    setBookingTime(event.target.value.bookingTime)
+    setClassroomId(event.target.value.classroomId)
+    setBookingDate(event.target.value.bookingDate)
+    
+
   };
 
   const clasrooms = {};
@@ -78,7 +86,7 @@ function UpdateMyBookingCard(props) {
 
   const myBokkings = props.booking
     .map((booking) => (
-      <MenuItem key={booking.id} value={booking.id}>
+      <MenuItem key={booking.id} value={booking}>
         Referencia:{booking.id} | Fecha:{booking.bookingDate} | Hora:
         {booking.bookingTime} | {clasrooms[booking.classroomId]}
       </MenuItem>
@@ -113,16 +121,18 @@ function UpdateMyBookingCard(props) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={bookingId}
+            value={bookingSelect}
             label="Referencia Reserva"
-            onChange={handleChangeId}
+            onChange={handleChangeSelect} 
           >
             {myBokkings}
           </Select>
         </FormControl>
+        
         <TextField
           sx={{ marginTop: "10px" }}
           type="date"
+          value={bookingDate}
           onChange={handleChangeAge}
           slotProps={{
             input: {
@@ -138,10 +148,11 @@ function UpdateMyBookingCard(props) {
             id="demo-simple-select"
             value={bookingTime}
             label="Horario"
-            onChange={handleChangeHora}
+            onChange={handleChangeHora }
+            
           >
             {horarios.map((hora) => (
-              <MenuItem key={hora} value={hora}>
+              <MenuItem key={hora} value={ hora }>
                 {hora}
               </MenuItem>
             ))}

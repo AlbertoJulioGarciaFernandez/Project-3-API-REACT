@@ -16,13 +16,15 @@ import { useState } from "react";
 import { UpdateBooking } from "../../../../services/booking";
 
 function UpdateBookingCard(props) {
-  const [bookingId, setbookingId] = useState("");
+  const [bookingSelect, setBookingSelect] = useState("");
   const [bookingDate, setBookingDate] = useState("");
   const [bookingTime, setBookingTime] = useState("");
   const [classroomId, setClassroomId] = useState("");
   const [userId, setUserId] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
+
+  console.log(bookingSelect)
 
   const role = localStorage.getItem("role");
 
@@ -34,11 +36,16 @@ function UpdateBookingCard(props) {
         bookingDate: bookingDate,
         bookingTime: bookingTime,
         classroomId: classroomId,
-        bookingId: bookingId,
+        bookingId: bookingSelect.id,
         userId:userId
 
       });
       setMensaje(addBookingResponse.data);
+      props.functRefres()
+      setBookingDate("")
+       setBookingSelect("")
+       setBookingTime("")
+       setClassroomId("")
 
       //Do something with the response
     } catch (error) {
@@ -46,20 +53,10 @@ function UpdateBookingCard(props) {
     }
   }
 
-  const convertirFormatoFecha = (fechaDMY) => {
-    const partesFecha = fechaDMY.split("-"); // Divide la fecha en sus partes: día, mes, año
-    const dia = partesFecha[0];
-    const mes = partesFecha[1];
-    const año = partesFecha[2];
 
-    // Formatea la fecha en formato año-mes-día (YYYY-MM-DD)
-    const fechaYMD = `${año}/${mes}/${dia}`;
-    return fechaYMD;
-  };
 
   const handleChangeAge = (event) => {
-    let fechaFormateada = convertirFormatoFecha(event.target.value);
-    setBookingDate(fechaFormateada);
+    setBookingDate(event.target.value);
   };
 
   const handleChangeHora = (event) => {
@@ -70,9 +67,12 @@ function UpdateBookingCard(props) {
     setClassroomId(event.target.value);
   };
 
-  const handleChangeId = (event) => {
-    setbookingId(event.target.value);
-    setUserId(user[event.target.value])
+  const handleBookingSelect = (event) => {
+    setBookingSelect(event.target.value);
+    setUserId(event.target.value.userId)
+    setBookingDate(event.target.value.bookingDate)
+    setBookingTime(event.target.value.bookingTime)
+    setClassroomId(event.target.value.classroomId)
     
   };
 
@@ -88,7 +88,7 @@ function UpdateBookingCard(props) {
 
   const myBokkings = props.booking
     .map((booking) => (
-      <MenuItem key={booking} value={booking.id}>
+      <MenuItem key={booking} value={booking}>
         Referencia:{booking.id} | Fecha:{booking.bookingDate} | Hora:
         {booking.bookingTime} | {clasrooms[booking.classroomId]}
       </MenuItem>
@@ -123,9 +123,9 @@ function UpdateBookingCard(props) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={bookingId}
+            value={bookingSelect}
             label="Referencia Reserva"
-            onChange={handleChangeId}
+            onChange={handleBookingSelect}
           >
             {myBokkings}
           </Select>
@@ -133,6 +133,7 @@ function UpdateBookingCard(props) {
         <TextField
           sx={{ marginTop: "10px" }}
           type="date"
+          value={bookingDate}
           onChange={handleChangeAge}
           slotProps={{
             input: {

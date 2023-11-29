@@ -29,12 +29,11 @@ function DeleteMyBookingCard(props) {
         bookingId: bookingId,
       });
       setMensaje(addMyBookingResponse.data);
-      console.log(addMyBookingResponse.data);
+      props.functRefres()
 
       //Do something with the response
     } catch (error) {
       setError(error.response.data);
-      console.log(error);
     }
   }
 
@@ -80,11 +79,7 @@ function DeleteMyBookingCard(props) {
         <Button onClick={() => addMyBooking()}>Eliminar Reserva</Button>
       </CardActions>
 
-      {mensaje ? (
-        <Alert severity="success">{mensaje}</Alert>
-      ) : (
-        error && <Alert severity="error">{error}</Alert>
-      )}
+      {mensaje ? (<Alert severity="success">{mensaje}</Alert>) : (error && <Alert severity="error">{error}</Alert>)}
     </Card>
   );
 }

@@ -38,9 +38,13 @@ function ListBookings() {
 
 
   return (
-    <div className='cuerpoListBooking'>
-      {bookingsList}
-    </div>
+    <>
+      {bookingsList.length > 0 ? (
+        <div className="cuerpoListBooking">{bookingsList}</div>
+      ) : (
+        <h1 className="cuerpoListBookingNot">No Hay Reservas Disponibles</h1>
+      )}
+    </>
       
     
     

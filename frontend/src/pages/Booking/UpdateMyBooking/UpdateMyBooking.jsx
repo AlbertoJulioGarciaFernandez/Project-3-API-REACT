@@ -5,6 +5,14 @@ import UpdateMyBookingCard from './UpdateMyBookingCard/UpdateMyBookingCard';
 import { getMyBookings } from '../../../services/booking';
 
 function UpdateMyBooking() {
+
+  const [refres, setRefres] = useState(false)
+
+  function handleRefres() {
+    setRefres(!refres)
+  }
+  
+
     const [classrooms, setClassrooms] = useState([])
 
   useEffect(() => {
@@ -20,18 +28,16 @@ function UpdateMyBooking() {
 
   useEffect(() => {
     getMyBoookings()
-  },[])
+  },[refres])
 
   async function getMyBoookings() {
     const data = await getMyBookings()
     setBookings(data.bookings);
-    
-     
   }
 
   return (
     <div className='BodyAddMyBooking'>
-      <UpdateMyBookingCard classroom={classrooms} booking={bookings}/>
+      {(bookings && classrooms) && <UpdateMyBookingCard classroom={classrooms} booking={bookings}  functRefres={handleRefres} getMyBoookings={getMyBoookings}/>}
       
     </div>
     
