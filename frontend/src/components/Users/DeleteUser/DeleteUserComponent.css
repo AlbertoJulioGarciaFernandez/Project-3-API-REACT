@@ -1,6 +1,6 @@
 
 .formularioDeleteUser {
-    width: 40vw;
+    width: 30vw;
     margin: 2rem auto;
     background-color: #f8f8f8;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -9,8 +9,10 @@
 }
 
 .titulo {
+    border-top-left-radius: 14px;
     font-size: 28px;
-    padding: 20px;
+    width: 15rem;
+    padding: 2px;
     background-color: #3498db;
     color: #ffffff;
     text-align: center;

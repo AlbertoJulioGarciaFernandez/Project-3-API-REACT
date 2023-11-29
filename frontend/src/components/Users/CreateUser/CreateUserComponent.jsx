@@ -13,7 +13,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
     <div className="containerFragmentCreateUser">
       <form className="formulariocrearteUser">
         <React.Fragment>
-          <Typography gutterBottom variant="h4" component="form">
+          <Typography className="tituloCreate" gutterBottom variant="h4" component="form">
             Alta de Usuario
           </Typography>
 

@@ -13,7 +13,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
     <div className="containerFragment">
       <form className="formularioUpdateUser">
         <React.Fragment>
-          <Typography gutterBottom variant="h4" component="form" className="titulo">
+          <Typography gutterBottom variant="h4" component="form" className="tituloUdpdate">
             Actualización de Usuario
           </Typography>
 

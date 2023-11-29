@@ -1,108 +1,15 @@
-/* .containerFragment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-  }
-  
-  .formulario {
-    width: 25vw;
-    height: 80vh;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .formContainer {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .textField {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .botonEnviar{
-    justify-content: center;
-    margin-top: -1rem;
-  }
-  
-   */
-
-
- /*   .containerFragment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.formulario {
-    width: 50%;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.formulario form {
-    display: flex;
-    flex-direction: column;
-}
-
-.formulario Typography {
-    font-size: 28px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.formContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.textField {
-    width: 100%;
-}
-
-.botonEnviar {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.botonEnviar Button {
-    background-color: #2ecc71;
-    color: #ffffff;
-    border-radius: 8px;
-    padding: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.botonEnviar Button:hover {
-    background-color: #27ae60;
-}
- */
-
-
- .containerFragment {
+.containerFragment {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   
 }
 
 .formularioUpdateUser {
-  width: 50%;
+  width: 60%;
   background-color: #f8f8f8;
-  padding: 20px;
+/*   padding: 20px; */
   border: 1px solid #ccc;
   border-radius: 25px;
   
@@ -113,14 +20,16 @@
   flex-direction: column;
 }
 
-.titulo {
-  font-size: 28px;
+.tituloUdpdate {
+  border-top-left-radius: 24px;
+  /* font-size: 28px; */
   width: 25rem;
-  padding: 20px;
+  padding: 2px;
   background-color: #3498db;
   color: #ffffff;
   text-align: center;
   border-bottom: 2px solid #2980b9;
+
 }
 
 .formContainer {

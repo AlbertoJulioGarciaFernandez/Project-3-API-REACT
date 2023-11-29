@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     text-align: center;
   }
   
@@ -11,8 +11,7 @@
     height: 60vh;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 14px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
@@ -31,4 +30,15 @@
     margin-top: 2rem;
   }
   
+
+.tituloCreate {
+  border-top-left-radius: 15px;
+  font-size: 28px;
+  width: 15rem;
+  padding: 2px;
+  background-color: #3498db;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 2px solid #2980b9;
+}
   
