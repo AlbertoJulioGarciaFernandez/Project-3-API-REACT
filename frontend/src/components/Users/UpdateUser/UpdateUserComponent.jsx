@@ -106,7 +106,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
           </CardContent>
 
           <CardActions className="botonEnviar">
-            <Button variant="contained" color="success" onClick={handleSubmit}>
+            <Button type="submit" variant="contained" color="success" onClick={handleSubmit}>
               Enviar
             </Button>
           </CardActions>
