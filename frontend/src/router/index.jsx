@@ -18,6 +18,9 @@ import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
 import AddBuilding from "../pages/Building/AddBuilding/AddBuilding";
 import UpdateBuilding from "../pages/Building/UpdateBuilding/UpdateBuilding";
 import DeleteBuilding from "../pages/Building/DeleteBuilding/DeleteBuilding";
+import AddEquipment from "../pages/Building/AddBuilding/AddBuilding";
+import UpdateEquipment from "../pages/Building/UpdateBuilding/UpdateBuilding";
+import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
 
 export const router = createBrowserRouter([
   {
