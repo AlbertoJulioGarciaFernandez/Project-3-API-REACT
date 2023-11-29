@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 
 function ListUsersComponent(props) {
     
+  console.log(props)
   //const dataColumns = Object.keys(data[0]); crea los campos que tendrá la cabecera dinamicamente
   const dataColumns = ["Id","Nombre", "Apellido", "Direccion", "Email", "Rol"] // crea los campos que tendrá la cabecera manualmente
   const [page, setPage] = React.useState(0);

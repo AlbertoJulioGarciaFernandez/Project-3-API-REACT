@@ -28,7 +28,7 @@ function SideMenu() {
     { icon: <AddIcon />, text: 'Crear Reserva', link: '/dashboard/listBookings', index: 2 },
     { icon: <ChangeCircleIcon />, text: 'Modificar Reserva', link: '/dashboard/listBookings', index: 3 },
     { icon: <DeleteIcon />, text: 'Eliminar Reserva', link: '/dashboard/listBookings', index: 4 },
-    // Agrega más elementos si es necesario
+    // Agrega más elementos sị es necesario
   ];
 
   const menuItemsUsuario = [

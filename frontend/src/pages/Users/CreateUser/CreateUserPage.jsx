@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createUser } from "../../../services/user";
 
 function CreateUserPage() {
+
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -13,7 +14,8 @@ function CreateUserPage() {
   });
 
   const handleSubmit = async () => {
-    const response = await createUser(user);
+    await createUser(user);
+    
   };
 
   return (
