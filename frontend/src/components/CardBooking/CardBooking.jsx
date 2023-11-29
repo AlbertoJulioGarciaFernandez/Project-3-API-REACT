@@ -2,6 +2,7 @@ import { Card, Typography } from "@mui/material";
 import "./CardBooking.css";
 import img from "../../assets/portada.jpg";
 
+
 function CardBooking(props) {
  
 
@@ -9,7 +10,6 @@ function CardBooking(props) {
   props.classroom.map(
     (classroom) => (clasrooms[classroom.id] = classroom.classroomName)
   );
-
   return (
     <Card className="CardListBooking">
       <div className="CardListBookingTitel">
@@ -28,6 +28,10 @@ function CardBooking(props) {
         <img className="CardListBookingImg" src={img} />
       </div>
     </Card>
+
+
+
+
   );
 }
 
