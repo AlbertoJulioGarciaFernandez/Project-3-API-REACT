@@ -15,7 +15,7 @@ function CreateUserPage() {
 
 
   const handleSubmit = async (e) => {
-     /*  e.preventDefault(); */
+      e.preventDefault();
       await createUser(user);
       setUser({
         firstName: "",

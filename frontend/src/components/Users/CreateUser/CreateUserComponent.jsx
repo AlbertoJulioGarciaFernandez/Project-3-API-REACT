@@ -27,7 +27,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
     } else if (user.password.length < 1){
       setErrorPassword(true);
     } else {
-      handleSubmit();
+      handleSubmit(e);
     }
   }
 
