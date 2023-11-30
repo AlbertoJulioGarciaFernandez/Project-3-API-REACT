@@ -29,6 +29,20 @@ function ListBookings() {
     setClassrooms(dataClassroom);
   }
 
+  bookings.sort((a, b) => {
+    const dateA = new Date(a.bookingDate);
+    const dateB = new Date(b.bookingDate);
+    
+    // Compara primero por bookingDate
+    if (dateA - dateB !== 0) {
+      return dateA - dateB;
+    } else {
+      // Si bookingDate es igual, compara por bookingTime
+      const timeA = a.bookingTime.split(':').map(Number);
+      const timeB = b.bookingTime.split(':').map(Number);
+      return timeA[0] - timeB[0] ;
+    }
+  })
 
 
   const bookingsList = bookings
@@ -40,8 +54,8 @@ function ListBookings() {
           classroom={classrooms}
         />
       );
-    })
-    .reverse();
+    }).reverse()
+    ;
 
   return (<>
     {bookingsList.length > 0 ? (

@@ -41,12 +41,42 @@ function DeleteMyBookingCard(props) {
     setbookingId(event.target.value);
   };
 
+
+  function claseCardDate(booking) {
+    function fechaHoy() {
+      const fecha = new Date();
+      const day = fecha.getDate();
+      const month = fecha.getMonth() + 1;
+      const year = fecha.getFullYear();
+      return `${year}-${month}-${day}`;
+    }
+
+    function horaActual() {
+      const fecha = new Date();
+      const hora = fecha.getHours();
+      const minutos = fecha.getMinutes();
+      return `${hora}:${minutos}`;
+    }
+
+    if (fechaHoy() < booking.bookingDate) {
+      return true;
+    } else if (fechaHoy() === booking.bookingDate) {
+      if (horaActual() < booking.bookingTime) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   const clasrooms = {};
   props.classroom
     .filter((booking) => booking.aimedAt === role)
     .map((classroom) => (clasrooms[classroom.id] = classroom.classroomName));
 
-  const myBokkings = props.booking
+  const myBokkings = props.booking.filter((booking)=>claseCardDate(booking))
     .map((booking) => (
       <MenuItem key={booking.id} value={booking.id}>
         Referencia:{booking.id} | Fecha:{booking.bookingDate} | Hora:

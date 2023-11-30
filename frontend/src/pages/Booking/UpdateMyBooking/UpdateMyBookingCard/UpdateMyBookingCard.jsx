@@ -23,9 +23,7 @@ function UpdateMyBookingCard(props) {
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
-  console.log(bookingSelect)
 
-  
 
   const role = localStorage.getItem("role");
 
@@ -33,29 +31,24 @@ function UpdateMyBookingCard(props) {
     try {
       setError("");
       setMensaje("");
-      const addMyBookingResponse = await UpdateMyBooking(
-        {
+      const addMyBookingResponse = await UpdateMyBooking({
         bookingDate: bookingDate,
         bookingTime: bookingTime,
         classroomId: classroomId,
         bookingId: bookingSelect.id,
-        }
-      );
-      setMensaje(addMyBookingResponse.data)
-       props.functRefres()
-       setBookingDate("")
-       setBookingSelect("")
-       setBookingTime("")
-       setClassroomId("")
-
+      });
+      setMensaje(addMyBookingResponse.data);
+      props.functRefres();
+      setBookingDate("");
+      setBookingSelect("");
+      setBookingTime("");
+      setClassroomId("");
 
       //Do something with the response
     } catch (error) {
       setError(error.response.data);
     }
   }
-
-
 
   const handleChangeAge = (event) => {
     let fechaFormateada = event.target.value;
@@ -72,19 +65,46 @@ function UpdateMyBookingCard(props) {
 
   const handleChangeSelect = (event) => {
     setBookingSelect(event.target.value);
-    setBookingTime(event.target.value.bookingTime)
-    setClassroomId(event.target.value.classroomId)
-    setBookingDate(event.target.value.bookingDate)
-    
-
+    setBookingTime(event.target.value.bookingTime);
+    setClassroomId(event.target.value.classroomId);
+    setBookingDate(event.target.value.bookingDate);
   };
+
+  function claseCardDate(booking) {
+    function fechaHoy() {
+      const fecha = new Date();
+      const day = fecha.getDate();
+      const month = fecha.getMonth() + 1;
+      const year = fecha.getFullYear();
+      return `${year}-${month}-${day}`;
+    }
+
+    function horaActual() {
+      const fecha = new Date();
+      const hora = fecha.getHours();
+      const minutos = fecha.getMinutes();
+      return `${hora}:${minutos}`;
+    }
+
+    if (fechaHoy() < booking.bookingDate) {
+      return true;
+    } else if (fechaHoy() === booking.bookingDate) {
+      if (horaActual() < booking.bookingTime) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 
   const clasrooms = {};
   props.classroom
     .filter((booking) => booking.aimedAt === role)
     .map((classroom) => (clasrooms[classroom.id] = classroom.classroomName));
 
-  const myBokkings = props.booking
+  const myBokkings = props.booking.filter((booking)=>claseCardDate(booking))
     .map((booking) => (
       <MenuItem key={booking.id} value={booking}>
         Referencia:{booking.id} | Fecha:{booking.bookingDate} | Hora:
@@ -123,12 +143,12 @@ function UpdateMyBookingCard(props) {
             id="demo-simple-select"
             value={bookingSelect}
             label="Referencia Reserva"
-            onChange={handleChangeSelect} 
+            onChange={handleChangeSelect}
           >
             {myBokkings}
           </Select>
         </FormControl>
-        
+
         <TextField
           sx={{ marginTop: "10px" }}
           type="date"
@@ -148,11 +168,10 @@ function UpdateMyBookingCard(props) {
             id="demo-simple-select"
             value={bookingTime}
             label="Horario"
-            onChange={handleChangeHora }
-            
+            onChange={handleChangeHora}
           >
             {horarios.map((hora) => (
-              <MenuItem key={hora} value={ hora }>
+              <MenuItem key={hora} value={hora}>
                 {hora}
               </MenuItem>
             ))}

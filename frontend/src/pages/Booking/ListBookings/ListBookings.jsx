@@ -16,8 +16,10 @@ function ListBookings() {
   async function getBoookings() {
     const data = await getAllBookings()
     setBookings(data);
+    
      
   }
+
 
   const [classrooms, setClassrooms] = useState([]);
 
@@ -29,8 +31,6 @@ function ListBookings() {
     const dataClassroom = await getAllClassrooms();
     setClassrooms(dataClassroom);
   }
-
-
 
 
   const dataColumns = ["Referencia Reserva","Fecha", "Hora", "Aula", "Id Usuario"] // crea los campos que tendrá la cabecera manualmente
@@ -46,10 +46,16 @@ function ListBookings() {
     setPage(0);
   };
 
+
+  
+
   const clasrooms = {};
   classrooms.map(
     (classroom) => (clasrooms[classroom.id] = classroom.classroomName)
   );
+
+
+
 
 
   
@@ -74,7 +80,8 @@ function ListBookings() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((booking) => {
+          {bookings.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((booking)=> 
+          {
     return (<TableRow hover role="checkbox" tabIndex={-1} key={booking.id}>
     <TableCell >{booking.id}</TableCell>
     <TableCell >{booking.bookingDate}</TableCell>
@@ -82,7 +89,7 @@ function ListBookings() {
     <TableCell >{booking[clasrooms.classroomId]}</TableCell>
     <TableCell >{booking.userId}</TableCell>
   </TableRow>)
-  }).reverse()}
+  })}
           </TableBody>
         </Table>
       </TableContainer>

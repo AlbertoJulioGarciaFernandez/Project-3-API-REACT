@@ -1,5 +1,5 @@
 .CardListBooking{
-    width: 400px;
+    width: 450px;
     margin: 30px;
     
 }
@@ -10,8 +10,14 @@
     text-align: center;
 }
 
+.CardListBookingTitelOutDate{
+    background-color: #919191;
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
 .CardListBookingBody{
-    padding: 0 20px 0 20px;
+    padding: 10px 10px 10px 10px;
     display: flex;
     flex-direction:row;
     
