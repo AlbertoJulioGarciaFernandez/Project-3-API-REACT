@@ -26,6 +26,8 @@ function AddBuilding() {
     [buildingNameMsg, setBuildingNameMsg] = useState(''),
     [buildingAddress, setBuildingAddress] = useState(''),
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
+    [buildingPhoneNumberMsg, setBuildingPhoneNumberMsg] = useState(''),
+    [validPhoneNumb, setValidPhoneNumb] = useState(false),
     [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
     [buildingAdmins, setBuildingAdmins] = useState([]),
     // The three following variables are related to the options
@@ -58,7 +60,12 @@ function AddBuilding() {
       setBuildingAddress(e.target.value);
     },
     handlePhoneNumbChange = (e) => {
-      setBuildingPhoneNumb(e.target.value);
+      const regex = /[0-9]{3}[0-9]{3}[0-9]{3}/;
+
+      if (regex.test(e.target.value)) {
+        setValidPhoneNumb(true);
+        setBuildingPhoneNumb(e.target.value);
+      }
     },
     handleProvidedServicesChange = (e) => {
 
@@ -109,8 +116,13 @@ function AddBuilding() {
         setBuildingNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
       } else {
         setBuildingNameMsg('');
-        // Confirm building registration dialog window will pop up:
-        setConfirmBuildingRegistration(true);
+        if (!validPhoneNumb) {
+          setBuildingPhoneNumberMsg('Error. +Info: El campo «Teléfono» no tiene el formato adecuado — éste ha de contener, únicamente, nueve números, sin espacio alguno entre ellos.');
+        } else {
+          setValidPhoneNumb(true);
+          // Confirm building registration dialog window will pop up:
+          setConfirmBuildingRegistration(true);
+        }
       }
     },
     handleProceedRegistration = async () => {
@@ -129,7 +141,7 @@ function AddBuilding() {
     handleCancelRegistration = () => {
       setConfirmBuildingRegistration(false);
     },
-    handleCleanCheckBox = async () => {
+    handleCleanForm = async () => {
       // Not only we have to set these state variables to false in order
       // to reset their values but also the array in which we store all 
       // the services!
@@ -141,8 +153,12 @@ function AddBuilding() {
       // If we did not reset the array, services which were checked before
       // we press the clean form button would still be stored in it despite
       // the fact that they are now unchecked!
-      
-      
+
+      // We also reset the message errors so that they disappear when this button
+      // is clicked:
+      setBuildingNameMsg('');
+      setBuildingPhoneNumberMsg('');
+
       // Check out why does not work (notice the async above in arrow function declaration)
       setBuildingAdmins([]);
       await getExistingUsers();
@@ -158,7 +174,7 @@ function AddBuilding() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '90vh', width: '50vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Alta de edificio"></CardHeader>
         <CardContent>
@@ -182,7 +198,7 @@ function AddBuilding() {
             className="textfield"
             onChange={handleAddressChange}
             type="text"
-            label="Direccion"
+            label="Dirección"
             margin="dense"
             title='Por favor, introduzca la dirección del edificio que desea dar de alta'
             fullWidth={true}
@@ -193,14 +209,17 @@ function AddBuilding() {
           <TextField
             className="textfield"
             onChange={handlePhoneNumbChange}
-            type="text"
-            label="Telefono"
+            type="tel"
+            label="Teléfono"
+            placeholder="Ejemplo: 123456789"
             margin="dense"
             title='Por favor, introduzca el número de teléfono del edificio que desea dar de alta'
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
+
+          {buildingPhoneNumberMsg.includes('Error') && <Alert severity="error">{buildingPhoneNumberMsg}</Alert>}
         </CardContent>
 
         <FormGroup title='Servicios disponibles' sx={{ marginLeft: 2, marginTop: 1 }}>
@@ -242,7 +261,7 @@ function AddBuilding() {
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button
-            onClick={handleCleanCheckBox}
+            onClick={handleCleanForm}
             size="large"
             type='reset'
             variant="contained"

@@ -38,15 +38,21 @@ function UpdateBuilding() {
     [buildingIdMsg, setBuildingIdMsg] = useState(''),
     [buildingAddress, setBuildingAddress] = useState(''),
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
+    [buildingPhoneNumberMsg, setBuildingPhoneNumberMsg] = useState(''),
+    [validPhoneNumb, setValidPhoneNumb] = useState(false),
     [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
     [buildingAdmins, setBuildingAdmins] = useState([]),
-    [buildingAdminId, setBuildingAdminId] = useState(null),
+    [cafeteriaIsChecked, setCafeteriaIsChecked] = useState(false),
+    [libraryIsChecked, setLibraryIsChecked] = useState(false),
+    [assemblyHallIsChecked, setAssemblyHallIsChecked] = useState(false),
+    [buildingAdminId, setBuildingAdminId] = useState(),
     [isError, setIsError] = useState(false),
+    [confirmBuildingRegistration, setConfirmBuildingRegistration] = useState(false),
     [buildingRegistered, setBuildingRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listBuildings");
     },
     handleNameChange = (e) => {
       setBuildingName(e.target.value);
@@ -55,9 +61,26 @@ function UpdateBuilding() {
       setBuildingAddress(e.target.value);
     },
     handlePhoneNumbChange = (e) => {
-      setBuildingPhoneNumb(e.target.value);
+      const regex = /[0-9]{3}[0-9]{3}[0-9]{3}/;
+
+      if (regex.test(e.target.value)) {
+        setValidPhoneNumb(true);
+        setBuildingPhoneNumb(e.target.value);
+      }
     },
     handleProvidedServicesChange = (e) => {
+
+      if (e.target.labels[0].innerText === 'Cafetería') {
+        setCafeteriaIsChecked(!cafeteriaIsChecked);
+      }
+
+      if (e.target.labels[0].innerText === 'Biblioteca') {
+        setLibraryIsChecked(!libraryIsChecked);
+      }
+
+      if (e.target.labels[0].innerText === 'Salón de actos') {
+        setAssemblyHallIsChecked(!assemblyHallIsChecked);
+      }
 
       // If the checkbox is checked:
       if (e.target.checked) {
@@ -108,24 +131,46 @@ function UpdateBuilding() {
         if (buildingName === '') {
           setBuildingNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
-          try {
-            setBuildingNameMsg('');
-            let buildingServices = buildingProvidedServices.join(', ');
-            await updateBuilding(buildingId, { buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
-            //         "buildingName": "nuevo",
-            // "address": "C/ Lope de Vega, 19",
-            // "phoneNumber": "785623659",
-            // "providedServices": "Biblioteca, Salón de actos",
-            // "userId": 8
-            setBuildingName('');
-            setBuildingRegistered(true);
-            setIsError(false);
-          } catch (error) {
-            setIsError(true);
-            setErrorMsg(error);
+          setBuildingNameMsg('');
+          if (!validPhoneNumb) {
+            setBuildingPhoneNumberMsg('Error. +Info: El campo «Teléfono» no tiene el formato adecuado — éste ha de contener, únicamente, nueve números, sin espacio alguno entre ellos.');
+          } else {
+            setValidPhoneNumb(true);
+            // Confirm building registration dialog window will pop up:
+            setConfirmBuildingRegistration(true);
           }
         }
       }
+    },
+    handleProceedRegistration = async () => {
+      setConfirmBuildingRegistration(false);
+      try {
+        let buildingServices = buildingProvidedServices.join(', ');
+        await updateBuilding(buildingId, { buildingName: buildingName, address: buildingAddress, phoneNumber: buildingPhoneNumb, providedServices: buildingServices, userId: buildingAdminId });
+        setBuildingName('');
+        setBuildingRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelRegistration = () => {
+      setConfirmBuildingRegistration(false);
+    },
+    handleCleanForm = async () => {
+      setCafeteriaIsChecked(false);
+      setLibraryIsChecked(false);
+      setAssemblyHallIsChecked(false);
+
+      setBuildingProvidedServices([]);
+
+      setBuildingNameMsg('');
+      setBuildingPhoneNumberMsg('');
+
+      // Check out why does not work (notice the async above in arrow function declaration)
+      setBuildingAdmins([]);
+      await getExistingUsers();
     }
 
   return (
@@ -168,7 +213,7 @@ function UpdateBuilding() {
             onChange={handleNameChange}
             type="text"
             title='Por favor, introduzca la nueva denominación del edificio'
-            label="Denominacion"
+            label="Denominación"
             margin="dense"
             required
             fullWidth={true}
@@ -183,7 +228,7 @@ function UpdateBuilding() {
             onChange={handleAddressChange}
             type="text"
             title='Por favor, introduzca la nueva dirección del edificio'
-            label="Direccion"
+            label="Dirección"
             margin="dense"
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
@@ -193,20 +238,23 @@ function UpdateBuilding() {
           <TextField
             className="textfield"
             onChange={handlePhoneNumbChange}
-            type="text"
+            type="tel"
             title='Por favor, introduzca el nuevo número de teléfono del edificio'
-            label="Telefono"
+            label="Teléfono"
             margin="dense"
+            placeholder="Ejemplo: 123456789"
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
+
+          {buildingPhoneNumberMsg.includes('Error') && <Alert severity="error">{buildingPhoneNumberMsg}</Alert>}
         </CardContent>
 
         <FormGroup title='Servicios disponibles' sx={{ marginLeft: 2, marginTop: 1 }}>
-          <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
-          <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
-          <FormControlLabel onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
+          <FormControlLabel checked={cafeteriaIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
+          <FormControlLabel checked={libraryIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
+          <FormControlLabel checked={assemblyHallIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />
         </FormGroup>
 
 
@@ -216,7 +264,7 @@ function UpdateBuilding() {
             title='Por favor, despliegue y seleccione el nuevo código de la persona que administrará el edificio que desea actualizar'
             labelId="simple-select-buildingadminid-label"
             id="simple-select"
-            value={(buildingAdminId === null) ? '' : buildingAdminId}
+            value={(buildingAdminId === undefined) ? '' : buildingAdminId}
             label="Codigo administrador"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectBuildingAdminChange}
@@ -239,8 +287,41 @@ function UpdateBuilding() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanForm}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el edificio con código {buildingId}. +Info: {errorMsg.response.data.error} ({errorMsg.response.data.text})</Alert>}
         {buildingRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmBuildingRegistration && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmBuildingRegistration}
+          onClose={handleProceedRegistration}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar actualización de edificio"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a actualizar el aula código {buildingId} con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedRegistration}>Aceptar</Button>
+            <Button onClick={handleCancelRegistration}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {buildingRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}
