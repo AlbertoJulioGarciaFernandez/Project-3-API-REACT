@@ -24,8 +24,7 @@ function CreateUserPage() {
       email: "",
       password: "",
     })
-  };
-  
+  }; 
 
   return (
     <CreateUserComponent
