@@ -4,7 +4,8 @@ import CardBooking from "../../../components/CardBooking/CardBooking";
 import { getMyBookings } from "../../../services/booking";
 import { getAllClassrooms } from "../../../services/classroom";
 
-function ListBookings() {
+function ListMyBookings() {
+
   const [bookings, setBookings] = useState([])
 
   useEffect(() => {
@@ -66,4 +67,4 @@ function ListBookings() {
   </>)
 }
 
-export default ListBookings;
+export default ListMyBookings;

@@ -24,9 +24,6 @@ function UpdateBookingCard(props) {
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
-  console.log(bookingSelect)
-
-  const role = localStorage.getItem("role");
 
   async function addMyBooking() {
     try {
@@ -114,13 +111,15 @@ function UpdateBookingCard(props) {
 
   return (
     <Card sx={{ width: "500px", background: "#DEE7FF" }}>
-      <CardHeader title="Modificar Reserva" />
+      <CardHeader title="Modificar Reserva" sx={{textAlign:"center"}}/>
+      <Divider/>
       <CardContent>
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}}>
             Referencia Reserva
           </InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={bookingSelect}
@@ -131,7 +130,7 @@ function UpdateBookingCard(props) {
           </Select>
         </FormControl>
         <TextField
-          sx={{ marginTop: "10px" }}
+          sx={{ marginTop: "10px", background:"white" }}
           type="date"
           value={bookingDate}
           onChange={handleChangeAge}
@@ -143,8 +142,9 @@ function UpdateBookingCard(props) {
           }}
         />
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Horario</InputLabel>
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}}>Horario</InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={bookingTime}
@@ -159,8 +159,9 @@ function UpdateBookingCard(props) {
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Clase</InputLabel>
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}}>Clase</InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={classroomId}
@@ -176,9 +177,8 @@ function UpdateBookingCard(props) {
           </Select>
         </FormControl>
       </CardContent>
-      <Divider />
-      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={() => addMyBooking()}>Modificar Reserva</Button>
+      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+        <Button onClick={() => addMyBooking()} size="large" variant="contained" sx={{background:"black"}}>Modificar Reserva</Button>
       </CardActions>
 
       {mensaje ? (

@@ -41,7 +41,7 @@ function CardBooking(props) {
     }
   }
   return (
-    <Card className="CardListBooking">
+    <Card className="CardListBooking" sx={{background:"#DEE7FF"}}>
       <div className={claseCardDate()}>
         <Typography variant="h5">
           {" "}
@@ -50,9 +50,9 @@ function CardBooking(props) {
       </div>
       <div className="CardListBookingBody">
         <div>
-          <h4> Fecha: {formatdate(props.bookingsArray.bookingDate)}</h4>
-          <h4>Hora: {props.bookingsArray.bookingTime}</h4>
-          <h4> {clasrooms[props.bookingsArray.classroomId]}</h4>
+        <Typography variant="h6">Fecha: {formatdate(props.bookingsArray.bookingDate)}</Typography>
+        <Typography variant="h6">Hora: {props.bookingsArray.bookingTime}</Typography>
+        <Typography variant="h6">{clasrooms[props.bookingsArray.classroomId]}</Typography>      
         </div>
         <img className="CardListBookingImg" src={img} />
       </div>

@@ -1,6 +1,6 @@
 .CardListBooking{
-    width: 450px;
-    margin: 30px;
+    width: 400px;
+    margin: 15px;
     
 }
 
@@ -24,8 +24,8 @@
 }
 
 .CardListBookingImg{
-    width: 50%;
-    height: 100%;
+    width: 40%;
+    height: 90%;
     margin: auto;
     margin-right: 0;
     justify-content: center;

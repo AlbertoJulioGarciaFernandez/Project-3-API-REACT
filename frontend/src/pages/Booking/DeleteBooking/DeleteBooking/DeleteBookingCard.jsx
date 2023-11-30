@@ -59,13 +59,15 @@ function DeleteBookingCard(props) {
 
   return (
     <Card sx={{ width: "500px", background: "#DEE7FF" }}>
-      <CardHeader title="Eliminar Reserva" />
+      <CardHeader title="Eliminar Reserva" sx={{textAlign:"center"}} />
+      <Divider/>
       <CardContent>
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}}>
             Referencia Reserva
           </InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={bookingId}
@@ -76,9 +78,8 @@ function DeleteBookingCard(props) {
           </Select>
         </FormControl>
       </CardContent>
-      <Divider />
-      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={() => addMyBooking()}>Eliminar Reserva</Button>
+      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+        <Button onClick={() => addMyBooking()} size="large" variant="contained" sx={{background:"black"}}>Eliminar Reserva</Button>
       </CardActions>
 
       {mensaje ? (

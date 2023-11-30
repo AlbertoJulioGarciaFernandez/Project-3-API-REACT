@@ -173,7 +173,7 @@ function ProfielCard({ myProfile }) {
             <Button
               className="btn-cambiarContraseña"
               onClick={changerPassword}
-              sx={{ background: lightBlue }}
+              size="large" variant="contained" sx={{background:"black"}}
             >
               Confirmar cambio de contraseña
             </Button>

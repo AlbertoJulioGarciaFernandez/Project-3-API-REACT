@@ -82,7 +82,8 @@ function AddBookingCard(props) {
 
   return (
     <Card sx={{ width: "500px", background: "#DEE7FF" }}>
-      <CardHeader title="Crear Reserva" />
+      <CardHeader title="Crear Reserva" sx={{textAlign:"center"}}/>
+      <Divider/>
       <CardContent>
         <TextField
           type="date"
@@ -92,11 +93,14 @@ function AddBookingCard(props) {
               min: "2018-06-07T00:00",
               max: "2018-06-14T00:00",
             },
+            
           }}
+          sx={{fontWeight:"bold", color:"black", background:"white"}}
         />
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Horario</InputLabel>
-          <Select
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold", color:"black"}}>Horario</InputLabel>
+          <Select 
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={bookingTime}
@@ -111,8 +115,9 @@ function AddBookingCard(props) {
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Clase</InputLabel>
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold", color:"black"}}>Clase</InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={classroomId}
@@ -129,9 +134,9 @@ function AddBookingCard(props) {
           </Select>
         </FormControl>
       </CardContent>
-      <Divider />
-      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={() => addMiBooking()}>Crear Reserva</Button>
+      
+      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+        <Button onClick={() => addMiBooking()} size="large" variant="contained" sx={{background:"black"}}>Crear Reserva</Button>
       </CardActions>
 
       {mensaje ? (

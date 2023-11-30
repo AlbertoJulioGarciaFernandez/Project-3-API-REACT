@@ -7,6 +7,7 @@ import * as React from "react";
 
 function ListBookings() {
 
+
   const [bookings, setBookings] = useState([])
 
   useEffect(() => {
@@ -53,6 +54,8 @@ function ListBookings() {
   classrooms.map(
     (classroom) => (clasrooms[classroom.id] = classroom.classroomName)
   );
+
+ 
 
 
 
@@ -109,7 +112,7 @@ function ListBookings() {
 
 
 
-      ) : (
+       ): (
         <h1 className="cuerpoListBookingNot">No Hay Reservas Disponibles</h1>
       )}
     </div>

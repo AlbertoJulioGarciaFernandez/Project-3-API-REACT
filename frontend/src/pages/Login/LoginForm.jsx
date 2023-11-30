@@ -60,7 +60,7 @@ function LoginForm() {
         const loginResponse = await login({ email, password });
         localStorage.setItem("token", loginResponse.data.token);
         localStorage.setItem("role", loginResponse.data.role);
-        navigate("/dashboard");
+        loginResponse.data.role==="admin"?navigate("/dashboard/listBookings"):navigate("/dashboard/listmybookings");
       }
     } catch (error) {
       //Handle the error

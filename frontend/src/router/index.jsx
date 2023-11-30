@@ -25,6 +25,8 @@ import UpdateBooking from "../pages/Booking/UpdateBooking/UpdateBooking";
 import DeleteBooking from "../pages/Booking/DeleteBooking/DeleteBooking";
 import Profile from "../pages/Users/Profile/Profiel";
 
+let role =""
+
 
 export const router = createBrowserRouter([
   {
@@ -42,20 +44,22 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Root />,
-    //errorElement: <NotFound />,
+    errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
+       
         return redirect("/"); //If the user isn't logged in, we redirect to the login page.
-      } else {
+      } else { 
+        role = localStorage.getItem("role")
+        console.log(role)
         return null;
       }
     },
     children: [
       {
         path: "/dashboard/listBookings",
-        element: <ListBookings />,
-      },
-      {
+        element: <ListBookings />
+      },{
         path: '/dashboard/listEquipment',
         element: <ListEquipment />
       },

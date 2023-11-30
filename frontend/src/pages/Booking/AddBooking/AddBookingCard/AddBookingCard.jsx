@@ -88,11 +88,13 @@ function AddBookingCard({user,classroom}) {
 
   return (
     <Card sx={{ width: "500px", background: "#DEE7FF" }}>
-      <CardHeader title="Crear Reserva" />
+      <CardHeader title="Crear Reserva" sx={{textAlign:"center"}} />
+      <Divider/>
       <CardContent>
       <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Usuarios</InputLabel>
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}} >Usuarios</InputLabel>
           <Select
+            sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={userId}
@@ -109,7 +111,7 @@ function AddBookingCard({user,classroom}) {
         </FormControl>
         <TextField
           type="date"
-          sx={{ marginTop: "10px" }}
+          sx={{ marginTop: "10px", background:"white", borderRadius:"5px" }}
           onChange={handleChangeAge}
           slotProps={{
             input: {
@@ -119,8 +121,9 @@ function AddBookingCard({user,classroom}) {
           }}
         />
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Horario</InputLabel>
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}}>Horario</InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={bookingTime}
@@ -135,8 +138,9 @@ function AddBookingCard({user,classroom}) {
           </Select>
         </FormControl>
         <FormControl fullWidth sx={{ marginTop: "10px" }}>
-          <InputLabel id="demo-simple-select-label">Clase</InputLabel>
+          <InputLabel id="demo-simple-select-label" sx={{fontWeight:"bold"}}>Clase</InputLabel>
           <Select
+          sx={{background:"white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={classroomId}
@@ -152,9 +156,8 @@ function AddBookingCard({user,classroom}) {
           </Select>
         </FormControl>
       </CardContent>
-      <Divider />
-      <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button onClick={() => anadirBooking()}>Crear Reserva</Button>
+      <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+        <Button onClick={() => anadirBooking()} size="large" variant="contained" sx={{background:"black"}}>Crear Reserva</Button>
       </CardActions>
 
       {mensaje ? (
