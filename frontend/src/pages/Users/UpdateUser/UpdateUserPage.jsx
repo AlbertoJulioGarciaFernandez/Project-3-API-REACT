@@ -15,8 +15,18 @@ function UpdateUserPage() {
     role:"",
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     await updateUser(user);
+    setUser({
+      id: "",
+      firstName: "",
+      lastName: "",
+      address: "",
+      email: "",
+      password: "",
+      role:"",
+    })
   };
 
   return (

@@ -2,36 +2,24 @@
 import "./CreateUserComponent.css";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import { Button, TextField } from "@mui/material";
+import React  from "react";
 
 export default function CreateUserComponent({ handleSubmit, setUser, user }) {
-/*   const [nameError, setNameError] = useState("");
-
-  const handleNamechange = (e) => {//manejo de campo nombre vacio
-    const newName = e.target.value;
-    setUser({...user, firstName: newName});
-    setNameError(newName.trim() === "" ? "El nombre es quererido" : "");
-  }; */
 
   return (
     <div className="containerFragmentCreateUser">
-      <form className="formulariocrearteUser" onSubmit={handleSubmit}>
+      <form className="formulariocrearteUser">
         <React.Fragment>
-          <Typography
-            className="tituloCreate"
-            gutterBottom
-            variant="h4"
-            component="form"
-          >
+          <Typography className="tituloCreate" gutterBottom variant="h4" component="form">
             Alta de Usuario
           </Typography>
 
           <CardContent className="formContainerCreateUser">
             <TextField
               className="textField"
+              value={user.firstName}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -44,6 +32,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textFieldCreateUser"
+              value={user.lastName}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -56,6 +45,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textFieldCreateUser"
+              value={user.address}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -68,6 +58,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textFieldCreateUser"
+              value={user.email}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -78,8 +69,9 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
                 setUser({ ...user, email: e.target.value });
               }}
             />
-            <TextField
+             <TextField
               className="textFieldCreateUser"
+              value={user.password}
               type="password"
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -94,12 +86,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
           </CardContent>
 
           <CardActions className="botonEnviar">
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              onClick={handleSubmit}
-            >
+            <Button type="submit" variant="contained" color="success" onClick={handleSubmit}>
               Enviar
             </Button>
           </CardActions>

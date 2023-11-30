@@ -20,6 +20,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
           <CardContent className="formContainer">
             <TextField
               className="textField"
+              value={user.id}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -32,10 +33,11 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               />
             <TextField
               className="textField"
+              value={user.firstName}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-1"
               label="Nombre"
               placeholder="Nombre"
               onChange={(e) => {
@@ -44,10 +46,11 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textField"
+              value={user.lastName}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-2"
               label="Apellidos"
               placeholder="Apellidos"
               onChange={(e) => {
@@ -56,10 +59,11 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textField"
+              value={user.address}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-3"
               label="Direccion"
               placeholder="Direccion"
               onChange={(e) => {
@@ -68,10 +72,11 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textField"
+              value={user.email}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-4"
               label="Email"
               placeholder="Email"
               onChange={(e) => {
@@ -80,11 +85,12 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
             />
              <TextField
               className="textField"
+              value={user.password}
               type="password"
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-5"
               label="Password"
               placeholder="Password"
               onChange={(e) => {
@@ -93,10 +99,11 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
             />
              <TextField
               className="textField"
+              value={user.role}
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-6"
               label="role"
               placeholder="role"
               onChange={(e) => {
