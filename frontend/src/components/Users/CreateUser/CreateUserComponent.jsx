@@ -87,8 +87,11 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               id="outlined-required-address"
               label="Direccion"
               placeholder="Direccion"
+              error={errorAddress}
+              helperText={errorAddress ? "La Dirección es obligatoria" : ""}
               onChange={(e) => {
                 setUser({ ...user, address: e.target.value });
+                setErrorAddress(false)
               }}
             />
             <TextField
@@ -100,8 +103,11 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               id="outlined-required-email"
               label="Email"
               placeholder="Email"
+              error={errorEmail}
+              helperText={errorEmail ? "El Email es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, email: e.target.value });
+                setErrorEmail(false)
               }}
             />
             <TextField
@@ -114,8 +120,11 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               id="outlined-required-password"
               label="Password"
               placeholder="Password"
+              error={errorPassword}
+              helperText={errorPassword ? "La contraseña es obligatoria" : ""}
               onChange={(e) => {
                 setUser({ ...user, password: e.target.value });
+                setErrorPassword(false)
               }}
             />
           </CardContent>
