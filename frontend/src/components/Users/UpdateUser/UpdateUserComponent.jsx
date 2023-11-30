@@ -1,5 +1,5 @@
 // CreateUserComponent.jsx
-import "./CreateUserComponent.css";
+import "./UpdateUserComponent.css";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -7,17 +7,29 @@ import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
 import React  from "react";
 
-export default function CreateUserComponent({ handleSubmit, setUser, user }) {
+export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
 
   return (
-    <div className="containerFragmentCreateUser">
-      <form className="formulariocrearteUser">
+    <div className="containerFragment">
+      <form className="formularioUpdateUser">
         <React.Fragment>
-          <Typography className="tituloCreate" gutterBottom variant="h4" component="form">
-            Alta de Usuario
+          <Typography gutterBottom variant="h4" component="form" className="tituloUdpdate">
+            Actualización de Usuario
           </Typography>
 
-          <CardContent className="formContainerCreateUser">
+          <CardContent className="formContainer">
+            <TextField
+              className="textField"
+              sx={{ marginBottom: "20px" }}
+              component="form"
+              required
+              id="outlined-required"
+              label="Id Usuario"
+              placeholder="Id Usuario"
+              onChange={(e) => {
+                setUser({ ...user, id: e.target.value });
+              }}
+              />
             <TextField
               className="textField"
               sx={{ marginBottom: "20px" }}
@@ -31,7 +43,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textFieldCreateUser"
+              className="textField"
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -43,7 +55,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textFieldCreateUser"
+              className="textField"
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -55,7 +67,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textFieldCreateUser"
+              className="textField"
               sx={{ marginBottom: "20px" }}
               component="form"
               required
@@ -67,7 +79,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
              <TextField
-              className="textFieldCreateUser"
+              className="textField"
               type="password"
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -79,10 +91,22 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
                 setUser({ ...user, password: e.target.value });
               }}
             />
+             <TextField
+              className="textField"
+              sx={{ marginBottom: "20px" }}
+              component="form"
+              required
+              id="outlined-required"
+              label="role"
+              placeholder="role"
+              onChange={(e) => {
+                setUser({ ...user, role: e.target.value });
+              }}
+            />
           </CardContent>
 
           <CardActions className="botonEnviar">
-            <Button type="submit" variant="contained" color="success" onClick={handleSubmit}>
+            <Button variant="contained" color="success" onClick={handleSubmit}>
               Enviar
             </Button>
           </CardActions>

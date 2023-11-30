@@ -5,9 +5,6 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/Signup/SignUp";
 import ListBookings from "../pages/Booking/ListBookings/ListBookings";
 import ListUsersPage from "../pages/Users/ListUsers/ListUsersPage";
-import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
-import AddEquipment from "../pages/Equipment/AddEquipment/AddEquipment";
-import UpdateEquipment from "../pages/Equipment/UpdateEquipment/UpdateEquipment";
 import DeleteEquipment from "../pages/Equipment/DeleteEquipment/DeleteEquipment";
 import CreateUserPage from "../pages/Users/CreateUser/CreateUserPage";
 import ListClassrooms from "../pages/Classroom/ListClassrooms/ListClassrooms";
@@ -15,6 +12,8 @@ import AddClassroom from "../pages/Classroom/AddClassroom/AddClassroom";
 import UpdateClassroom from "../pages/Classroom/UpdateClassroom/UpdateClassroom";
 import DeleteClassroom from "../pages/Classroom/DeleteClassroom/DeleteClassroom";
 import NotFound from "../pages/NotFound/NotFound";
+import UpdateUserPage from "../pages/Users/UpdateUser/UpdateUserPage";
+import DeleteUserComponent from "../components/Users/DeleteUser/DeleteUserComponent";
 import ListBuildings from "../pages/Building/ListBuildings/ListBuildings";
 import ListMyBookings from "../pages/Booking/ListMyBookings/ListMyBookings";
 import AddBooking from "../pages/Booking/AddBooking/AddBooking";
@@ -24,9 +23,12 @@ import AddMyBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
 import UpdateBooking from "../pages/Booking/UpdateBooking/UpdateBooking";
 import DeleteBooking from "../pages/Booking/DeleteBooking/DeleteBooking";
 import Profile from "../pages/Users/Profile/Profiel";
-
-let role =""
-
+import AddBuilding from "../pages/Building/AddBuilding/AddBuilding";
+import UpdateBuilding from "../pages/Building/UpdateBuilding/UpdateBuilding";
+import DeleteBuilding from "../pages/Building/DeleteBuilding/DeleteBuilding";
+import AddEquipment from "../pages/Building/AddBuilding/AddBuilding";
+import UpdateEquipment from "../pages/Building/UpdateBuilding/UpdateBuilding";
+import ListEquipment from "../pages/Equipment/ListEquipment/ListEquipment";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,7 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <Root />,
     errorElement: <NotFound />,
+    // errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
        
@@ -85,29 +88,69 @@ export const router = createBrowserRouter([
         element: <CreateUserPage />,
       },
       {
-        path: "/dashboard/listClassrooms",
-        element: <ListClassrooms />,
+        path: "/dashboard/updateUser",
+        element: <UpdateUserPage/>,
       },
       {
-        path: "/dashboard/addClassroom",
-        element: <AddClassroom />,
+        path: "/dashboard/deleteUser",
+        element: <DeleteUserComponent/>
       },
       {
-        path: "/dashboard/updateClassroom",
-        element: <UpdateClassroom />,
+        path: "/dashboard/updateUser",
+        element: <UpdateUserPage/>,
       },
       {
-        path: "/dashboard/deleteClassroom",
-        element: <DeleteClassroom />,
+        path: "/dashboard/deleteUser",
+        element: <DeleteUserComponent/>
       },
-      // {
-      //   path: '/dashboard/updateBuilding',
-      //   element: <UpdateBuilding />
-      // },
-      // {
-      //   path: '/dashboard/deleteBuilding',
-      //   element: <DeleteBuilding />
-      // },
+      {
+        path: "/dashboard/listEquipment",
+        element: <ListEquipment />,
+      },
+      {
+        path: "/dashboard/addEquipment",
+        element: <AddEquipment />,
+      },
+      {
+        path: "/dashboard/updateEquipment",
+        element: <UpdateEquipment />,
+      },
+      {
+        path: "/dashboard/deleteEquipment",
+        element: <DeleteEquipment />,
+      },
+      {
+        path: '/dashboard/listClassrooms',
+        element: <ListClassrooms />
+      },
+      {
+        path: '/dashboard/addClassroom',
+        element: <AddClassroom />
+      },
+      {
+        path: '/dashboard/updateClassroom',
+        element: <UpdateClassroom />
+      },
+      {
+        path: '/dashboard/deleteClassroom',
+        element: <DeleteClassroom />
+      },
+      {
+        path: '/dashboard/listBuildings',
+        element: <ListBuildings />
+      },
+      {
+        path: '/dashboard/addBuilding',
+        element: <AddBuilding />
+      },
+      {
+        path: '/dashboard/updateBuilding',
+        element: <UpdateBuilding />
+      },
+      {
+        path: '/dashboard/deleteBuilding',
+        element: <DeleteBuilding />
+      },
       {
         path: '/dashboard/listmybookings',
         element: <ListMyBookings/>
