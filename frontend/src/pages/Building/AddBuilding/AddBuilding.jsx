@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Card, CardActions, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import './AddEquipment.css';
+/* import './AddEquipment.css'; */
+import './AddBuilding.css';
 import { useState } from 'react';
 import { createPieceEquipment } from '../../../services/equipment';
 import { useNavigate } from 'react-router-dom';

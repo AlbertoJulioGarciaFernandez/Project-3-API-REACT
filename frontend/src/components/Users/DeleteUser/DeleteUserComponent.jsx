@@ -58,7 +58,7 @@ export default function DeleteUserComponent() {
         <select className="seleccion" name="lenguajes" id="lang" size="4">
           {listUser}
         </select>
-        <input className="boton" type="submit" value="Enviar" onClick={handleClick} />
+        <input className="boton" type="submit" value="Eliminar" onClick={handleClick} />
       </form>
     </>
   );

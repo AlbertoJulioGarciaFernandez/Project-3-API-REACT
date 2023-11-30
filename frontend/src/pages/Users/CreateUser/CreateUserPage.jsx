@@ -17,6 +17,7 @@ function CreateUserPage() {
     await createUser(user);
     
   };
+  
 
   return (
     <CreateUserComponent

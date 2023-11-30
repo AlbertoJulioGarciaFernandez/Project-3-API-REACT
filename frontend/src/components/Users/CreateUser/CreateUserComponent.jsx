@@ -23,7 +23,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-name"
               label="Nombre"
               placeholder="Nombre"
               onChange={(e) => {
@@ -35,7 +35,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-lastname"
               label="Apellidos"
               placeholder="Apellidos"
               onChange={(e) => {
@@ -47,7 +47,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-address"
               label="Direccion"
               placeholder="Direccion"
               onChange={(e) => {
@@ -59,7 +59,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-email"
               label="Email"
               placeholder="Email"
               onChange={(e) => {
@@ -72,7 +72,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
               sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required"
+              id="outlined-required-password"
               label="Password"
               placeholder="Password"
               onChange={(e) => {
