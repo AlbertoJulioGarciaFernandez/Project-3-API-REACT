@@ -73,8 +73,12 @@ function UpdateEquipment() {
     },
     handleCancelUpdate = () => {
       setConfirmPieceOfEquipmentUpdate(false);
-    };
-    
+    },
+    handleCleanInput = () => {
+      setEquipmentName('');
+      setEquipmentDescription('');
+    }
+
 
   return (
     <Box sx={{
@@ -89,7 +93,7 @@ function UpdateEquipment() {
         sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de equipamiento"></CardHeader>
-        
+
         <FormControl size='large' sx={{ marginLeft: 2, marginBottom: -1, width: 300 }}>
           <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
           <Select
@@ -147,6 +151,18 @@ function UpdateEquipment() {
             sx={{ backgroundColor: 'black' }}
           >
             Actualizar
+          </Button>
+        </CardActions>
+
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
           </Button>
         </CardActions>
 

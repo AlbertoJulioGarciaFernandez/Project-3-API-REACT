@@ -28,6 +28,11 @@ function AddBuilding() {
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
     [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
     [buildingAdmins, setBuildingAdmins] = useState([]),
+    // The three following variables are related to the options
+    // in the select checkbox menu. It is important every of these 
+    // these three options has its own variable attached as, if not,
+    // when we check or uncheck any of them, the others will change
+    // state, leading to an uncontrolled behaviour:
     [cafeteriaIsChecked, setCafeteriaIsChecked] = useState(false),
     [libraryIsChecked, setLibraryIsChecked] = useState(false),
     [assemblyHallIsChecked, setAssemblyHallIsChecked] = useState(false),
@@ -57,6 +62,14 @@ function AddBuilding() {
     },
     handleProvidedServicesChange = (e) => {
 
+      // The three following if conditions are necessary as
+      // when any of the options are checked or unchecked, 
+      // this function will be invoked, passing the corresponding
+      // evento into it via parameter, and the previous checkbox
+      // state will be changed into false or true depending on its
+      // previous state (e.g.: if the service cafeteria was checked, 
+      // its state would be set to true, because its former state 
+      // was false, and vice versa):
       if (e.target.labels[0].innerText === 'Cafetería') {
         setCafeteriaIsChecked(!cafeteriaIsChecked);
       }

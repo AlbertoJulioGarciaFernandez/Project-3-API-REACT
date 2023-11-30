@@ -9,7 +9,7 @@ function AddEquipment() {
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
     [equipmentDescription, setEquipmentDescription] = useState(null),
     [isError, setIsError] = useState(false),
-    [confirmPieceOfEquipmentRegistration, setConfirmPieceOfEquipmentRegistration] = useState(false),
+    [confirmEquipmentRegistration, setConfirmEquipmentRegistration] = useState(false),
     [equipmentRegistered, setEquipmentRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
@@ -30,10 +30,11 @@ function AddEquipment() {
       } else {
         setEquipmentNameMsg('');
         // Confirm piece of equipment registration dialog window will pop up:
-        setConfirmPieceOfEquipmentRegistration(true);
+        setConfirmEquipmentRegistration(true);
       }
     },
     handleProceedRegistration = async () => {
+      setConfirmEquipmentRegistration(false);
       try {
         await createPieceEquipment({ equipmentName: equipmentName, description: equipmentDescription });
         setEquipmentName('');
@@ -45,7 +46,7 @@ function AddEquipment() {
       }
     },
     handleCancelRegistration = () => {
-      setConfirmPieceOfEquipmentRegistration(false);
+      setConfirmEquipmentRegistration(false);
     };
 
   return (
@@ -102,8 +103,40 @@ function AddEquipment() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el equipamiento {equipmentName}. +Info: {errorMsg.response.data}</Alert>}
         {equipmentRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmEquipmentRegistration && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmEquipmentRegistration}
+          onClose={handleProceedRegistration}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar alta de equipamiento"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a dar de alta un nuevo equipamiento con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedRegistration}>Aceptar</Button>
+            <Button onClick={handleCancelRegistration}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {equipmentRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}
