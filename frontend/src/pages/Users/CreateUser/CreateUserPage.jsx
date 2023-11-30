@@ -1,10 +1,9 @@
 // CreateUserPage.jsx
 import CreateUserComponent from "../../../components/Users/CreateUser/CreateUserComponent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createUser } from "../../../services/user";
 
 function CreateUserPage() {
-  const [refresh, setRefresh] = useState(false);
 
   const [user, setUser] = useState({
     firstName: "",
@@ -14,17 +13,18 @@ function CreateUserPage() {
     password: "",
   });
 
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createUser(user);
-  setUser({
-      firstName: "",
-      lastName: "",
-      address: "",
-      email: "",
-      password: "",
-    })
-  }; 
+     /*  e.preventDefault(); */
+      await createUser(user);
+      setUser({
+        firstName: "",
+        lastName: "",
+        address: "",
+        email: "",
+        password: "",
+      })
+    }
 
   return (
     <CreateUserComponent
