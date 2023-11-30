@@ -87,7 +87,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
 
           <CardActions className="botonEnviar">
             <Button type="submit" variant="contained" color="success" onClick={handleSubmit}>
-              Enviar
+              Crear
             </Button>
           </CardActions>
         </React.Fragment>

@@ -114,7 +114,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
 
           <CardActions className="botonEnviar">
             <Button type="submit" variant="contained" color="success" onClick={handleSubmit}>
-              Enviar
+              Actualizar
             </Button>
           </CardActions>
         </React.Fragment>
