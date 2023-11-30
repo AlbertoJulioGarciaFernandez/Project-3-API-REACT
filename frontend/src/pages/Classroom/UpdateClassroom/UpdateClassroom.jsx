@@ -96,7 +96,10 @@ function UpdateClassroom() {
     },
     handleCancelUpdate = () => {
       setConfirmClassroomUpdate(false);
-    };
+    },
+    handleCleanInput = () => {
+      setClassroomCapacity(null);
+    }
 
   return (
     <Box sx={{
@@ -207,6 +210,18 @@ function UpdateClassroom() {
             sx={{ backgroundColor: 'black' }}
           >
             Actualizar
+          </Button>
+        </CardActions>
+
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
           </Button>
         </CardActions>
 

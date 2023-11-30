@@ -133,8 +133,9 @@ function AddClassroom() {
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectAimedAtChange}
           >
-            <MenuItem value={'alumnado'}>Alumnado</MenuItem>
-            <MenuItem value={'profesorado'}>Profesorado</MenuItem>
+            {/* Important: The values have to be those we have declared in the classroom model (enum: student and professor): */}
+            <MenuItem value={'student'}>Alumnado</MenuItem>
+            <MenuItem value={'professor'}>Profesorado</MenuItem>
           </Select>
         </FormControl>
 
