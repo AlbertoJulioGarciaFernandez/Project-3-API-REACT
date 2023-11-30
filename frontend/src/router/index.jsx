@@ -24,6 +24,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <NotFound />,
   },
   {
     path: "/signup",
@@ -34,10 +35,8 @@ export const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/dashboard",
+    path: "/dashboard/",
     element: <Root />,
-    errorElement: <NotFound />,
-    // errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
         return redirect("/"); //If the user isn't logged in, we redirect to the login page.

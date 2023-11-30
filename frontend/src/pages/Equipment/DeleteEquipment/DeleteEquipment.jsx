@@ -91,10 +91,6 @@ function DeleteEquipment() {
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
-            {/* We add an empty option which will come in handy when we have to reset the form fields: */}
-            <MenuItem value="">
-              <em></em>
-            </MenuItem>
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
@@ -102,6 +98,7 @@ function DeleteEquipment() {
             })}
           </Select>
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {equipmentIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>

@@ -26,7 +26,7 @@ function AddBuilding() {
     [buildingAddress, setBuildingAddress] = useState(''),
     [buildingPhoneNumb, setBuildingPhoneNumb] = useState(''),
     [buildingPhoneNumberMsg, setBuildingPhoneNumberMsg] = useState(''),
-    [validPhoneNumb, setValidPhoneNumb] = useState(false),
+    [validPhoneNumb, setValidPhoneNumb] = useState(true),
     [buildingProvidedServices, setBuildingProvidedServices] = useState([]),
     [buildingAdmins, setBuildingAdmins] = useState([]),
     // The three following variables are related to the options
@@ -59,11 +59,14 @@ function AddBuilding() {
       setBuildingAddress(e.target.value);
     },
     handlePhoneNumbChange = (e) => {
-      const regex = /[0-9]{3}[0-9]{3}[0-9]{3}/;
+      setBuildingPhoneNumb(e.target.value);
+
+      const regex = /^\d{9}$/;
 
       if (regex.test(e.target.value)) {
         setValidPhoneNumb(true);
-        setBuildingPhoneNumb(e.target.value);
+      } else {
+        setValidPhoneNumb(false);
       }
     },
     handleProvidedServicesChange = (e) => {
@@ -115,9 +118,10 @@ function AddBuilding() {
         setBuildingNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
       } else {
         setBuildingNameMsg('');
-        if (!validPhoneNumb) {
+        if (validPhoneNumb === false) {
           setBuildingPhoneNumberMsg('Error. +Info: El campo «Teléfono» no tiene el formato adecuado — éste ha de contener, únicamente, nueve números, sin espacio alguno entre ellos.');
         } else {
+          setBuildingPhoneNumberMsg('');
           setValidPhoneNumb(true);
           // Confirm building registration dialog window will pop up:
           setConfirmBuildingRegistration(true);
@@ -140,29 +144,25 @@ function AddBuilding() {
     handleCancelRegistration = () => {
       setConfirmBuildingRegistration(false);
     },
-    handleCleanForm = async () => {
+    handleCleanForm = () => {
+      setBuildingName('');
+      setBuildingNameMsg('');
+      setBuildingAddress('');
+      setBuildingPhoneNumb('');
+      setBuildingPhoneNumberMsg('');
+      setValidPhoneNumb(true);
+      // If we did not reset the array, services which were checked before
+      // we press the clean form button would still be stored in it despite
+      // the fact that they are now unchecked!
+      setBuildingProvidedServices([]);
       // Not only we have to set these state variables to false in order
       // to reset their values but also the array in which we store all 
       // the services!
       setCafeteriaIsChecked(false);
       setLibraryIsChecked(false);
       setAssemblyHallIsChecked(false);
-      // Resetting the array:
-      setBuildingProvidedServices([]);
-      // If we did not reset the array, services which were checked before
-      // we press the clean form button would still be stored in it despite
-      // the fact that they are now unchecked!
-
-      // We also reset the message errors so that they disappear when this button
-      // is clicked:
-      setBuildingNameMsg('');
-      setBuildingPhoneNumberMsg('');
-
-      // Check out why does not work (notice the async above in arrow function declaration)
-      // setBuildingAdmins([]);
-      // await getExistingUsers();
+      setBuildingAdminId();
     }
-
   return (
     <Box sx={{
       alignItems: 'center',
@@ -186,12 +186,14 @@ function AddBuilding() {
             margin="dense"
             title='Por favor, introduzca la denominación del edificio que desea dar de alta'
             required
+            value={buildingName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {buildingNameMsg.includes('Error') && <Alert severity="error">{buildingNameMsg}</Alert>}
+          {buildingNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -199,6 +201,7 @@ function AddBuilding() {
             type="text"
             label="Dirección"
             margin="dense"
+            value={buildingAddress}
             title='Por favor, introduzca la dirección del edificio que desea dar de alta'
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
@@ -212,6 +215,7 @@ function AddBuilding() {
             label="Teléfono"
             placeholder="Ejemplo: 123456789"
             margin="dense"
+            value={buildingPhoneNumb}
             title='Por favor, introduzca el número de teléfono del edificio que desea dar de alta'
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}

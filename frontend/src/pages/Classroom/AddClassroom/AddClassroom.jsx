@@ -71,9 +71,12 @@ function AddClassroom() {
       setConfirmClassroomRegistration(false);
     },
     handleCleanInput = () => {
+      setClassroomName('');
+      setClassroomNameMsg('');
       setClassroomCapacity(null);
+      setClassroomAimedAt('');
+      setClassroomBuildingId('');
     }
-
   return (
     <Box sx={{
       alignItems: 'center',
@@ -97,12 +100,14 @@ function AddClassroom() {
             margin="dense"
             title='Por favor, introduzca el nombre del aula que desea dar de alta'
             required
+            value={classroomName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {classroomNameMsg.includes('Error') && <Alert severity="error">{classroomNameMsg}</Alert>}
+          {classroomNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -117,8 +122,6 @@ function AddClassroom() {
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
-
-
 
         </CardContent>
 

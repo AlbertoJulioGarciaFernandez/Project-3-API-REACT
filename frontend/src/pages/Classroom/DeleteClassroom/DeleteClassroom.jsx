@@ -55,6 +55,10 @@ function DeleteClassroom() {
     },
     handleCancelDeletion = () => {
       setConfirmClassroomDeletion(false);
+    },
+    handleCleanInput = () => {
+      setClassroomId('');
+      setClassroomIdMsg('');
     }
 
   return (
@@ -90,6 +94,7 @@ function DeleteClassroom() {
             })}
           </Select>
           {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
+          {classroomIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -100,6 +105,18 @@ function DeleteClassroom() {
             sx={{ backgroundColor: 'black' }}
           >
             Eliminar
+          </Button>
+        </CardActions>
+
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
           </Button>
         </CardActions>
 

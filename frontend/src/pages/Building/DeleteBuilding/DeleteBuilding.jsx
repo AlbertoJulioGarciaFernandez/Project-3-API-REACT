@@ -55,6 +55,10 @@ function DeleteBuilding() {
     },
     handleCancelDeletion = () => {
       setConfirmBuildingDeletion(false);
+    },
+    handleCleanInput = () => {
+      setBuildingId('');
+      setBuildingIdMsg('');
     }
 
   return (
@@ -100,6 +104,18 @@ function DeleteBuilding() {
             sx={{ backgroundColor: 'black' }}
           >
             Eliminar
+          </Button>
+        </CardActions>
+
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
           </Button>
         </CardActions>
 

@@ -61,11 +61,14 @@ function UpdateBuilding() {
       setBuildingAddress(e.target.value);
     },
     handlePhoneNumbChange = (e) => {
-      const regex = /[0-9]{3}[0-9]{3}[0-9]{3}/;
+      setBuildingPhoneNumb(e.target.value);
+
+      const regex = /^\d{9}$/;
 
       if (regex.test(e.target.value)) {
         setValidPhoneNumb(true);
-        setBuildingPhoneNumb(e.target.value);
+      } else {
+        setValidPhoneNumb(false);
       }
     },
     handleProvidedServicesChange = (e) => {
@@ -132,9 +135,10 @@ function UpdateBuilding() {
           setBuildingNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
           setBuildingNameMsg('');
-          if (!validPhoneNumb) {
+          if (validPhoneNumb === false) {
             setBuildingPhoneNumberMsg('Error. +Info: El campo «Teléfono» no tiene el formato adecuado — éste ha de contener, únicamente, nueve números, sin espacio alguno entre ellos.');
           } else {
+            setBuildingPhoneNumberMsg('');
             setValidPhoneNumb(true);
             // Confirm building registration dialog window will pop up:
             setConfirmBuildingRegistration(true);
@@ -158,19 +162,22 @@ function UpdateBuilding() {
     handleCancelRegistration = () => {
       setConfirmBuildingRegistration(false);
     },
-    handleCleanForm = async () => {
-      setCafeteriaIsChecked(false);
-      setLibraryIsChecked(false);
-      setAssemblyHallIsChecked(false);
+    handleCleanForm = () => {
+      setBuildingId('');
+      setBuildingIdMsg('');
+      setBuildingName('');
+      setBuildingNameMsg('');
+      setBuildingAddress('');
+      setBuildingPhoneNumb('');
+      setBuildingPhoneNumberMsg('');
+      setValidPhoneNumb(true);
 
       setBuildingProvidedServices([]);
 
-      setBuildingNameMsg('');
-      setBuildingPhoneNumberMsg('');
-
-      // Check out why does not work (notice the async above in arrow function declaration)
-      setBuildingAdmins([]);
-      await getExistingUsers();
+      setCafeteriaIsChecked(false);
+      setLibraryIsChecked(false);
+      setAssemblyHallIsChecked(false);
+      setBuildingAdminId();
     }
 
   return (
@@ -215,6 +222,7 @@ function UpdateBuilding() {
             title='Por favor, introduzca la nueva denominación del edificio'
             label="Denominación"
             margin="dense"
+            value={buildingName}
             required
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
@@ -230,6 +238,7 @@ function UpdateBuilding() {
             title='Por favor, introduzca la nueva dirección del edificio'
             label="Dirección"
             margin="dense"
+            value={buildingAddress}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
@@ -242,6 +251,7 @@ function UpdateBuilding() {
             title='Por favor, introduzca el nuevo número de teléfono del edificio'
             label="Teléfono"
             margin="dense"
+            value={buildingPhoneNumb}
             placeholder="Ejemplo: 123456789"
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}

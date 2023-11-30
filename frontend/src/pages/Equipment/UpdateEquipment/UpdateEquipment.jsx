@@ -94,7 +94,7 @@ function UpdateEquipment() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '60vh', width: '60vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '60vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de equipamiento"></CardHeader>
 
@@ -109,10 +109,6 @@ function UpdateEquipment() {
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
-            {/* We add an empty option which will come in handy when we have to reset the form fields: */}
-            <MenuItem value="">
-              <em></em>
-            </MenuItem>
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
@@ -120,6 +116,7 @@ function UpdateEquipment() {
             })}
           </Select>
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {equipmentIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardContent>
@@ -131,12 +128,14 @@ function UpdateEquipment() {
             label="Denominación"
             margin="dense"
             required
+            value={equipmentName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {equipmentNameMsg.includes('Error') && <Alert severity="error">{equipmentNameMsg}</Alert>}
+          {equipmentNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -145,6 +144,7 @@ function UpdateEquipment() {
             title='Por favor, introduzca la nueva descripción del equipamiento'
             label="Descripción"
             margin="dense"
+            value={equipmentDescription}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"

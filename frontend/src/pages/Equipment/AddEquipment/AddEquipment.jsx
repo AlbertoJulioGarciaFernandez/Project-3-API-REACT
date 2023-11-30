@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function AddEquipment() {
   const [equipmentName, setEquipmentName] = useState(''),
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
-    [equipmentDescription, setEquipmentDescription] = useState(null),
+    [equipmentDescription, setEquipmentDescription] = useState(''),
     [isError, setIsError] = useState(false),
     [confirmEquipmentRegistration, setConfirmEquipmentRegistration] = useState(false),
     [equipmentRegistered, setEquipmentRegistered] = useState(false),
@@ -77,12 +77,14 @@ function AddEquipment() {
             margin="dense"
             title='Por favor, introduzca el nombre del equipamiento que desea dar de alta'
             required
+            value={equipmentName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {equipmentNameMsg.includes('Error') && <Alert severity="error">{equipmentNameMsg}</Alert>}
+          {equipmentNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -90,6 +92,7 @@ function AddEquipment() {
             type="text"
             label="Descripción"
             margin="dense"
+            value={equipmentDescription}
             title='Por favor, introduzca la descripción del equipamiento que desea dar de alta'
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}

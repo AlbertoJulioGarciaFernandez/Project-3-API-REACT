@@ -99,6 +99,12 @@ function UpdateClassroom() {
     },
     handleCleanInput = () => {
       setClassroomCapacity(null);
+      setClassroomId('');
+      setClassroomIdMsg('');
+      setClassroomName('');
+      setClassroomNameMsg('');
+      setClassroomAimedAt('');
+      setClassroomBuildingId('');
     }
 
   return (
@@ -111,7 +117,7 @@ function UpdateClassroom() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '80vh', width: '50vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de aula"></CardHeader>
 
@@ -133,6 +139,7 @@ function UpdateClassroom() {
             })}
           </Select>
           {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
+          {classroomIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardContent>
@@ -144,12 +151,14 @@ function UpdateClassroom() {
             label="Denominación"
             margin="dense"
             required
+            value={classroomName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {classroomNameMsg.includes('Error') && <Alert severity="error">{classroomNameMsg}</Alert>}
+          {classroomNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
