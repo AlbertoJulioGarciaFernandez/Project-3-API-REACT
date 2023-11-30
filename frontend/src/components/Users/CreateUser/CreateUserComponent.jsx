@@ -5,15 +5,27 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { TextField } from "@mui/material";
-import React  from "react";
+import React, { useState } from "react";
 
 export default function CreateUserComponent({ handleSubmit, setUser, user }) {
+/*   const [nameError, setNameError] = useState("");
+
+  const handleNamechange = (e) => {//manejo de campo nombre vacio
+    const newName = e.target.value;
+    setUser({...user, firstName: newName});
+    setNameError(newName.trim() === "" ? "El nombre es quererido" : "");
+  }; */
 
   return (
     <div className="containerFragmentCreateUser">
-      <form className="formulariocrearteUser">
+      <form className="formulariocrearteUser" onSubmit={handleSubmit}>
         <React.Fragment>
-          <Typography className="tituloCreate" gutterBottom variant="h4" component="form">
+          <Typography
+            className="tituloCreate"
+            gutterBottom
+            variant="h4"
+            component="form"
+          >
             Alta de Usuario
           </Typography>
 
@@ -66,7 +78,7 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
                 setUser({ ...user, email: e.target.value });
               }}
             />
-             <TextField
+            <TextField
               className="textFieldCreateUser"
               type="password"
               sx={{ marginBottom: "20px" }}
@@ -82,7 +94,12 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
           </CardContent>
 
           <CardActions className="botonEnviar">
-            <Button type="submit" variant="contained" color="success" onClick={handleSubmit}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              onClick={handleSubmit}
+            >
               Enviar
             </Button>
           </CardActions>
