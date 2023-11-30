@@ -21,7 +21,6 @@ function AddBuilding() {
     // Storing all the users who are building administrators:
     setBuildingAdmins(buildingAdmins);
   }
-
   const [buildingName, setBuildingName] = useState(''),
     [buildingNameMsg, setBuildingNameMsg] = useState(''),
     [buildingAddress, setBuildingAddress] = useState(''),
@@ -160,8 +159,8 @@ function AddBuilding() {
       setBuildingPhoneNumberMsg('');
 
       // Check out why does not work (notice the async above in arrow function declaration)
-      setBuildingAdmins([]);
-      await getExistingUsers();
+      // setBuildingAdmins([]);
+      // await getExistingUsers();
     }
 
   return (
@@ -222,7 +221,9 @@ function AddBuilding() {
           {buildingPhoneNumberMsg.includes('Error') && <Alert severity="error">{buildingPhoneNumberMsg}</Alert>}
         </CardContent>
 
-        <FormGroup title='Servicios disponibles' sx={{ marginLeft: 2, marginTop: 1 }}>
+        <h2>Servicios disponibles</h2>
+
+        <FormGroup title='Servicios disponibles' sx={{ marginLeft: 2, marginTop: 1, width: 200 }}>
           <FormControlLabel checked={cafeteriaIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Cafetería" />
           <FormControlLabel checked={libraryIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Biblioteca" />
           <FormControlLabel checked={assemblyHallIsChecked} onChange={handleProvidedServicesChange} componentsProps={{ typography: { variant: 'h6', fontWeight: 'bold' } }} control={<Checkbox />} label="Salón de actos" />

@@ -77,6 +77,10 @@ function UpdateEquipment() {
     handleCleanInput = () => {
       setEquipmentName('');
       setEquipmentDescription('');
+      setEquipmentNameMsg('');
+      // To reset equipment code drop-down menu:
+      setEquipmentId('');
+      setEquipmentIdMsg('');
     }
 
 
@@ -90,7 +94,7 @@ function UpdateEquipment() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '60vh', width: '60vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de equipamiento"></CardHeader>
 
@@ -105,6 +109,10 @@ function UpdateEquipment() {
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
+            {/* We add an empty option which will come in handy when we have to reset the form fields: */}
+            <MenuItem value="">
+              <em></em>
+            </MenuItem>
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {

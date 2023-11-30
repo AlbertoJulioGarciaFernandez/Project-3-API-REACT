@@ -58,6 +58,11 @@ function DeleteEquipment() {
     },
     handleCancelDeletion = () => {
       setConfirmPieceEquipmentDeletion(false);
+    },
+    handleCleanInput = () => {
+      // To reset equipment code drop-down menu:
+      setEquipmentId('');
+      setEquipmentIdMsg('');
     }
 
   return (
@@ -86,6 +91,10 @@ function DeleteEquipment() {
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectChange}
           >
+            {/* We add an empty option which will come in handy when we have to reset the form fields: */}
+            <MenuItem value="">
+              <em></em>
+            </MenuItem>
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
@@ -103,6 +112,18 @@ function DeleteEquipment() {
             sx={{ backgroundColor: 'black' }}
           >
             Eliminar
+          </Button>
+        </CardActions>
+
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
           </Button>
         </CardActions>
 

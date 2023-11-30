@@ -47,6 +47,11 @@ function AddEquipment() {
     },
     handleCancelRegistration = () => {
       setConfirmEquipmentRegistration(false);
+    },
+    handleCleanForm = () => {
+      setEquipmentName('');
+      setEquipmentDescription('');
+      setEquipmentNameMsg('');
     };
 
   return (
@@ -105,6 +110,7 @@ function AddEquipment() {
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
           <Button
+            onClick={handleCleanForm}
             size="large"
             type='reset'
             variant="contained"
