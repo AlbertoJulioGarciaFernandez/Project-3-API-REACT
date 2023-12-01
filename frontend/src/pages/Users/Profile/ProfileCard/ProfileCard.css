@@ -1,4 +1,4 @@
-.profielBody{
+.profileBody{
     width: 100%;
     height: 100%;
     display: flex;
@@ -8,12 +8,9 @@
     
 }
 
-.profielCard{
+.profileCard{
     width: 500px;
     padding: 20px;
     text-align: center;
     
 }
-
-
-
