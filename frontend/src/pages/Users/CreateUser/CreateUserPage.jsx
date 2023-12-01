@@ -13,10 +13,18 @@ function CreateUserPage() {
     password: "",
   });
 
-  const handleSubmit = async () => {
-    await createUser(user);
-    
-  };
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      await createUser(user);
+      setUser({
+        firstName: "",
+        lastName: "",
+        address: "",
+        email: "",
+        password: "",
+      })
+    }
 
   return (
     <CreateUserComponent
