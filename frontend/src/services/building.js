@@ -9,56 +9,26 @@ export async function getAllBuildings() {
   return data;
 }
 
-// export async function createClassroom({ classroomName, capacity, aimedAt, buildingId }) {
-//   const { data } = await api.post(
-//     "/classroom",
-//     {
-//       classroomName: classroomName,
-//       capacity: capacity,
-//       aimedAt: aimedAt,
-//       buildingId: buildingId
-//     },
-//     {
-//       headers: {
-//         authorization: localStorage.token,
-//       },
-//     }
-//   );
-//   return data;
-// }
-
-export async function createClassroom(classroomData) {
-  const { data } = await api.post(
-    "/classroom",
-    classroomData,
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
-  return data;
-}
-
-export async function updateClassroom({
-  classroomId, classroomData
-}) {
-  const { data } = await api.put(
-    `/classroom/${classroomId}`,
-    {
-      classroomData
+export async function createBuilding(buildingData) {
+  const { data } = await api.post("/building", buildingData, {
+    headers: {
+      authorization: localStorage.token,
     },
-    {
-      headers: {
-        authorization: localStorage.token,
-      },
-    }
-  );
+  });
   return data;
 }
 
-export async function deleteClassroom(classroomId) {
-  const { data } = await api.delete(`/classroom/${classroomId}`, {
+export async function updateBuilding(buildingId, buildingData) {
+  const { data } = await api.put(`/building/${buildingId}`, buildingData, {
+    headers: {
+      authorization: localStorage.token,
+    },
+  });
+  return data;
+}
+
+export async function deleteBuilding(buildingId) {
+  const { data } = await api.delete(`/building/${buildingId}`, {
     headers: {
       authorization: localStorage.token,
     },

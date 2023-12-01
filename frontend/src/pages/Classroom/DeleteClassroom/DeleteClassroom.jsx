@@ -21,11 +21,12 @@ function DeleteClassroom() {
     [classroomId, setClassroomId] = useState(''),
     [classroomIdMsg, setClassroomIdMsg] = useState(''),
     [isError, setIsError] = useState(false),
+    [confirmClassroomDeletion, setConfirmClassroomDeletion] = useState(false),
     [classroomDeleted, setClassroomDeleted] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listClassrooms");
     },
     handleSelectChange = (e) => {
       setClassroomId(e.target.value.toString());
@@ -36,16 +37,28 @@ function DeleteClassroom() {
       if (classroomId === '') {
         setClassroomIdMsg('Error. +Info: Por favor, despliegue el menú «Código del aula» y seleccione un valor.');
       } else {
-        try {
-          setClassroomIdMsg('');
-          await deleteClassroom(classroomId);
-          setClassroomDeleted(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setClassroomIdMsg('');
+        // Confirm classroom deletion dialog window will pop up:
+        setConfirmClassroomDeletion(true);
       }
+    },
+    handleProceedDeletion = async () => {
+      setConfirmClassroomDeletion(false);
+      try {
+        await deleteClassroom(classroomId);
+        setClassroomDeleted(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelDeletion = () => {
+      setConfirmClassroomDeletion(false);
+    },
+    handleCleanInput = () => {
+      setClassroomId('');
+      setClassroomIdMsg('');
     }
 
   return (
@@ -77,10 +90,11 @@ function DeleteClassroom() {
             {/* Dynamic generation of select option depending on the classrooms already registered on 
             the database: */}
             {classrooms.map(classroom => {
-              return <MenuItem key={classroom.id} value={classroom.id}>{classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
+              return <MenuItem key={classroom.id} value={classroom.id}>Código {classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
             })}
           </Select>
           {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
+          {classroomIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -94,8 +108,41 @@ function DeleteClassroom() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el aula con código {classroomId}. +Info: {errorMsg}</Alert>}
         {classroomDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
+
+        {confirmClassroomDeletion && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmClassroomDeletion}
+          onClose={handleProceedDeletion}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar eliminacion aula"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a eliminar de la base de datos el aula con código «{classroomId}». Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedDeletion}>Aceptar</Button>
+            <Button onClick={handleCancelDeletion}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {classroomDeleted && <Dialog
           style={{ position: 'absolute', left: 600, top: 100 }}
@@ -105,7 +152,7 @@ function DeleteClassroom() {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Eliminación de equipamiento"}
+            {"Eliminación de aula"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">

@@ -41,11 +41,12 @@ function UpdateClassroom() {
     [classroomAimedAt, setClassroomAimedAt] = useState(null),
     [classroomBuildingId, setClassroomBuildingId] = useState(null),
     [isError, setIsError] = useState(false),
+    [confirmClassroomUpdate, setConfirmClassroomUpdate] = useState(false),
     [classroomRegistered, setClassroomRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listClassrooms");
     },
     handleNameChange = (e) => {
       setClassroomName(e.target.value);
@@ -73,18 +74,37 @@ function UpdateClassroom() {
         if (classroomName === '') {
           setClassroomNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
-          try {
-            setClassroomNameMsg('');
-            await updateClassroom(classroomId, { classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
-            setClassroomName('');
-            setClassroomRegistered(true);
-            setIsError(false);
-          } catch (error) {
-            setIsError(true);
-            setErrorMsg(error);
-          }
+          setClassroomNameMsg('');
+          // Confirm classroom update dialog window will pop up:
+          setConfirmClassroomUpdate(true);
+
         }
       }
+    },
+    handleProceedUpdate = async () => {
+      setConfirmClassroomUpdate(false);
+      try {
+        setClassroomNameMsg('');
+        await updateClassroom(classroomId, { classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
+        setClassroomName('');
+        setClassroomRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelUpdate = () => {
+      setConfirmClassroomUpdate(false);
+    },
+    handleCleanInput = () => {
+      setClassroomCapacity(null);
+      setClassroomId('');
+      setClassroomIdMsg('');
+      setClassroomName('');
+      setClassroomNameMsg('');
+      setClassroomAimedAt('');
+      setClassroomBuildingId('');
     }
 
   return (
@@ -97,7 +117,7 @@ function UpdateClassroom() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', marginTop: 10, backgroundColor: '#c3d2fc', height: '80vh', width: '50vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de aula"></CardHeader>
 
@@ -115,10 +135,11 @@ function UpdateClassroom() {
             {/* Dynamic generation of select option depending on the classrooms already registered on 
             the database: */}
             {classrooms.map(classroom => {
-              return <MenuItem key={classroom.id} value={classroom.id}>{classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
+              return <MenuItem key={classroom.id} value={classroom.id}>Código: {classroom.id} (Denominación: {classroom.classroomName})</MenuItem>
             })}
           </Select>
           {classroomIdMsg.includes('Error') && <Alert severity="error">{classroomIdMsg}</Alert>}
+          {classroomIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardContent>
@@ -130,12 +151,14 @@ function UpdateClassroom() {
             label="Denominación"
             margin="dense"
             required
+            value={classroomName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {classroomNameMsg.includes('Error') && <Alert severity="error">{classroomNameMsg}</Alert>}
+          {classroomNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -145,6 +168,7 @@ function UpdateClassroom() {
             margin="dense"
             title='Por favor, seleccione el aforo del aula que desea modificar (valor mínimo: 10 — valor máximo: 50)'
             fullWidth={true}
+            value={(classroomCapacity === null) ? '' : classroomCapacity}
             InputProps={{ inputProps: { min: 10, max: 50 } }}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
@@ -198,8 +222,41 @@ function UpdateClassroom() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el aula con código {classroomId}. +Info: {errorMsg.response.data}</Alert>}
         {classroomRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmClassroomUpdate && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmClassroomUpdate}
+          onClose={handleProceedUpdate}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar actualización de aula"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a actualizar el aula código {classroomId} con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedUpdate}>Aceptar</Button>
+            <Button onClick={handleCancelUpdate}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {classroomRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}
