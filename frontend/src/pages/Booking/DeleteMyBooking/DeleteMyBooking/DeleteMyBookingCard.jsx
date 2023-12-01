@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { DeleteMyBooking } from "../../../../services/booking";
+import PropTypes from 'prop-types';
 
 function DeleteMyBookingCard(props) {
   const [bookingId, setbookingId] = useState("");
@@ -45,15 +46,23 @@ function DeleteMyBookingCard(props) {
   function claseCardDate(booking) {
     function fechaHoy() {
       const fecha = new Date();
-      const day = fecha.getDate();
+      let day = fecha.getDate();
+      const dayCero = [1,2,3,4,5,6,7,8,9]
+      if(dayCero.includes(day)){
+        day=`0${day}`
+      }
       const month = fecha.getMonth() + 1;
       const year = fecha.getFullYear();
       return `${year}-${month}-${day}`;
     }
-
+  
     function horaActual() {
       const fecha = new Date();
-      const hora = fecha.getHours();
+      let hora = fecha.getHours();
+      const horaCero = [1,2,3,4,5,6,7,8,9]
+      if(horaCero.includes(hora)){
+        hora=`0${hora}`
+      }
       const minutos = fecha.getMinutes();
       return `${hora}:${minutos}`;
     }
@@ -113,6 +122,12 @@ function DeleteMyBookingCard(props) {
       {mensaje ? (<Alert severity="success">{mensaje}</Alert>) : (error && <Alert severity="error">{error}</Alert>)}
     </Card>
   );
+}
+
+DeleteMyBookingCard.propTypes = {
+  classroom: PropTypes.object,
+  booking:PropTypes.object,
+  functRefres:PropTypes.func
 }
 
 export default DeleteMyBookingCard;

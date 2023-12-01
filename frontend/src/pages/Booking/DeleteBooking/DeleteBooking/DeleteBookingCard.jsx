@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { DeleteBooking} from "../../../../services/booking";
+import PropTypes from 'prop-types';
 
 function DeleteBookingCard(props) {
   const [bookingId, setbookingId] = useState("");
@@ -90,5 +91,12 @@ function DeleteBookingCard(props) {
     </Card>
   );
 }
+
+DeleteBookingCard.propTypes = {
+  classroom: PropTypes.object,
+  booking:PropTypes.object,
+  functRefres:PropTypes.func
+}
+
 
 export default DeleteBookingCard;

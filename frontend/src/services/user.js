@@ -15,7 +15,6 @@ export const getListUsers = async () => {
       "Authorization": localStorage.getItem("token"),
     },
   });
- 
   return data; // trae todos los datos de los usuarios
 };
 

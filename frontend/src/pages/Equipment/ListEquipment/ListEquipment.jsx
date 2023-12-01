@@ -22,12 +22,9 @@ function ListEquipment() {
   }
 
   return (
-    <div>
-      <h1>Listado de equipamiento disponible</h1>
-      {equipment.map((pieceOfEquipment, i) => {
-        return <PieceOfEquipment key={i} pieceEquipment={pieceOfEquipment} />
-      })}
-    </div>
+    <>
+      <PieceOfEquipment equipmentAvailable={equipment} />
+    </>
   )
 }
 

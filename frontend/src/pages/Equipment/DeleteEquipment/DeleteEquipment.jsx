@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { deletePieceEquipment, getAllEquipment } from '../../../services/equipment';
 
 function DeleteEquipment() {
-  
+
   useEffect(() => {
     getEquipmentAvailable();
   }, []);
@@ -22,11 +22,12 @@ function DeleteEquipment() {
     [equipmentId, setEquipmentId] = useState(''),
     [equipmentIdMsg, setEquipmentIdMsg] = useState(''),
     [isError, setIsError] = useState(false),
+    [confirmPieceEquipmentDeletion, setConfirmPieceEquipmentDeletion] = useState(false),
     [equipmentDeleted, setEquipmentDeleted] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listEquipment");
     },
     handleSelectChange = (e) => {
       setEquipmentId(e.target.value.toString());
@@ -37,16 +38,31 @@ function DeleteEquipment() {
       if (equipmentId === '') {
         setEquipmentIdMsg('Error. +Info: Por favor, despliegue el menú «Código del equipamiento» y seleccione un valor.');
       } else {
-        try {
-          setEquipmentIdMsg('');
-          await deletePieceEquipment(equipmentId);
-          setEquipmentDeleted(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setEquipmentIdMsg('');
+        // Confirm piece of equipment deletion dialog window will pop up:
+        setConfirmPieceEquipmentDeletion(true);
       }
+    },
+    handleProceedDeletion = async () => {
+      // The following setter will make the first pop up
+      // dialog window disappear:
+      setConfirmPieceEquipmentDeletion(false);
+      try {
+        await deletePieceEquipment(equipmentId);
+        setEquipmentDeleted(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelDeletion = () => {
+      setConfirmPieceEquipmentDeletion(false);
+    },
+    handleCleanInput = () => {
+      // To reset equipment code drop-down menu:
+      setEquipmentId('');
+      setEquipmentIdMsg('');
     }
 
   return (
@@ -78,10 +94,11 @@ function DeleteEquipment() {
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id} (Denominación: {pieceOfEquipment.equipmentName})</MenuItem>
+              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>Código: {pieceOfEquipment.id} (Denominación: {pieceOfEquipment.equipmentName})</MenuItem>
             })}
           </Select>
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {equipmentIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -95,8 +112,41 @@ function DeleteEquipment() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar eliminar el equipamiento con código {equipmentId}. +Info: {errorMsg}</Alert>}
         {equipmentDeleted && <Alert severity="success">Operación realizada con éxito.</Alert>}
+
+        {confirmPieceEquipmentDeletion && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmPieceEquipmentDeletion}
+          onClose={handleProceedDeletion}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar eliminacion equipamiento"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a eliminar de la base de datos el equipamiento con código «{equipmentId}». Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedDeletion}>Aceptar</Button>
+            <Button onClick={handleCancelDeletion}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {equipmentDeleted && <Dialog
           style={{ position: 'absolute', left: 600, top: 100 }}

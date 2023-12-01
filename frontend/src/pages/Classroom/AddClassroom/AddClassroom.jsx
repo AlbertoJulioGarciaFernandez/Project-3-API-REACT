@@ -21,15 +21,16 @@ function AddClassroom() {
   const [buildingsRegistered, setBuildingsRegistered] = useState([]),
     [classroomName, setClassroomName] = useState(''),
     [classroomNameMsg, setClassroomNameMsg] = useState(''),
-    [classroomCapacity, setClassroomCapacity] = useState(''),
-    [classroomAimedAt, setClassroomAimedAt] = useState(''),
-    [classroomBuildingName, setClassroomBuildingName] = useState(''),
+    [classroomCapacity, setClassroomCapacity] = useState(null),
+    [classroomAimedAt, setClassroomAimedAt] = useState(null),
+    [classroomBuildingId, setClassroomBuildingId] = useState(null),
     [isError, setIsError] = useState(false),
+    [confirmClassroomRegistration, setConfirmClassroomRegistration] = useState(false),
     [classroomRegistered, setClassroomRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listClassrooms");
     },
     handleNameChange = (e) => {
       setClassroomName(e.target.value);
@@ -40,8 +41,8 @@ function AddClassroom() {
     handleSelectAimedAtChange = (e) => {
       setClassroomAimedAt(e.target.value);
     },
-    handleSelectBuildingNameChange = (e) => {
-      setClassroomBuildingName(e.target.value);
+    handleSelectBuildingIdChange = (e) => {
+      setClassroomBuildingId(e.target.value);
     },
     handleClick = async (e) => {
       e.preventDefault();
@@ -49,19 +50,33 @@ function AddClassroom() {
       if (classroomName === '') {
         setClassroomNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
       } else {
-        try {
-          setClassroomNameMsg('');
-          await createClassroom({ classroomName: classroomName, capacity: capacity, aimedAt: aimedAt, buildingId: buildingId });
-          setClassroomName('');
-          setClassroomRegistered(true);
-          setIsError(false);
-        } catch (error) {
-          setIsError(true);
-          setErrorMsg(error);
-        }
+        setClassroomNameMsg('');
+        // Confirm classroom registration dialog window will pop up:
+        setConfirmClassroomRegistration(true);
       }
+    },
+    handleProceedRegistration = async () => {
+      setConfirmClassroomRegistration(false);
+      try {
+        await createClassroom({ classroomName: classroomName, capacity: classroomCapacity, aimedAt: classroomAimedAt, buildingId: classroomBuildingId });
+        setClassroomName('');
+        setClassroomRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelRegistration = () => {
+      setConfirmClassroomRegistration(false);
+    },
+    handleCleanInput = () => {
+      setClassroomName('');
+      setClassroomNameMsg('');
+      setClassroomCapacity(null);
+      setClassroomAimedAt('');
+      setClassroomBuildingId('');
     }
-
   return (
     <Box sx={{
       alignItems: 'center',
@@ -72,7 +87,7 @@ function AddClassroom() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '50vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Alta de aula"></CardHeader>
         <CardContent>
@@ -85,12 +100,14 @@ function AddClassroom() {
             margin="dense"
             title='Por favor, introduzca el nombre del aula que desea dar de alta'
             required
+            value={classroomName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {classroomNameMsg.includes('Error') && <Alert severity="error">{classroomNameMsg}</Alert>}
+          {classroomNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -98,14 +115,13 @@ function AddClassroom() {
             type="number"
             label="Aforo"
             margin="dense"
+            value={(classroomCapacity === null) ? '' : classroomCapacity}
             title='Por favor, seleccione el aforo del aula que desea dar de alta (valor mínimo: 10 — valor máximo: 50)'
             fullWidth={true}
             InputProps={{ inputProps: { min: 10, max: 50 } }}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
-
-
 
         </CardContent>
 
@@ -115,13 +131,14 @@ function AddClassroom() {
             title='Por favor, despliegue y seleccione el público al que está dirigido el aula que desea dar de alta'
             labelId="simple-select-equipment-id-label"
             id="simple-select"
-            value={classroomAimedAt}
+            value={(classroomAimedAt === null) ? '' : classroomAimedAt}
             label="Dirigida a"
             sx={{ backgroundColor: 'white' }}
             onChange={handleSelectAimedAtChange}
           >
-            <MenuItem value={'alumnado'}>Alumnado</MenuItem>
-            <MenuItem value={'profesorado'}>Profesorado</MenuItem>
+            {/* Important: The values have to be those we have declared in the classroom model (enum: student and professor): */}
+            <MenuItem value={'student'}>Alumnado</MenuItem>
+            <MenuItem value={'professor'}>Profesorado</MenuItem>
           </Select>
         </FormControl>
 
@@ -129,16 +146,16 @@ function AddClassroom() {
           <InputLabel style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Edificio de ubicación</InputLabel>
           <Select
             title='Por favor, despliegue y seleccione el edificio donde estará ubicado el aula'
-            labelId="simple-select-equipment-id-label"
+            labelId="simple-select-classroombuilding-id-label"
             id="simple-select"
-            value={classroomBuildingName}
+            value={(classroomBuildingId === null) ? '' : classroomBuildingId}
             label="Edificio ubicacion"
             sx={{ backgroundColor: 'white' }}
-            onChange={handleSelectBuildingNameChange}
+            onChange={handleSelectBuildingIdChange}
           >
             {/* Dynamic generation of select option depending on the buildings already registered on the database: */}
             {buildingsRegistered.map(building => {
-              return <MenuItem key={building.id} value={building.buildingName}>{building.buildingName}</MenuItem>
+              return <MenuItem key={building.id} value={building.id}>Código {building.id} (Denominación: {building.buildingName})</MenuItem>
             })}
           </Select>
         </FormControl>
@@ -154,8 +171,41 @@ function AddClassroom() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar dar de alta el aula {classroomName}. +Info: {errorMsg.response.data}</Alert>}
         {classroomRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmClassroomRegistration && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmClassroomRegistration}
+          onClose={handleProceedRegistration}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar alta de aula"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a dar de alta un nuevo aula con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedRegistration}>Aceptar</Button>
+            <Button onClick={handleCancelRegistration}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {classroomRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}
