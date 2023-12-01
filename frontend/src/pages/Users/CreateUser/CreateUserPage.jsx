@@ -17,6 +17,7 @@ function CreateUserPage() {
   const handleSubmit = async (e) => {
       e.preventDefault();
       await createUser(user);
+      console.log("entra")
       setUser({
         firstName: "",
         lastName: "",

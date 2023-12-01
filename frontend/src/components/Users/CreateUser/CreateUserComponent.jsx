@@ -2,56 +2,55 @@
 import "./CreateUserComponent.css";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import { TextField } from "@mui/material";
+import React, { useState }  from "react";
 
 export default function CreateUserComponent({ handleSubmit, setUser, user }) {
 
-  const [errorFirstName, setErrorFirstName] = useState(false);
-  const [errorLasttName, setErrorLastName] = useState(false);
-  const [errorAddress, setErrorAddress] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorPassword, setErrorPassword] = useState(false);
+  const [errorFirstName, setErrorFirstName] = useState(false),
+        [errorLastName, setErrorLastName] = useState(false),
+        [errorAddress, setErrorAddress] = useState(false),
+        [errorEmail, setErrorEmail] = useState(false),
+        [errorPassword, setErrorPassword] = useState(false)
 
-  function checkData(e) {
+
+  function chekData(e) {
     e.preventDefault();
-           if (user.firstName.length < 1) {
+        if (user.firstName.length < 1) {
       setErrorFirstName(true);
-    } else if (user.lastName.length < 1){
+    } else if (user.lastName.length < 1) {
       setErrorLastName(true);
-    } else if (user.address.length < 1){
+    } else if (user.address.length < 1) {
       setErrorAddress(true);
-    } else if (user.email.length < 1){
+    } else if (user.email.length < 1) {
       setErrorEmail(true);
-    } else if (user.password.length < 1){
+    } else if (user.password.length < 1) {
       setErrorPassword(true);
     } else {
       handleSubmit(e);
     }
   }
+  
 
   return (
     <div className="containerFragmentCreateUser">
       <form className="formulariocrearteUser">
         <React.Fragment>
-          <Typography
-            className="tituloCreate"
-            gutterBottom
-            variant="h4"
-            component="form"
-          >
+          <Typography className="tituloForm" gutterBottom variant="h5" component="form" >
             Alta de Usuario
           </Typography>
 
           <CardContent className="formContainerCreateUser">
             <TextField
-              className="textField"
+              className="textFieldCreateUser"
+              sx={{ backgroundColor: 'white', marginBottom: "20px" }}
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.firstName}
-              sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required-name"
+              id="outlined-required"
               label="Nombre"
               placeholder="Nombre"
               error={errorFirstName}
@@ -60,19 +59,19 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
                 setUser({ ...user, firstName: e.target.value });
                 setErrorFirstName(false)
               }}
-
             />
             <TextField
               className="textFieldCreateUser"
+              sx={{ backgroundColor: 'white', marginBottom: "20px" }}
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.lastName}
-              sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required-lastname"
+              id="outlined-required"
               label="Apellidos"
               placeholder="Apellidos"
-              error={errorLasttName}
-              helperText={errorLasttName ? "El Apellido es obligatorio" : ""}
+              error={errorLastName}
+              helperText={errorLastName ? "El Apellido es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, lastName: e.target.value });
                 setErrorLastName(false)
@@ -80,11 +79,12 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textFieldCreateUser"
+              sx={{ backgroundColor: 'white', marginBottom: "20px" }}
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.address}
-              sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required-address"
+              id="outlined-required"
               label="Direccion"
               placeholder="Direccion"
               error={errorAddress}
@@ -96,11 +96,12 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
             />
             <TextField
               className="textFieldCreateUser"
+              sx={{ backgroundColor: 'white', marginBottom: "20px" }}
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.email}
-              sx={{ marginBottom: "20px" }}
               component="form"
               required
-              id="outlined-required-email"
+              id="outlined-required"
               label="Email"
               placeholder="Email"
               error={errorEmail}
@@ -110,14 +111,15 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
                 setErrorEmail(false)
               }}
             />
-            <TextField
+             <TextField
               className="textFieldCreateUser"
-              value={user.password}
               type="password"
-              sx={{ marginBottom: "20px" }}
+              sx={{ backgroundColor: 'white', marginBottom: "20px" }}
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
+              value={user.password}
               component="form"
               required
-              id="outlined-required-password"
+              id="outlined-required"
               label="Password"
               placeholder="Password"
               error={errorPassword}
@@ -129,14 +131,11 @@ export default function CreateUserComponent({ handleSubmit, setUser, user }) {
             />
           </CardContent>
 
-          <CardActions className="botonEnviar">
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              onClick={checkData}
-            >
-              Crear
+          <CardActions className="containerButton">
+            <Button 
+            size="large" variant="contained" sx={{background:"black"}}
+            type="submit" onClick={chekData}>
+              Enviar
             </Button>
           </CardActions>
         </React.Fragment>

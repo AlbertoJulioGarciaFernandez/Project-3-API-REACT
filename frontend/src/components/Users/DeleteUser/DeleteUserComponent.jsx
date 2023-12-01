@@ -1,6 +1,7 @@
 import "./DeleteUserComponent.css";
 import { useEffect, useState } from "react";
 import { deleteUser, getListUsers } from "../../../services/user";
+import { Button } from "@mui/material";
 
 export default function DeleteUserComponent() {
 
@@ -50,16 +51,19 @@ export default function DeleteUserComponent() {
     },[refresh]);
     
   return (
-    <>
-      <form className="formularioDeleteUser" action="#">
+    <div className="formularioDeleteUser">
+      <form className="containerForm" action="#">
+        <div className="containerTitulo">
         <label className="titulo">
           Eliminar Usuario
         </label>
+        </div>
         <select className="seleccion" name="lenguajes" id="lang" size="4">
           {listUser}
         </select>
-        <input className="boton" type="submit" value="Eliminar" onClick={handleClick} />
+        <Button className="boton" type="submit" value="Eliminar" variant="contained" sx={{backgroundColor: 'black', marginTop: 7}}onClick={handleClick}>Eliminar</Button>
+       {/*  <input className="boton" type="submit" value="Eliminar" onClick={handleClick} /> */}
       </form>
-    </>
+    </div>
   );
 }

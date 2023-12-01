@@ -39,20 +39,21 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
 
   return (
     <div className="containerFragment">
-      <form className="formularioUpdateUser">
+      <form className="containerFormUpdateUser">
         <React.Fragment>
           <Typography
             gutterBottom
-            variant="h4"
+            variant="h5"
             component="form"
-            className="tituloUdpdate"
+            className="tituloForm"
           >
             Actualización de Usuario
           </Typography>
 
-          <CardContent className="formContainer">
+          <CardContent className="containerCard">
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.id}
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -68,7 +69,8 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.firstName}
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -84,7 +86,8 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.lastName}
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -100,7 +103,8 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.address}
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -116,7 +120,8 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.email}
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -132,7 +137,8 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.password}
               type="password"
               sx={{ marginBottom: "20px" }}
@@ -149,7 +155,8 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               }}
             />
             <TextField
-              className="textField"
+              className="containerTextField"
+              InputLabelProps={{ style: { fontWeight:"bold"} }}
               value={user.role}
               sx={{ marginBottom: "20px" }}
               component="form"
@@ -166,13 +173,10 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
             />
           </CardContent>
 
-          <CardActions className="botonEnviar">
+          <CardActions className="containerButton" >
             <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              onClick={chekData}
-            >
+            size="large" variant="contained" sx={{background:"black"}}
+            type="submit" onClick={chekData}>
               Actualizar
             </Button>
           </CardActions>
