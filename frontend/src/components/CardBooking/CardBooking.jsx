@@ -1,11 +1,16 @@
 import { Card, Typography } from "@mui/material";
 import "./CardBooking.css";
 import img from "../../assets/portada.jpg";
+import PropTypes from 'prop-types';
 
 function CardBooking(props) {
   function fechaHoy() {
     const fecha = new Date();
-    const day = fecha.getDate();
+    let day = fecha.getDate();
+    const dayCero = [1,2,3,4,5,6,7,8,9]
+    if(dayCero.includes(day)){
+      day=`0${day}`
+    }
     const month = fecha.getMonth() + 1;
     const year = fecha.getFullYear();
     return `${year}-${month}-${day}`;
@@ -13,17 +18,23 @@ function CardBooking(props) {
 
   function horaActual() {
     const fecha = new Date();
-    const hora = fecha.getHours();
+    let hora = fecha.getHours();
+    const horaCero = [1,2,3,4,5,6,7,8,9]
+    if(horaCero.includes(hora)){
+      hora=`0${hora}`
+    }
     const minutos = fecha.getMinutes();
     return `${hora}:${minutos}`;
   }
+
+
 
   function formatdate(date) {
     return date.split("-").reverse().join("-");
   }
 
   const clasrooms = {};
-  props.classroom.map(
+  props.classroomArray.map(
     (classroom) => (clasrooms[classroom.id] = classroom.classroomName)
   );
 
@@ -58,6 +69,11 @@ function CardBooking(props) {
       </div>
     </Card>
   );
+}
+
+CardBooking.propTypes = {
+  bookingsArray: PropTypes.object,
+  classroomArray:PropTypes.object
 }
 
 export default CardBooking;

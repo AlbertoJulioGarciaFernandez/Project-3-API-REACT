@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { UpdateBooking } from "../../../../services/booking";
+import PropTypes from 'prop-types';
 
 function UpdateBookingCard(props) {
   const [bookingSelect, setBookingSelect] = useState("");
@@ -188,6 +189,12 @@ function UpdateBookingCard(props) {
       )}
     </Card>
   );
+}
+
+UpdateBookingCard.propTypes = {
+  classroom: PropTypes.object,
+  booking:PropTypes.object,
+  functRefres:PropTypes.func
 }
 
 export default UpdateBookingCard;

@@ -52,7 +52,7 @@ function ListMyBookings() {
         <CardBooking
           key={booking.id}
           bookingsArray={booking}
-          classroom={classrooms}
+          classroomArray={classrooms}
         />
       );
     }).reverse()

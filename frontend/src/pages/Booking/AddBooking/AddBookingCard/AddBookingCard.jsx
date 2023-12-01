@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { addBooking } from "../../../../services/booking";
+import PropTypes from 'prop-types';
 
 function AddBookingCard({user,classroom}) {
   const [bookingDate, setBookingDate] = useState("");
@@ -154,6 +155,7 @@ function AddBookingCard({user,classroom}) {
                 </MenuItem>
               ))}
           </Select>
+
         </FormControl>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "center" }}>
@@ -168,5 +170,11 @@ function AddBookingCard({user,classroom}) {
     </Card>
   );
 }
+
+AddBookingCard.propTypes = {
+  user: PropTypes.object,
+  classroom:PropTypes.object
+}
+
 
 export default AddBookingCard;
