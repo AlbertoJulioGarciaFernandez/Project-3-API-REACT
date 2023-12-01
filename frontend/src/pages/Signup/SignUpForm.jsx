@@ -43,7 +43,7 @@ function SignUpForm() {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/dashboard");
+    navigate("/dashboard/listmybookings");
   }
 
   function validateEmail(userEmail) {

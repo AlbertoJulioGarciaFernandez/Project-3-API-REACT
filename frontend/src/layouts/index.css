@@ -25,7 +25,10 @@
 .contenidoDashboard{
     background-color: #4E7FFF;
     width: calc(100vw - 300px);
-    height: calc(100vh - 107px);
+    height: calc(100vh - 65px);
     overflow-y: auto;
-    padding: 20px;
+    background-color: #97B4FF;
+    
+    
+
 }

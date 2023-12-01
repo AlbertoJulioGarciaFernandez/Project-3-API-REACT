@@ -1,25 +1,26 @@
 // CreateUserPage.jsx
-import CreateUserComponent from "../../../components/Users/CreateUser/CreateUserComponent";
+import UpdateUserComponent from '../../../components/Users/UpdateUser/UpdateUserComponent'
 import { useState } from "react";
-import { createUser } from "../../../services/user";
+import { updateUser } from "../../../services/user";
 
-function CreateUserPage() {
+function UpdateUserPage() {
 
   const [user, setUser] = useState({
+    id: "",
     firstName: "",
     lastName: "",
     address: "",
     email: "",
     password: "",
+    role:"",
   });
 
   const handleSubmit = async () => {
-    await createUser(user);
-    
+    await updateUser(user);
   };
 
   return (
-    <CreateUserComponent
+    <UpdateUserComponent
       handleSubmit={handleSubmit}
       setUser={setUser}
       user={user}
@@ -27,4 +28,4 @@ function CreateUserPage() {
   );
 }
 
-export default CreateUserPage;
+export default UpdateUserPage;

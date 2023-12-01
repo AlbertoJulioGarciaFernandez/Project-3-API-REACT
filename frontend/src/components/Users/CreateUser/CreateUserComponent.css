@@ -1,15 +1,44 @@
-.containerFragment{
-    background-color: blueviolet;
+.containerFragmentCreateUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .formulariocrearteUser {
+    width: 22vw;
+    height: 60vh;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .formContainerCreateUser {
     display: flex;
     flex-direction: column;
-    max-width: 25vw;
-    height: 60vh;
-    align-items: center;
-    justify-content: center;
-    margin-left: 25vw;
-    border-radius: 10px;
-}
+  }
+  
+  .textFieldCreateUser {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 
-.textField{
-    width: 15vw;
+  .botonEnviar{
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+
+.tituloCreate {
+  border-top-left-radius: 15px;
+  font-size: 28px;
+  width: 15rem;
+  padding: 2px;
+  background-color: #3498db;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 2px solid #2980b9;
 }
+  

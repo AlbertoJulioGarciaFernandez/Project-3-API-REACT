@@ -21,8 +21,8 @@ import Logo from "../../components/Logo/Logo";
 import sideImg from "../../assets/loginSignupImg.jpg";
 
 function LoginForm() {
-  const [email, setEmail] = useState("alberto@gmail.com");
-  const [password, setPassword] = useState("1234567a");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState(false);
@@ -41,7 +41,7 @@ function LoginForm() {
     } else {
       setErrorEmail({
         error: true,
-        message: "Formato de correo electronico incorrecto",
+        message: "Formato de correo electrónico incorrecto",
       });
     }
     if (validatePassword(password)) {
@@ -52,7 +52,7 @@ function LoginForm() {
     } else {
       setErrorPassword({
         error: true,
-        message: "Contraseña no valida",
+        message: "Contraseña no válida",
       });
     }
     try {
@@ -60,12 +60,11 @@ function LoginForm() {
         const loginResponse = await login({ email, password });
         localStorage.setItem("token", loginResponse.data.token);
         localStorage.setItem("role", loginResponse.data.role);
-        navigate("/dashboard");
+        loginResponse.data.role === "admin" ? navigate("/dashboard/listBookings") : navigate("/dashboard/listmybookings");
       }
     } catch (error) {
       //Handle the error
       setError("true");
-      console.log("No registrado");
     }
   }
 
@@ -85,7 +84,7 @@ function LoginForm() {
         raised={true}
         sx={{ backgroundColor: "#4E7FFF", height: "100vh", width: "50vw" }}
       >
-          <Logo />
+        <Logo />
         <CardHeader
           title="Iniciar Sesión"
           sx={{ color: "white", textAlign: "center" }}

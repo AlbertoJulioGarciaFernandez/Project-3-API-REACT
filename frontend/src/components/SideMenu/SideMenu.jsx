@@ -23,19 +23,28 @@ function SideMenu() {
     setSelectedIndex(index === selectedIndex ? null : index);
   };
 
+
+  const role = localStorage.getItem("role")
+
+  
+
+
+
+
+
   const menuItemsReserva = [
-    { icon: <ListIcon />, text: 'Ver Reservas', link: '/dashboard/listBookings', index: 1 },
-    { icon: <AddIcon />, text: 'Crear Reserva', link: '/dashboard/listBookings', index: 2 },
-    { icon: <ChangeCircleIcon />, text: 'Modificar Reserva', link: '/dashboard/listBookings', index: 3 },
-    { icon: <DeleteIcon />, text: 'Eliminar Reserva', link: '/dashboard/listBookings', index: 4 },
+    { icon: <ListIcon />, text: 'Ver Reservas', link: role==="admin" ?'/dashboard/listbookings':'/dashboard/listmybookings' , index:1},
+    { icon: <AddIcon />, text: 'Crear Reserva', link: role==="admin" ?'/dashboard/addbooking':'/dashboard/addmybooking', index:2 },
+    { icon: <ChangeCircleIcon />, text: 'Modificar Reserva', link:role==="admin" ?'/dashboard/updateBooking':'/dashboard/updatemybooking', index:3 },
+    { icon: <DeleteIcon />, text: 'Eliminar Reserva', link:role==="admin" ?'/dashboard/deletebooking':'/dashboard/deletemybooking', index:4 },
     // Agrega más elementos si es necesario
   ];
 
   const menuItemsUsuario = [
     { icon: <ListIcon />, text: 'Ver Usuarios', link: '/dashboard/listUsers', index: 5 },
     { icon: <AddIcon />, text: 'Crear Usuario', link: '/dashboard/createUser', index: 6 },
-    { icon: <ChangeCircleIcon />, text: 'Modificar Usuario', link: '/dashboard/listUsers', index: 7 },
-    { icon: <DeleteIcon />, text: 'Eliminar Usuario', link: '/dashboard/listUsers', index: 8 },
+    { icon: <ChangeCircleIcon />, text: 'Modificar Usuario', link: '/dashboard/updateUser', index: 7 },
+    { icon: <DeleteIcon />, text: 'Eliminar Usuario', link: '/dashboard/deleteUser', index: 8 },
     // Agrega más elementos si es necesario
   ];
 
@@ -80,7 +89,7 @@ function SideMenu() {
           </Link>
         ))}
       </List>
-      <Divider />
+      {role==="admin" && (<><Divider />
       <List className="btnMenu">
         {menuItemsUsuario.map((item) => (
           <Link key={item.index} to={item.link} className="linkMenu">
@@ -155,7 +164,9 @@ function SideMenu() {
             </ListItem>
           </Link>
         ))}
-      </List>
+      </List></>)}
+      
+  
     </Box>
   );
 }

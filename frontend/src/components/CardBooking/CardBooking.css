@@ -1,0 +1,34 @@
+.CardListBooking{
+    width: 400px;
+    margin: 15px;
+    
+}
+
+.CardListBookingTitel{
+    background-color: #4E7FFF;
+    color: white;
+    text-align: center;
+}
+
+.CardListBookingTitelOutDate{
+    background-color: #919191;
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.CardListBookingBody{
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction:row;
+    
+}
+
+.CardListBookingImg{
+    width: 40%;
+    height: 90%;
+    margin: auto;
+    margin-right: 0;
+    justify-content: center;
+    
+    
+}

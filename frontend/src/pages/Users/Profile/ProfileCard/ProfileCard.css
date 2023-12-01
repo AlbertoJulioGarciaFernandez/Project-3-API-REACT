@@ -1,0 +1,19 @@
+.profielBody{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.profielCard{
+    width: 500px;
+    padding: 20px;
+    text-align: center;
+    
+}
+
+
+

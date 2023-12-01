@@ -1,0 +1,19 @@
+.bodyVerReservas{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+.tableBody{
+    width: 90%;
+    
+}
+
+.tableContainer{
+    background-color: #DEE7FF;
+}
