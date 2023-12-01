@@ -25,11 +25,12 @@ function UpdateEquipment() {
     [equipmentNameMsg, setEquipmentNameMsg] = useState(''),
     [equipmentDescription, setEquipmentDescription] = useState(''),
     [isError, setIsError] = useState(false),
+    [confirmPieceOfEquipmentUpdate, setConfirmPieceOfEquipmentUpdate] = useState(false),
     [equipmentRegistered, setEquipmentRegistered] = useState(false),
     [errorMsg, setErrorMsg] = useState({}),
     navigate = useNavigate(),
     handleNavigate = () => {
-      navigate("/dashboard");
+      navigate("/dashboard/listEquipment");
     },
     handleNameChange = (e) => {
       setEquipmentName(e.target.value);
@@ -51,20 +52,37 @@ function UpdateEquipment() {
         if (equipmentName === '') {
           setEquipmentNameMsg('Error. +Info: El campo «Denominación» es de obligada cumplimentación.');
         } else {
-          try {
-            setEquipmentNameMsg('');
-            // await updatePieceEquipment({ equipmentId: equipmentId, equipmentName: equipmentName, description: equipmentDescription });
-            await updatePieceEquipment(equipmentId, { equipmentName: equipmentName, description: equipmentDescription });
-            setEquipmentName('');
-            setEquipmentRegistered(true);
-            setIsError(false);
-          } catch (error) {
-            setIsError(true);
-            setErrorMsg(error);
-          }
+          setEquipmentNameMsg('');
+          // Confirm piece of equipment update dialog window will pop up:
+          setConfirmPieceOfEquipmentUpdate(true);
         }
       }
+    },
+    handleProceedUpdate = async () => {
+      setConfirmPieceOfEquipmentUpdate(false);
+      try {
+        setEquipmentNameMsg('');
+        await updatePieceEquipment(equipmentId, { equipmentName: equipmentName, description: equipmentDescription });
+        setEquipmentName('');
+        setEquipmentRegistered(true);
+        setIsError(false);
+      } catch (error) {
+        setIsError(true);
+        setErrorMsg(error);
+      }
+    },
+    handleCancelUpdate = () => {
+      setConfirmPieceOfEquipmentUpdate(false);
+    },
+    handleCleanInput = () => {
+      setEquipmentName('');
+      setEquipmentDescription('');
+      setEquipmentNameMsg('');
+      // To reset equipment code drop-down menu:
+      setEquipmentId('');
+      setEquipmentIdMsg('');
     }
+
 
   return (
     <Box sx={{
@@ -76,10 +94,10 @@ function UpdateEquipment() {
       <Card
         raised={true}
         component={'form'}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '50vh', width: '50vw' }}
+        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'space-evenly', backgroundColor: '#c3d2fc', height: '70vh', width: '60vw' }}
       >
         <CardHeader titleTypographyProps={{ fontWeight: 'bold', fontSize: 30, borderBottom: '1px solid black', textAlign: 'center' }} title="Actualización de equipamiento"></CardHeader>
-        
+
         <FormControl size='large' sx={{ marginLeft: 2, marginBottom: -1, width: 300 }}>
           <InputLabel required style={{ color: 'black', fontWeight: 'bolder', fontSize: 20 }} id="demo-simple-select-label">Código del equipamiento</InputLabel>
           <Select
@@ -94,10 +112,11 @@ function UpdateEquipment() {
             {/* Dynamic generation of select option depending on the equipment already registered on 
             the database: */}
             {equipment.map(pieceOfEquipment => {
-              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>{pieceOfEquipment.id}</MenuItem>
+              return <MenuItem key={pieceOfEquipment.id} value={pieceOfEquipment.id}>Código: {pieceOfEquipment.id} (Denominación: {pieceOfEquipment.equipmentName})</MenuItem>
             })}
           </Select>
           {equipmentIdMsg.includes('Error') && <Alert severity="error">{equipmentIdMsg}</Alert>}
+          {equipmentIdMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
         </FormControl>
 
         <CardContent>
@@ -109,12 +128,14 @@ function UpdateEquipment() {
             label="Denominación"
             margin="dense"
             required
+            value={equipmentName}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
 
           {equipmentNameMsg.includes('Error') && <Alert severity="error">{equipmentNameMsg}</Alert>}
+          {equipmentNameMsg.includes('Error') && <Alert severity="error">Los campos señalados con asterisco (*) son de obligada cumplimentación.</Alert>}
 
           <TextField
             className="textfield"
@@ -123,6 +144,7 @@ function UpdateEquipment() {
             title='Por favor, introduzca la nueva descripción del equipamiento'
             label="Descripción"
             margin="dense"
+            value={equipmentDescription}
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
@@ -140,8 +162,41 @@ function UpdateEquipment() {
           </Button>
         </CardActions>
 
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCleanInput}
+            size="large"
+            type='reset'
+            variant="contained"
+            sx={{ backgroundColor: 'black' }}
+          >
+            Limpiar formulario
+          </Button>
+        </CardActions>
+
         {isError && <Alert severity="error">Se ha producido un error interno al intentar actualizar el equipamiento con código {equipmentId}. +Info: {errorMsg.response.data.message}</Alert>}
         {equipmentRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
+
+        {confirmPieceOfEquipmentUpdate && <Dialog
+          style={{ position: 'absolute', left: 500, top: 100 }}
+          open={confirmPieceOfEquipmentUpdate}
+          onClose={handleProceedUpdate}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirmar actualización de equipamiento"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Se procederá a actualizar el equipamiento código {equipmentId} con los datos que ha cumplimentado. Haga clic en «Aceptar» si desea proceder.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleProceedUpdate}>Aceptar</Button>
+            <Button onClick={handleCancelUpdate}>Cancelar</Button>
+          </DialogActions>
+        </Dialog>}
 
         {equipmentRegistered && <Dialog
           style={{ position: 'absolute', left: 500, top: 100 }}

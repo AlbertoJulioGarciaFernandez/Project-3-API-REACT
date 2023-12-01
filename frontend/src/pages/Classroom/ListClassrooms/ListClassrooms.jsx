@@ -22,12 +22,9 @@ function ListClassrooms() {
   }
 
   return (
-    <div>
-      <h1>Aulario</h1>
-      {classrooms.map(classroom => {
-        return <Classroom key={classroom.id} existingClassroom={classroom} />
-      })}
-    </div>
+    <>
+      <Classroom existingClassrooms={classrooms} />
+    </>
   )
 }
 

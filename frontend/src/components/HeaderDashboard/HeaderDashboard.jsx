@@ -20,7 +20,7 @@ function HeaderDashboard() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const settings = [{name:"Perfil", onclick: profiel , key: "1"},{name:"Cerrar Sesion",key:"2", onclick:onLogout} ];
+  const settings = [{ name: "Perfil", onclick: profile, key: "1" }, { name: "Cerrar Sesion", key: "2", onclick: onLogout }];
 
   useEffect(() => {
     getMyUserProfile();
@@ -33,16 +33,14 @@ function HeaderDashboard() {
     setUserName(data.firstName);
   }
 
-  
-  
   function onLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     navigate('/')
   }
 
-  function profiel() {
-    navigate('/dashboard/profiel')
+  function profile() {
+    navigate('/dashboard/profile')
   }
 
   const handleOpenUserMenu = (event) => {

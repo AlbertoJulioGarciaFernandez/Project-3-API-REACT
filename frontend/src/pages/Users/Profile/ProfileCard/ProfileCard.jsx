@@ -8,19 +8,19 @@ import {
   IconButton,
   InputAdornment,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import "./ProfileCard.css";
 import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
-import { lightBlue } from "@mui/material/colors";
 import { updatePassword } from "../../../../services/user";
+import PropTypes from 'prop-types';
 
-function ProfielCard({ myProfile }) {
+function ProfileCard({ myProfile }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleRep, setIsVisibleRep] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordRep, setPasswordRep] = useState("");
-  const [error, setError] = useState(false);
   const [errorMesg, setErrorMesg] = useState("");
   const [dataMesg, setDataMesg] = useState("");
   const [errorPassword, setErrorPassword] = useState({
@@ -58,7 +58,7 @@ function ProfielCard({ myProfile }) {
       setErrorPassword({
         error: true,
         message:
-          "Contraseña debe contener numeros, letras y tener al menos 8 caracteres",
+          "La contraseña debe contener números, letras y tener al menos 8 caracteres",
       });
     }
 
@@ -87,7 +87,6 @@ function ProfielCard({ myProfile }) {
         console.log("dato", changeData);
       }
     } catch (error) {
-      setError("true");
       setErrorMesg(error.response.data.message);
     }
   }
@@ -98,18 +97,26 @@ function ProfielCard({ myProfile }) {
   };
 
   return (
-    <div className="profielBody">
-      <Card className="profielCard" sx={{ background: "#DEE7FF" }}>
+    <div className="profileBody">
+      <Card className="profileCard" sx={{ background: "#DEE7FF" }}>
         <Avatar
           alt={myProfile.firstName}
           src="."
           sx={{ margin: "auto", marginBottom: 5, width: 100, height: 100 }}
         />
-        <h2>Nombre: {myProfile.firstName}</h2>
-        <h2>Apellidos: {myProfile.lastName}</h2>
-        <h2>Dirreccion: {myProfile.address}</h2>
-        <h2>Email: {myProfile.email}</h2>
-        <Button  className="btn-cambiarContraseña" onClick={handleOpen} >
+        <Typography variant="h6">
+          Nombre: {myProfile.firstName}
+        </Typography>
+        <Typography variant="h6">
+          Apellidos: {myProfile.lastName}
+        </Typography>
+        <Typography variant="h6">
+          Dirección: {myProfile.address}
+        </Typography>
+        <Typography variant="h6">
+          Email: {myProfile.email}
+        </Typography>
+        <Button className="btn-cambiarContraseña" onClick={handleOpen} >
           Cambiar contraseña
         </Button>
         {open && (
@@ -173,7 +180,7 @@ function ProfielCard({ myProfile }) {
             <Button
               className="btn-cambiarContraseña"
               onClick={changerPassword}
-              size="large" variant="contained" sx={{background:"black"}}
+              size="large" variant="contained" sx={{ background: "black" }}
             >
               Confirmar cambio de contraseña
             </Button>
@@ -190,4 +197,8 @@ function ProfielCard({ myProfile }) {
   );
 }
 
-export default ProfielCard;
+ProfileCard.propTypes = {
+  myProfile: PropTypes.object
+}
+
+export default ProfileCard;
