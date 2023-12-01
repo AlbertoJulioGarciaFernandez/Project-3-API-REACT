@@ -1,10 +1,9 @@
-div {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
+    .notfound {
+        align-items: center;
+        background-color: #4E7FFF;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        justify-content: center;
+        width: 100vw;
+    }
