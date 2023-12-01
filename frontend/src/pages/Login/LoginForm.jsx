@@ -70,7 +70,7 @@ function LoginForm() {
   }
 
   function validateEmail(email) {
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return regex.test(email);
   }
 
@@ -87,7 +87,7 @@ function LoginForm() {
       >
           <Logo />
         <CardHeader
-          title="Iniciar Sesion"
+          title="Iniciar Sesión"
           sx={{ color: "white", textAlign: "center" }}
         ></CardHeader>
         <CardContent>
@@ -97,7 +97,7 @@ function LoginForm() {
             sx={{ background: "white", borderRadius: 1 }}
             type="email"
             required
-            label="Correo electronico"
+            label="Correo electrónico"
             variant="filled"
             margin="dense"
             fullWidth={true}
@@ -150,7 +150,7 @@ function LoginForm() {
             sx={{ background: "black" }}
             variant="contained"
           >
-            Iniciar Sesion
+            Iniciar Sesión
           </Button>
         </CardActions>
         <CardContent>
@@ -160,9 +160,9 @@ function LoginForm() {
             justifyContent="center"
             color="white"
           >
-            Si no esta regitrado haga clic&nbsp;
+            Si no está regitrado, haga clic&nbsp;
             <Link to={`/signup`} className="link">
-              aqui
+              aquí
             </Link>
           </Typography>
         </CardContent>
