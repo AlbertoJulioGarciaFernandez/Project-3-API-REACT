@@ -47,13 +47,10 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard/",
     element: <Root />,
-    errorElement: <NotFound />,
-    // errorElement: <NotFound />,
     loader: () => {
       if (!localStorage.getItem("token")) {
-       
         return redirect("/"); //If the user isn't logged in, we redirect to the login page.
-      } else { 
+      } else {
         return null;
       }
     },
@@ -61,7 +58,56 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/listBookings",
         element: <ListBookings />
-      },{
+      },
+      {
+        path: '/dashboard/listmybookings',
+        element: <ListMyBookings />
+      },
+      {
+        path: '/dashboard/addbooking',
+        element: <AddBooking />
+      },
+      {
+        path: '/dashboard/addmybooking',
+        element: <AddMyBooking />
+      },
+      {
+        path: '/dashboard/updatebooking',
+        element: <UpdateBooking />
+      },
+      {
+        path: '/dashboard/updatemybooking',
+        element: <UpdateMyBooking />
+      },
+      {
+        path: '/dashboard/deletebooking',
+        element: <DeleteBooking />
+      },
+      {
+        path: '/dashboard/deletemybooking',
+        element: <DeleteMyBooking />
+      },
+      {
+        path: '/dashboard/profile',
+        element: <Profile />
+      },
+      {
+        path: "/dashboard/listUsers",
+        element: <ListUsersPage />,
+      },
+      {
+        path: "/dashboard/createUser",
+        element: <CreateUserPage />,
+      },
+      {
+        path: "/dashboard/updateUser",
+        element: <UpdateUserPage />,
+      },
+      {
+        path: "/dashboard/deleteUser",
+        element: <DeleteUserComponent />
+      },
+      {
         path: '/dashboard/listEquipment',
         element: <ListEquipment />
       },
@@ -76,47 +122,6 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/deleteEquipment',
         element: <DeleteEquipment />
-      },
-    
-      {
-        path: "/dashboard/listUsers",
-        element: <ListUsersPage />,
-      },
-      {
-        path: "/dashboard/createUser",
-        element: <CreateUserPage />,
-      },
-      {
-        path: "/dashboard/updateUser",
-        element: <UpdateUserPage/>,
-      },
-      {
-        path: "/dashboard/deleteUser",
-        element: <DeleteUserComponent/>
-      },
-      {
-        path: "/dashboard/updateUser",
-        element: <UpdateUserPage/>,
-      },
-      {
-        path: "/dashboard/deleteUser",
-        element: <DeleteUserComponent/>
-      },
-      {
-        path: "/dashboard/listEquipment",
-        element: <ListEquipment />,
-      },
-      {
-        path: "/dashboard/addEquipment",
-        element: <AddEquipment />,
-      },
-      {
-        path: "/dashboard/updateEquipment",
-        element: <UpdateEquipment />,
-      },
-      {
-        path: "/dashboard/deleteEquipment",
-        element: <DeleteEquipment />,
       },
       {
         path: '/dashboard/listClassrooms',
@@ -150,42 +155,6 @@ export const router = createBrowserRouter([
         path: '/dashboard/deleteBuilding',
         element: <DeleteBuilding />
       },
-      {
-        path: '/dashboard/listmybookings',
-        element: <ListMyBookings/>
-      },
-      {
-        path: '/dashboard/addmybooking',
-        element: <AddMyBooking/>
-      },
-      {
-        path: '/dashboard/addbooking',
-        element: <AddBooking/>
-      },
-      {
-        path: '/dashboard/updatemybooking',
-        element: <UpdateMyBooking/>
-      },
-      {
-        path: '/dashboard/updatebooking',
-        element: <UpdateBooking/>
-      },
-      {
-        path: '/dashboard/deletemybooking',
-        element: <DeleteMyBooking/>
-      },
-      {
-        path: '/dashboard/deletebooking',
-        element: <DeleteBooking/>
-      },
-      {
-        path: '/dashboard/listbookings',
-        element: <ListBookings/>
-      },
-      {
-        path: '/dashboard/profiel',
-        element: <Profile/>
-      }
     ],
   },
 ]);
