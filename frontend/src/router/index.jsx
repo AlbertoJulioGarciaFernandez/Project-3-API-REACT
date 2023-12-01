@@ -22,7 +22,7 @@ import DeleteMyBooking from "../pages/Booking/DeleteMyBooking/DeleteMyBooking";
 import AddMyBooking from "../pages/Booking/AddMyBooking/AddMyBooking";
 import UpdateBooking from "../pages/Booking/UpdateBooking/UpdateBooking";
 import DeleteBooking from "../pages/Booking/DeleteBooking/DeleteBooking";
-import Profile from "../pages/Users/Profile/Profiel";
+import Profile from "../pages/Users/Profile/Profile";
 import AddBuilding from "../pages/Building/AddBuilding/AddBuilding";
 import UpdateBuilding from "../pages/Building/UpdateBuilding/UpdateBuilding";
 import DeleteBuilding from "../pages/Building/DeleteBuilding/DeleteBuilding";
