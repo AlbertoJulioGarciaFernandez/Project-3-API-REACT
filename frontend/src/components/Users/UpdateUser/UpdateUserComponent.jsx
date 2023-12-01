@@ -64,6 +64,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorId ? "El Id es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, id: e.target.value });
+                setErrorId(false)
               }}
             />
             <TextField
@@ -79,6 +80,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorFirstName ? "El Nombre es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, firstName: e.target.value });
+                setErrorFirstName(false)
               }}
             />
             <TextField
@@ -94,6 +96,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorLastName ? "El Apellido es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, lastName: e.target.value });
+                setErrorLastName(false)
               }}
             />
             <TextField
@@ -109,6 +112,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorAddress ? "La Dirección es obligatoria" : ""}
               onChange={(e) => {
                 setUser({ ...user, address: e.target.value });
+                setErrorAddress(false)
               }}
             />
             <TextField
@@ -124,6 +128,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorEmail ? "El Email es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, email: e.target.value });
+                setErrorEmail(false)
               }}
             />
             <TextField
@@ -140,6 +145,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorPassword ? "La contraseña es obligatoria" : ""}
               onChange={(e) => {
                 setUser({ ...user, password: e.target.value });
+                setErrorPassword(false)
               }}
             />
             <TextField
@@ -155,6 +161,7 @@ export default function UpdateUserComponent({ handleSubmit, setUser, user }) {
               helperText={errorRole ? "El Role es obligatorio" : ""}
               onChange={(e) => {
                 setUser({ ...user, role: e.target.value });
+                setErrorRole(false)
               }}
             />
           </CardContent>
