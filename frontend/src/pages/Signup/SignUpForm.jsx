@@ -26,57 +26,98 @@ import Logo from "../../components/Logo/Logo";
 
 function SignUpForm() {
   const [firstName, setFirstName] = useState("");
+  const [firstNameMsg, setFirstNameMsg] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
+  const [emailMsg, setEmailMsg] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordMsg, setPasswordMsg] = useState("");
   const [retypedPassword, setRetypedPassword] = useState("");
   const [retypedPasswordMsg, setRetypedPasswordMsg] = useState("");
   const [inputError, setInputError] = useState(false);
   const [errorMsg, setErrorMsg] = useState({});
   const [userRegistered, setUserRegistered] = useState(false);
-  const navigate = useNavigate();
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
   const [passwordRetypedIsVisible, setPasswordRetypedIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/dashboard");
+    navigate("/dashboard/listmybookings");
+  }
+
+  function validateEmail(userEmail) {
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    return regex.test(userEmail);
+  }
+
+  function validatePassword(password) {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]{8,}$/;
+    return regex.test(password);
   }
 
   async function handleClick(e) {
     e.preventDefault();
-    // Checking if both passwords match:
-    if (retypedPassword !== password) {
 
-      setRetypedPasswordMsg('Error. +Info: Ambas contraseñas han de coincidir.');
+    // Checking if first name field has been filled (it is required):
+    if (firstName === '') {
+      setFirstNameMsg('Error. +Info: El campo «Nombre» es de obligada cumplimentación.');
     } else {
-      if (retypedPassword !== '') {
-        if (retypedPassword.length > 7) {
-          setRetypedPasswordMsg('Ambas contraseñas coinciden y cumplen el requisito de ocho caracteres como mínimo.');
-
-          // Data will only be sent after having validated both email address and password: 
-          try {
-            const { data } = await signup({ firstName, lastName, address, email, password });
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('role', data.user.role);
-            setUserRegistered(true);
-            // Setting inputError variable to false in order to make the Alert message disappear (in case it is being shown
-            // on the screen)
-            setInputError(false);
-          } catch (error) {
-            setInputError(true);
-            setErrorMsg(error);
+      // Resetting state variable to make the message disappear in case the user keys in a valid input:
+      setFirstNameMsg('');
+      // Checking whether the email has the proper format:
+      if (!validateEmail(email)) {
+        setEmailMsg('Error. +Info: El campo «Correo electrónico» no cumple el formato solicitado (user@email.com).');
+      } else {
+        // Resetting state variable to make the message disappear in case the user keys in a valid input:
+        setEmailMsg('');
+        // Checking whether the password has the proper format:
+        if (!validatePassword(password)) {
+          if (retypedPasswordMsg.length > 0) {
+            // Resetting state variable to make the message disappear:
+            setRetypedPasswordMsg('');
           }
 
+          setPasswordMsg('Error. +Info: El campo «Contraseña» no cumple el formato solicitado (ocho caracteres, incluyendo una letra y un número).');
+
         } else {
-          setRetypedPasswordMsg('Error. +Info: Aunque las contraseñas coinciden, estas no cumplen el requisito de ocho caracteres como mínimo.');
+          // Resetting state variable to make the message disappear in case the user keys in a valid input:
+          setPasswordMsg('');
+
+          // Checking if both passwords match:
+          if (retypedPassword !== password) {
+            setRetypedPasswordMsg('Error. +Info: Ambas contraseñas han de coincidir.');
+          } else {
+            // Data will only be sent after having validated all the required fields pointed out above: 
+            try {
+              const { data } = await signup({ firstName, lastName, address, email, password });
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('role', data.user.role);
+              setUserRegistered(true);
+              // Setting inputError variable to false in order to make the Alert message disappear (in case it is being shown
+              // on the screen)
+              setInputError(false);
+            } catch (error) {
+              setInputError(true);
+              setErrorMsg(error);
+            }
+            if (retypedPassword !== '') {
+              if (retypedPassword.length > 7) {
+                setRetypedPasswordMsg('Ambas contraseñas coinciden y cumplen el requisito establecido.');
+
+
+
+              } else {
+                setRetypedPasswordMsg('Error. +Info: Aunque las contraseñas coinciden, estas no cumplen el requisito establecido (ocho caracteres, incluyendo una letra y un número).');
+              }
+            } else {
+              setRetypedPasswordMsg('Error. +Info: Los campos de contraseña son de obligada cumplimentación.')
+            }
+          }
         }
-      } else {
-        setRetypedPasswordMsg('Error. +Info: Los campos de contraseña son de obligada cumplimentación.')
+
       }
-
     }
-
   }
 
   return (
@@ -95,11 +136,14 @@ function SignUpForm() {
             type="text"
             label="Nombre"
             margin="dense"
+            required
             fullWidth={true}
             // Using the InputLabelProps property to modify the appearance of the input label:
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
           ></TextField>
+
+          {firstNameMsg.includes('Error') && <Alert severity="error">{firstNameMsg}</Alert>}
 
           <TextField
             className="textfield"
@@ -129,11 +173,14 @@ function SignUpForm() {
             type="text"
             label="Correo electrónico"
             margin="dense"
+            required
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             placeholder="El correo electrónico ha de cumplir el siguiente formato de ejemplo: user@email.com"
             variant="filled"
           ></TextField>
+
+          {emailMsg.includes('Error') && <Alert severity="error">{emailMsg}</Alert>}
 
           <TextField
             className="textfield"
@@ -141,7 +188,8 @@ function SignUpForm() {
             type={passwordIsVisible ? "text" : "password"}
             label="Contraseña"
             margin="dense"
-            placeholder="Se requiere que su contraseña tenga como mínimo ocho caracteres."
+            required
+            placeholder="Ocho caracteres, incluyendo una letra y un número (caracteres especiales, mayúsculas y minúsculas, admitidos)"
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
             variant="filled"
@@ -156,6 +204,8 @@ function SignUpForm() {
             }}
           ></TextField>
 
+          {passwordMsg.includes('Error') && <Alert severity="error">{passwordMsg}</Alert>}
+
           <TextField
             className="textfield"
             onChange={(e) => setRetypedPassword(e.target.value)}
@@ -166,6 +216,7 @@ function SignUpForm() {
             type={passwordRetypedIsVisible ? "text" : "password"}
             label="Repita contraseña"
             margin="dense"
+            required
             placeholder="La contraseña ha de coincidir con la establecida en el campo anterior."
             fullWidth={true}
             InputLabelProps={{ style: { color: 'black', fontWeight: 'bolder', fontSize: 20 } }}
@@ -208,7 +259,7 @@ function SignUpForm() {
           </Typography>
         </CardContent>
 
-        {inputError && <Alert severity="error">Error. +Info: {errorMsg.message}</Alert>}
+        {inputError && <Alert severity="error">Error. +Info: {errorMsg.response.data.msg}</Alert>}
         {userRegistered && <Alert severity="success">Formulario cumplimentado correctamente.</Alert>}
 
         {userRegistered && <Dialog

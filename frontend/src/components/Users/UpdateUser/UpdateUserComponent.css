@@ -1,0 +1,30 @@
+
+ .containerFragment{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+ }
+
+.containerFormUpdateUser{
+  background-color:#DEE7FF;
+  border-radius: 5px;
+  width: 600px;
+/*   height: 700px; */
+}
+
+.containerTextField{
+  background-color: white;
+  width: 100%;
+}
+
+.tituloForm{
+  padding-top: 1rem;
+}
+
+.containerButton{
+  justify-content: center;
+}

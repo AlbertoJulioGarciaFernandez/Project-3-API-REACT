@@ -41,7 +41,7 @@ function LoginForm() {
     } else {
       setErrorEmail({
         error: true,
-        message: "Formato de correo electronico incorrecto",
+        message: "Formato de correo electrónico incorrecto",
       });
     }
     if (validatePassword(password)) {
@@ -52,7 +52,7 @@ function LoginForm() {
     } else {
       setErrorPassword({
         error: true,
-        message: "Contraseña no valida",
+        message: "Contraseña no válida",
       });
     }
     try {
@@ -60,17 +60,16 @@ function LoginForm() {
         const loginResponse = await login({ email, password });
         localStorage.setItem("token", loginResponse.data.token);
         localStorage.setItem("role", loginResponse.data.role);
-        navigate("/home");
+        loginResponse.data.role === "admin" ? navigate("/dashboard/listBookings") : navigate("/dashboard/listmybookings");
       }
     } catch (error) {
       //Handle the error
       setError("true");
-      console.log("No registrado");
     }
   }
 
   function validateEmail(email) {
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     return regex.test(email);
   }
 
@@ -85,9 +84,9 @@ function LoginForm() {
         raised={true}
         sx={{ backgroundColor: "#4E7FFF", height: "100vh", width: "50vw" }}
       >
-          <Logo />
+        <Logo />
         <CardHeader
-          title="Iniciar Sesion"
+          title="Iniciar Sesión"
           sx={{ color: "white", textAlign: "center" }}
         ></CardHeader>
         <CardContent>
@@ -97,7 +96,7 @@ function LoginForm() {
             sx={{ background: "white", borderRadius: 1 }}
             type="email"
             required
-            label="Correo electronico"
+            label="Correo electrónico"
             variant="filled"
             margin="dense"
             fullWidth={true}
@@ -150,7 +149,7 @@ function LoginForm() {
             sx={{ background: "black" }}
             variant="contained"
           >
-            Iniciar Sesion
+            Iniciar Sesión
           </Button>
         </CardActions>
         <CardContent>
@@ -160,14 +159,14 @@ function LoginForm() {
             justifyContent="center"
             color="white"
           >
-            Si no esta regitrado haga clic&nbsp;
+            Si no está regitrado, haga clic&nbsp;
             <Link to={`/signup`} className="link">
-              aqui
+              aquí
             </Link>
           </Typography>
         </CardContent>
         {error && (
-          <Alert severity="error">El usuario indicado no esta registrado</Alert>
+          <Alert severity="error">Error. +Info: El usuario y/o la contraseña introducida no son correctos.</Alert>
         )}
       </Card>
       <Box

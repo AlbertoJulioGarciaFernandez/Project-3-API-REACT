@@ -1,0 +1,39 @@
+.formularioDeleteUser{
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+ }
+
+ .containerForm{
+   background-color: #DEE7FF;
+    width: 700px;
+    height: 600px;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .containerTitulo{
+    margin-top: 3rem;
+   
+ }
+
+ .titulo{
+    font-size: 25px;
+    font-weight: bold;
+ }
+
+ .seleccion{
+    width: 40rem;
+    height: 60%;
+    margin-top: 2rem;
+    font-size: large;
+ }
+
+ .boton{
+    background-color: blue;
+ }
