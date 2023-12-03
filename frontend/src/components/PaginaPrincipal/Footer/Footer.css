@@ -13,13 +13,14 @@
   
   .footer a {
     margin: 8px;
-    color: #ffd700;
+    font-weight: bold;
+    color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
   }
   
   .footer a:hover {
-    color: #ffffff;
+    color: #d4d4d4;
     text-decoration: underline;
   }
   

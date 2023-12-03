@@ -19,7 +19,7 @@ function Noticias() {
       </ul> */}
 
         <section className="seccion-noticias">
-          <article>
+          <article className="articulo">
             <h2>Descubrimiento Científico Revolucionario</h2>
             <p>
               Un equipo de científicos ha anunciado un descubrimiento
@@ -29,7 +29,7 @@ function Noticias() {
             </p>
           </article>
 
-          <article>
+          <article className="articulo">
             <h2>Nuevas Tendencias en Tecnología</h2>
             <p>
               Las últimas tendencias tecnológicas han llegado al mercado, desde
@@ -64,7 +64,7 @@ function Noticias() {
 
         
         <table>
-        <h1>Formate para tú futro</h1>
+        <h1>Fórmate para tu futuro</h1>
           <thead>
             <tr>
               <th>Especialidad</th>

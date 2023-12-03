@@ -65,7 +65,7 @@ function CarrouselComponent() {
     return (
       <div className="container-background">
         <Paper className="container-carousel">
-          <h2>{props.item.name}</h2>
+          <h2 className="h2header">{props.item.name}</h2>
           <p>{props.item.description}</p>
           <div className="container-image">
             <img className="image" src={props.item.img} alt="img" />
