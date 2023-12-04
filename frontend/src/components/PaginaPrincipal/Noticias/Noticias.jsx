@@ -20,7 +20,7 @@ function Noticias() {
 
         <section className="seccion-noticias">
           <article className="articulo">
-            <h2>Descubrimiento Científico Revolucionario</h2>
+            <h2>Descubrimiento Científico</h2>
             <p>
               Un equipo de científicos ha anunciado un descubrimiento
               revolucionario que podría cambiar la forma en que entendemos el
@@ -42,7 +42,7 @@ function Noticias() {
 
         <section className="seccion-noticias">
           <article className="articulo">
-            <h2>Avances en Medicina: Tratamiento Revolucionario</h2>
+            <h2>Avances en Medicina</h2>
             <p>
               Un nuevo tratamiento médico ha demostrado ser altamente efectivo
               en ensayos clínicos, ofreciendo esperanza a aquellos que sufren de
@@ -63,7 +63,7 @@ function Noticias() {
         </section>
 
         
-        <table>
+        <table className="tableHome">
         <h1>Fórmate para tu futuro</h1>
           <thead>
             <tr>
